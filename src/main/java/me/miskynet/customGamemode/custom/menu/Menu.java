@@ -3,6 +3,7 @@ package me.miskynet.customGamemode.custom.menu;
 import me.miskynet.customGamemode.custom.item.Item;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -39,5 +40,9 @@ public class Menu implements InventoryHolder {
     @Override
     public @NotNull Inventory getInventory() {
         return this.inventory;
+    }
+
+    public void openForPlayer(Player player) {
+        player.openInventory(this.inventory);
     }
 }

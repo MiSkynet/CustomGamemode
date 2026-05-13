@@ -12,11 +12,12 @@ import java.util.List;
  * Helps create and modifying an ItemStack easier by creating an Item object.
  * */
 public class Item {
-    Material material;
-    Component displayName = null;
-    List<Component> lore = null;
-    Integer amount = null;
-    CustomModelDataComponent customModelDataComponent = null;
+
+    private Material material;
+    private Component displayName = null;
+    private List<Component> lore = null;
+    private Integer amount = null;
+    private CustomModelDataComponent customModelDataComponent = null;
 
     /*
     * Different constructors
@@ -52,6 +53,9 @@ public class Item {
         this.material = material;
     }
 
+    /*
+    * setter and getter
+    * */
     public Item setMaterial(Material material) {
         this.material = material;
         return this;
@@ -126,7 +130,6 @@ public class Item {
         ItemMeta itemMeta = itemStack.getItemMeta();
 
         if (itemMeta != null) {
-
             if (this.displayName != null) this.displayName = itemMeta.displayName();
             if (this.lore != null) itemMeta.lore();
             if (this.customModelDataComponent != null) itemMeta.setCustomModelDataComponent(this.customModelDataComponent);
