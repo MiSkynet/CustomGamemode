@@ -1,4 +1,4 @@
-package me.miskynet.customGamemode.custom;
+package me.miskynet.customGamemode.custom.item;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
