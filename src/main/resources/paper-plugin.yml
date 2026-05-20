@@ -1,0 +1,5 @@
+name: CustomGamemode
+version: '1.0'
+main: me.miskynet.customGamemode.Main
+api-version: '1.21'
+authors: [ MiSkynet ]
