@@ -30,13 +30,14 @@ public class MenuManager {
     * not created when starting the server or executing a function (like for custom entitys)
     * */
     public void menuSetup() {
+
+        /*
+        * menu for the interact entity
+        * */
         Menu interactEntity = new Menu(Utils.component("Test Menu"), 27, 82019383);
-
-        Item test = new Item(Material.DRAGON_EGG, Utils.component("§cCooles Ei"));
-        interactEntity.addItem(test);
-
-        Item button = new Item(Material.BARRIER, Utils.component("§cBack"));
-        interactEntity.addItem(button);
+        interactEntity
+                .addItem(new Item(Material.DRAGON_EGG, Utils.component("§cCooles Ei")))
+                .addItem(new Item(Material.BARRIER, Utils.component("§cBack")));
 
     }
 

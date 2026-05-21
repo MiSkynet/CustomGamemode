@@ -100,7 +100,7 @@ public class Item {
      * Builds the Item into an ItemStack
      * @return Item as a ItemStack
      */
-    public ItemStack getItemStack() {
+    public ItemStack toItemStack() {
         ItemStack itemStack = new ItemStack(this.material);
         ItemMeta itemMeta = itemStack.getItemMeta();
 

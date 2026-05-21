@@ -46,20 +46,24 @@ public class Menu implements InventoryHolder {
         return this.id;
     }
 
-    public void setItem(int slot, ItemStack itemStack) {
+    public Menu setItem(int slot, ItemStack itemStack) {
         this.inventory.setItem(slot, itemStack);
+        return this;
     }
 
-    public void setItem(int slot, Item item) {
-        this.inventory.setItem(slot, item.getItemStack());
+    public Menu setItem(int slot, Item item) {
+        this.inventory.setItem(slot, item.toItemStack());
+        return this;
     }
 
-    public void addItem(ItemStack itemStack) {
+    public Menu addItem(ItemStack itemStack) {
         this.inventory.addItem(itemStack);
+        return this;
     }
 
-    public void addItem(Item item) {
-        this.inventory.addItem(item.getItemStack());
+    public Menu addItem(Item item) {
+        this.inventory.addItem(item.toItemStack());
+        return this;
     }
 
     public ItemStack getItem(int slot) {
