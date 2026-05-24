@@ -14,11 +14,17 @@ public class MenuEntity extends CustomEntity {
 
     private Menu menu;
 
+    /*
+     * constructor
+     * */
     public MenuEntity(EntityType entityType, Menu menu) {
         super(entityType);
         this.menu = menu;
     }
 
+    /*
+     * setter, getter and everything else
+     * */
     public void setInteractionMenu(Menu menu) {
         this.menu = menu;
     }

@@ -12,10 +12,16 @@ public class DialogEntity extends CustomEntity{
 
     HashMap<Integer, Component> dialogList = new HashMap<>();
 
+    /*
+     * constructor
+     * */
     public DialogEntity(EntityType entityType) {
         super(entityType);
     }
 
+    /*
+     * setter, getter and everything else
+     * */
     public DialogEntity setDialog(int dialogValue, Component dialog) {
         if (!dialogList.containsKey(dialogValue)) {
             this.dialogList.put(dialogValue, dialog);

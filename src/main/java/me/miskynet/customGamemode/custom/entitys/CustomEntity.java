@@ -1,7 +1,6 @@
 package me.miskynet.customGamemode.custom.entitys;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -19,10 +18,16 @@ public class CustomEntity {
     private boolean gravity = false;
     private boolean ai = false;
 
+    /*
+     * constructor
+     * */
     public CustomEntity(EntityType entityType) {
         this.entityType = entityType;
     }
 
+    /*
+     * setter, getter and everything else
+     * */
     public void setCustomName(Component customName) {
         this.customName = customName;
     }

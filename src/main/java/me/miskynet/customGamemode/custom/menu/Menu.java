@@ -18,20 +18,39 @@ public class Menu implements InventoryHolder {
 
     Inventory inventory;
     private int id;
+    private MenuType menuType;
 
+    public enum MenuType {
+        DEFAULT,
+        TEXTURE
+    }
+
+    /*
+     * constructor
+     * */
     public Menu(Component title, int size) {
-        this.inventory = Bukkit.createInventory(this, size, title);
-        this.id = createRandomID();
-        menuManager.addMenu(this.id, this);
+        this(title, size, createRandomID(), MenuType.DEFAULT);
     }
 
     public Menu(Component title, int size, int id) {
+        this(title, size, id, MenuType.DEFAULT);
+    }
+
+    public Menu(Component title, int size, MenuType menuType) {
+        this(title, size, createRandomID(), menuType);
+    }
+
+    public Menu(Component title, int size, int id, MenuType menuType) {
         this.inventory = Bukkit.createInventory(this, size, title);
         this.id = id;
+        this.menuType = menuType;
         menuManager.addMenu(this.id, this);
     }
 
-    private int createRandomID() {
+    /*
+     * setter, getter and everything else
+     * */
+    private static int createRandomID() {
         while (true) {
             Random random = new Random();
             int id = random.nextInt(1_000_000_000);
@@ -66,8 +85,13 @@ public class Menu implements InventoryHolder {
         return this;
     }
 
+
     public ItemStack getItem(int slot) {
         return this.inventory.getItem(slot);
+    }
+
+    public MenuType getMenuType() {
+        return this.menuType;
     }
 
     @Override

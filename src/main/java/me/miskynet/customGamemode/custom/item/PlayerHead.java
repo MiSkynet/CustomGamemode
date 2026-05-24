@@ -19,31 +19,33 @@ public class PlayerHead extends Item {
 
     private String textureHash;
 
+    /*
+    * constructor
+    * */
+    public PlayerHead(String textureHash) {
+        this(null, null, 1, null, textureHash);
+    }
+
+    public PlayerHead(Component displayName, String textureHash) {
+        this(displayName, null, 1, null, textureHash);
+    }
+
+    public PlayerHead(Component displayName, List<Component> lore, String textureHash) {
+        this(displayName, lore, 1, null, textureHash);
+    }
+
+    public PlayerHead(Component displayName, List<Component> lore, int amount, String textureHash) {
+        this(displayName, lore, amount, null, textureHash);
+    }
+
     public PlayerHead(Component displayName, List<Component> lore, int amount, CustomModelDataComponent customModelDataComponent, String textureHash) {
         super(Material.PLAYER_HEAD, displayName, lore, amount, customModelDataComponent);
         this.textureHash = textureHash;
     }
 
-    public PlayerHead(Component displayName, List<Component> lore, int amount, String textureHash) {
-        super(Material.PLAYER_HEAD, displayName, lore, amount);
-        this.textureHash = textureHash;
-    }
-
-    public PlayerHead(Component displayName, List<Component> lore, String textureHash) {
-        super(Material.PLAYER_HEAD, displayName, lore);
-        this.textureHash = textureHash;
-    }
-
-    public PlayerHead(Component displayName, String textureHash) {
-        super(Material.PLAYER_HEAD, displayName);
-        this.textureHash = textureHash;
-    }
-
-    public PlayerHead(String textureHash) {
-        super(Material.PLAYER_HEAD);
-        this.textureHash = textureHash;
-    }
-
+    /*
+     * setter, getter and everything else
+     * */
     public PlayerHead setTexture(String textureHash) {
         this.textureHash = textureHash;
         return this;
