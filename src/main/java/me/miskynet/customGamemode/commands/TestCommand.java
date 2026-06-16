@@ -1,170 +1,93 @@
 package me.miskynet.customGamemode.commands;
 
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import me.miskynet.customGamemode.Main;
-import me.miskynet.customGamemode.custom.Utils;
-import me.miskynet.customGamemode.custom.entitys.MenuEntity;
-import me.miskynet.customGamemode.custom.item.PlayerHead;
-import me.miskynet.customGamemode.custom.item.Relic;
-import me.miskynet.customGamemode.custom.menu.Menu;
-import me.miskynet.customGamemode.custom.menu.TextureMenu;
-import org.bukkit.Registry;
-import org.bukkit.entity.EntityType;
+import me.miskynet.customGamemode.custom.economy.EconomyManager;
+import me.miskynet.customGamemode.custom.menu.shop.Shop;
+import me.miskynet.customGamemode.utils.Utils;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 
 public class TestCommand {
 
     public static LiteralArgumentBuilder<CommandSourceStack> getBuilder() {
 
+        /*
+         * /testcommand inventory
+         * */
         return Commands.literal("testcommand")
                 .requires(source -> source.getSender() instanceof Player && source.getSender().isOp())
 
                 /*
                  * /testcommand inventory
                  * */
-                .then(Commands.literal("inventory")
-                    .then(Commands.argument("title", StringArgumentType.string())
-                        .then(Commands.argument("size", IntegerArgumentType.integer(9, 54))
+                /*
+
+                .then(Commands.argument("getRelic", StringArgumentType.string())
+                    .executes(ctx -> {
+                        Player player = (Player) ctx.getSource().getSender();
+
+                        Relic relic = new Relic();
+
+                        player.getInventory().addItem(relic.toItemStack());
+
+                        return 1;
+                    })
+                        .then(Commands.argument("amount", IntegerArgumentType.integer(1, 50))
                             .executes(ctx -> {
 
+                                Integer amount = ctx.getArgument("amount", Integer.class);
                                 Player player = (Player) ctx.getSource().getSender();
-                                String title = StringArgumentType.getString(ctx, "title");
-                                int size = IntegerArgumentType.getInteger(ctx, "size");
 
-                                int validSlots = (size % 9 == 0) ? size : 9;
-
-                                Menu menu = new Menu(Utils.component(title), validSlots);
-                                menu.openForPlayer(player);
+                                for (int i = 0; i < amount; i++) {
+                                    Relic relic = new Relic();
+                                    player.getInventory().addItem(relic.toItemStack());
+                                }
 
                                 return 1;
                             })
                         )
-                    )
                 )
 
-                .then(Commands.literal("testinv")
-                    .executes(ctx -> {
+                .executes(ctx -> {
+                    Player player = (Player) ctx.getSource().getSender();
 
-                        Player player = (Player) ctx.getSource().getSender();
+                    TextureMenu flowerExtractor = MenuManager.getFlowerExtractorMenu();
+                    flowerExtractor.openForPlayer(player);
 
-                        TextureMenu textureMenu = new TextureMenu(Utils.component("Flower Extractor"), 27, "\uE003");
-                        ArrayList<Integer> slots = new ArrayList<>();
-                        slots.add(11);
-                        slots.add(12);
-                        slots.add(15);
-                        textureMenu.setInteractSlots(slots);
 
-                        textureMenu.openForPlayer(player);
+                    return 1;
+                });
 
-                        return 1;
-                    })
+
+                // open the shop
+
+                */
+
+                .then(Commands.literal("shop")
+                        .executes(ctx -> {
+
+                            Player player = (Player) ctx.getSource().getSender();
+                            Shop shop = new Shop(0);
+                            shop.openForPlayer(player);
+
+                            return 1;
+                        })
                 )
 
-                /*
-                * /testcommand entity
-                * */
-                .then(Commands.literal("entity")
-                        .then(Commands.literal("interact")
-                            .then(Commands.argument("entityType", StringArgumentType.string())
-                                .executes(ctx -> {
+                .then(Commands.literal("balance")
+                        .executes(ctx -> {
+                            Player player = (Player) ctx.getSource().getSender();
 
-                                    EntityType entityType = EntityType.VILLAGER;
+                            player.sendMessage(Utils.component("&7Your Balance: &6" + Main.economyManager.getBalance(player)));
 
-                                    EntityType selectedType = ctx.getArgument("entity", EntityType.class);
+                            Main.economyManager.addBalance(player, 5);
 
-                                    if (selectedType != null) {
-                                        if (Registry.ENTITY_TYPE.stream().collect(Collectors.toList()).contains(selectedType)) {
-                                            entityType = selectedType;
-                                        }
-                                    }
-
-                                    if (StringArgumentType.getString(ctx, "type").equalsIgnoreCase("menu")) {
-                                        Player player = (Player) ctx.getSource().getSender();
-                                        MenuEntity menuEntity = new MenuEntity(entityType, Main.menuManager.searchId(82019383));
-
-                                        menuEntity.spawnEntity(player);
-                                    }
-                                    else if (StringArgumentType.getString(ctx, "type").equalsIgnoreCase("talking")) {
-                                        Player player = (Player) ctx.getSource().getSender();
-                                        MenuEntity menuEntity = new MenuEntity(entityType, Main.menuManager.searchId(82019383));
-                                        menuEntity.spawnEntity(player);
-                                    }
-
-                                    return 1;
-                                })
-                            )
-                        )
-                )
-
-                /*
-                 * /testcommand give
-                 * */
-                .then(Commands.literal("give")
-                        .then(Commands.literal("skull")
-                                .then(Commands.argument("skullHash", StringArgumentType.string())
-                                        .executes(ctx -> {
-                                            Player player = (Player) ctx.getSource().getSender();
-
-                                            String hash = StringArgumentType.getString(ctx, "skullHash");
-
-                                            PlayerHead head = new PlayerHead(hash);
-
-                                            head.setDisplayName(Utils.component(false, "&rCustom Head"));
-
-                                            player.getInventory().addItem(head.toItemStack());
-                                            return 1;
-                                        })
-                                        .then(Commands.argument("displayName", StringArgumentType.string())
-                                                .executes(ctx -> {
-                                                    Player player = (Player) ctx.getSource().getSender();
-
-                                                    String hash = StringArgumentType.getString(ctx, "skullHash");
-                                                    String displayName = StringArgumentType.getString(ctx, "displayName");
-
-                                                    PlayerHead head = new PlayerHead(hash);
-
-                                                    head.setDisplayName(Utils.component(false, displayName));
-
-                                                    player.getInventory().addItem(head.toItemStack());
-                                                    return 1;
-                                                })
-                                        )
-                                )
-                        )
-
-                        .then(Commands.literal("relic")
-                                .executes(ctx -> {
-                                    Player player = (Player) ctx.getSource().getSender();
-
-                                    int randomInt = ThreadLocalRandom.current().nextInt(1, 100);
-                                    float randomFloat = 0;
-
-                                    if (randomInt < 2) randomFloat = (float) ThreadLocalRandom.current().nextDouble(4.0, 5.0);
-                                    else if (randomInt < 8) randomFloat = (float) ThreadLocalRandom.current().nextDouble(3.0, 4.0);
-                                    else if (randomInt < 25) randomFloat = (float) ThreadLocalRandom.current().nextDouble(2.0, 3.0);
-                                    else if (randomInt < 50) randomFloat = (float) ThreadLocalRandom.current().nextDouble(1.0, 2.0);
-                                    else if (randomInt < 100) randomFloat = (float) ThreadLocalRandom.current().nextDouble(0.1, 1.0);
-
-                                    float purity = Math.round(randomFloat * 10.0f) / 10.0f;
-
-                                    Relic relic = new Relic(purity);
-                                    player.getInventory().addItem(relic.toItemStack());
-
-                                    return 1;
-                                })
-                        )
+                            return 1;
+                        })
                 );
     }
-
-
-
-
 }

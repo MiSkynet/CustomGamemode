@@ -1,28 +1,44 @@
 package me.miskynet.customGamemode;
 
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
-import me.miskynet.customGamemode.commands.TestCommand;
-import me.miskynet.customGamemode.custom.menu.MenuManager;
+import me.miskynet.customGamemode.commands.Eco;
+import me.miskynet.customGamemode.commands.ShopCommand;
+import me.miskynet.customGamemode.custom.economy.EconomyListener;
+import me.miskynet.customGamemode.custom.economy.EconomyManager;
+import me.miskynet.customGamemode.custom.menu.shop.Shop;
+import me.miskynet.customGamemode.custom.menu.shop.ShopListener;
+import me.miskynet.customGamemode.utils.customConfig.CustomConfig;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.ArrayList;
 
 public final class Main extends JavaPlugin {
 
-    public static MenuManager menuManager;
+    public static EconomyManager economyManager;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
 
-        this.menuManager = new MenuManager();
+        // Preload all shop items
+        Shop.cacheShopItems();
 
-        getServer().getPluginManager().registerEvents(new me.miskynet.customGamemode.custom.menu.Listener(), this);
-        getServer().getPluginManager().registerEvents(new me.miskynet.customGamemode.custom.entitys.Listener(), this);
+        // config setup
+        CustomConfig.setup("economy/playerData.yml");
 
+        economyManager = new EconomyManager();
+
+        // listener setup
+        getServer().getPluginManager().registerEvents(new ShopListener(), this);
+        getServer().getPluginManager().registerEvents(new EconomyListener(), this);
+
+        // command setup
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS.newHandler(event -> {
-            event.registrar().register(TestCommand.getBuilder().build());
-        }));
+            var registrar = event.registrar();
 
-        this.menuManager.menuSetup();
+            registrar.register("eco","Economy command",new Eco());
+            registrar.register("shop","Shop command",new ShopCommand());
+        }));
     }
 
     @Override

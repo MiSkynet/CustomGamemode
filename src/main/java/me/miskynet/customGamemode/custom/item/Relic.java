@@ -1,10 +1,11 @@
 package me.miskynet.customGamemode.custom.item;
 
-import me.miskynet.customGamemode.custom.Utils;
+import me.miskynet.customGamemode.utils.Utils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Relic extends Item {
 
@@ -13,6 +14,11 @@ public class Relic extends Item {
     /*
      * constructor
      * */
+
+    public Relic() {
+        this(getRandomPurity());
+    }
+
     public Relic(float purity) {
         super(Material.AMETHYST_SHARD, Utils.component(false, "§dAntic Relic"));
         this.purity = purity;
@@ -37,6 +43,22 @@ public class Relic extends Item {
      * */
     public float getPurity() {
         return this.purity;
+    }
+
+    private static float getRandomPurity() {
+
+        int randomInt = ThreadLocalRandom.current().nextInt(1, 100);
+        float randomFloat = 0;
+
+        if (randomInt < 2) randomFloat = (float) ThreadLocalRandom.current().nextDouble(4.0, 5.0);
+        else if (randomInt < 8) randomFloat = (float) ThreadLocalRandom.current().nextDouble(3.0, 4.0);
+        else if (randomInt < 25) randomFloat = (float) ThreadLocalRandom.current().nextDouble(2.0, 3.0);
+        else if (randomInt < 50) randomFloat = (float) ThreadLocalRandom.current().nextDouble(1.0, 2.0);
+        else if (randomInt < 100) randomFloat = (float) ThreadLocalRandom.current().nextDouble(0.1, 1.0);
+
+        float purity = Math.round(randomFloat * 10.0f) / 10.0f;
+
+        return purity;
     }
 
 }

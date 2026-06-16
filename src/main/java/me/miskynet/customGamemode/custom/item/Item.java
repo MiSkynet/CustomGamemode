@@ -8,7 +8,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * Helps create and modifying an ItemStack easier by creating an Item object.

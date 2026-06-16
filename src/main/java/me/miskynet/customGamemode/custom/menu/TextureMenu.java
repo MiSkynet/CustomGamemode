@@ -1,6 +1,7 @@
 package me.miskynet.customGamemode.custom.menu;
 
-import me.miskynet.customGamemode.custom.Utils;
+import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.utils.Utils;
 import me.miskynet.customGamemode.custom.item.Item;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -8,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +18,14 @@ import java.util.List;
 public class TextureMenu extends Menu {
 
     private ArrayList<Integer> interactSlots = new ArrayList<>();
+    private String unicode;
 
     /*
     * constructor
     * */
     public TextureMenu(Component title, int size, String unicode) {
-        super(Utils.component("§f\uE001" + unicode + "\uE002").append(title), size, MenuType.TEXTURE);
+        super(Utils.component("§f\uE001" + unicode + "\uE002").append(title), size);
+        this.unicode = unicode;
     }
 
     /*
@@ -36,11 +41,40 @@ public class TextureMenu extends Menu {
         super.inventory.clear();
     }
 
+    /**
+     * Slots that the player should be able to interact with
+     * every other slot will be occupied with items
+     */
+    public void setInteractSlots(int... slots) {
+        for (int slot : slots) {
+            interactSlots.add(slot);
+        }
+        super.inventory.clear();
+    }
+
+    /**
+     * Define slots that the user can interact with.
+     * in this slot, the user can also put items in!
+     * To define buttons, don't use this function and instead hard code the
+     * buttons in the event listener
+     * */
     public ArrayList<Integer> getInteractSlots() {
         return this.interactSlots;
     }
 
-    public void openForPlayer(Player player) {
+    /**
+     * The unicode is used to identify a specific TextureMenu
+     * */
+    public String getUnicode() {
+        return this.unicode;
+    }
+
+    /**
+     * This function sets every non-interact slot and every empty slot to an invisible
+     * item
+     * Useful for shift clicks to block them by default!
+     * */
+    public void fillEmptySlots() {
 
         Item item = new Item(Material.GHAST_TEAR);
         ItemStack itemStack = item.toItemStack();
@@ -54,9 +88,14 @@ public class TextureMenu extends Menu {
 
         for (int i = 0; i < super.inventory.getSize(); i++) {
             if (interactSlots.contains(i)) continue;
-            super.inventory.setItem(i, item.toItemStack());
+            if (inventory.getItem(i) == null || inventory.getItem(i).getType().equals(Material.AIR)) super.inventory.setItem(i, item.toItemStack());
         }
+    }
 
+    /**
+     * Open the menu for a player
+     * */
+    public void openForPlayer(Player player) {
         player.openInventory(this.inventory);
     }
 
