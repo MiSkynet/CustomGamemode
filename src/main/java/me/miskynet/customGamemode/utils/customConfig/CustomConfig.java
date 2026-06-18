@@ -12,12 +12,16 @@ import java.util.Map;
 
 public class CustomConfig {
 
-    private static final Map<String, FileConfiguration> configs = new HashMap<>();
-    private static final Map<String, File> files = new HashMap<>();
+    public static final Map<String, FileConfiguration> configs = new HashMap<>();
+    public static final Map<String, File> files = new HashMap<>();
 
-    public static void setup(String fileName) {
+    /**
+     * Set up a new file
+     * @param filePath Path where the file should be created
+     * */
+    public static void setup(String filePath) {
 
-        File file = new File(Main.getInstance().getDataFolder(), fileName);
+        File file = new File(Main.getInstance().getDataFolder(), filePath);
 
         if (!file.exists()) {
 
@@ -25,43 +29,94 @@ public class CustomConfig {
                 file.getParentFile().mkdirs();
             }
 
-            Main.getInstance().saveResource(fileName, false);
+            Main.getInstance().saveResource(filePath, false);
+
         }
 
-        files.put(fileName, file);
+        files.put(filePath, file);
 
-        configs.put(fileName, YamlConfiguration.loadConfiguration(file));
-    }
-
-    public static FileConfiguration get(String fileName) {
-        return configs.get(fileName);
+        configs.put(filePath, YamlConfiguration.loadConfiguration(file));
     }
 
     /**
-     * @return object out of config
+     * Get an instance of a file
+     * @param filePath Path to the file
+     * @return Instance of a config
      * */
-    public static Object get(String filepath, String key) {
-        return CustomConfig.get(filepath).get(key);
+    public static FileConfiguration get(String filePath) {
+        if (configs.containsKey(filePath)) {
+            return configs.get(filePath);
+        }
+        // load the file in case it isn't already
+        File file = new File(Main.getInstance().getDataFolder(), filePath);
+        if (file.exists()) {
+            files.put(filePath, file);
+            FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+            configs.put(filePath, config);
+            return config;
+        }
+        setup(filePath);
+        return configs.get(filePath);
     }
 
-    public static void save(String fileName) {
+    /**
+     * Get a key out of a config
+     * @return object out of config
+     * */
+    public static Object get(String filePath, String key) {
+        // load the file in case it isn't already
+        File file = new File(Main.getInstance().getDataFolder(), filePath);
+        if (file.exists()) {
+            files.put(filePath, file);
+            FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+            configs.put(filePath, config);
+        }else {
+            return null;
+        }
+
+        FileConfiguration config = CustomConfig.get(filePath);
+        return (config != null) ? config.get(key) : null;
+    }
+
+    /**
+     * Save content into a file
+     * @param filePath
+     * */
+    public static void save(String filePath) {
         try {
-            configs.get(fileName).save(files.get(fileName));
+            configs.get(filePath).save(files.get(filePath));
         } catch (IOException e) {
-            Bukkit.getLogger().warning("Could not save " + fileName);
+            Bukkit.getLogger().warning("Could not save " + filePath);
         }
     }
 
     /**
      * Set a key and value into a filepath (this must be an)
      * existing fileconfiguration / config
+     * @param filepath Path to the file
+     * @param key Key for the setting
+     * @param value Value for the setting
      * */
     public static void set(String filepath, String key, Object value) {
         CustomConfig.get(filepath).set(key, value);
-        CustomConfig.save("economy/playerData.yml");
+        CustomConfig.save(filepath);
     }
 
-    public static void reload(String fileName) {
-        configs.put(fileName, YamlConfiguration.loadConfiguration(files.get(fileName)));
+    /**
+     * Reload a file
+     * @param filePath Path to the file that should be reloaded
+     * */
+    public static void reload(String filePath) {
+        configs.put(filePath, YamlConfiguration.loadConfiguration(files.get(filePath)));
+    }
+
+    /**
+     * Checks if the settings file of a player exists
+     * @param filepath Path to the file that should be checked
+     * */
+    public static boolean checkForExistence(String filepath) {
+        File file = new File(Main.getInstance().getDataFolder(), filepath);
+        if (file.exists()) return true;
+        else return false;
     }
 }

@@ -5,14 +5,13 @@ import me.miskynet.customGamemode.custom.item.PlayerHead;
 import me.miskynet.customGamemode.custom.item.shop.ShopItem;
 import me.miskynet.customGamemode.custom.menu.TextureMenu;
 import me.miskynet.customGamemode.utils.Utils;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Shop extends TextureMenu {
 
@@ -124,26 +123,11 @@ public class Shop extends TextureMenu {
                 continue;
             }
 
-            int buyPrice = 20;
+            Random random = new Random();
 
-            String name = material.name();
-            if (name.contains("DIAMOND") || name.contains("EMERALD")) {
-                buyPrice = 1200;
-            } else if (name.contains("NETHERITE")) {
-                buyPrice = 5000;
-            } else if (name.contains("GOLD")) {
-                buyPrice = 150;
-            } else if (name.contains("IRON")) {
-                buyPrice = 60;
-            } else if (name.contains("LOG") || name.contains("PLANKS")) {
-                buyPrice = 12;
-            } else if (name.contains("DIRT") || name.contains("STONE") || name.contains("SAND")) {
-                buyPrice = 5;
-            } else if (name.endsWith("_ORE")) {
-                buyPrice = 100;
-            }
+            Double buyPrice = random.nextDouble(1, 2000);
 
-            int sellPrice = Math.max(1, buyPrice / 3);
+            Double sellPrice = Math.max(1, buyPrice / 3);
 
             cachedItems.add(new ShopItem(material, buyPrice, sellPrice));
 

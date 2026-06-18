@@ -5,6 +5,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.math.BigDecimal;
+
 public class EconomyListener implements Listener {
 
     /*
@@ -14,7 +16,7 @@ public class EconomyListener implements Listener {
     public void playerJoin(PlayerJoinEvent event) {
 
         if (Main.economyManager.getBalance(event.getPlayer()) == null) {
-            Main.economyManager.setBalance(event.getPlayer(), 0);
+            Main.economyManager.setBalance(event.getPlayer(), 0.0);
         }
 
     }
