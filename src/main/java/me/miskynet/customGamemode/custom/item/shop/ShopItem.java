@@ -23,6 +23,14 @@ public class ShopItem extends Item {
     private static final NamespacedKey buyKey = new NamespacedKey(Main.getInstance(), "buy_price");
     private static final NamespacedKey sellKey = new NamespacedKey(Main.getInstance(), "sell_price");
 
+    /**
+     * {@link ShopItem} is a type of {@link Item}. It is used to create
+     * items in the {@link me.miskynet.customGamemode.custom.menu.shop.Shop}. It contains
+     * information like the price to buy and sell the Item
+     * @param material Material of the Item
+     * @param buyPrice Price to buy the Item
+     * @param sellPrice Price a player will receive when selling the Item
+     * */
     public ShopItem(Material material, Double buyPrice, Double sellPrice) {
         super(material, null, new ArrayList<>());
 
@@ -36,6 +44,10 @@ public class ShopItem extends Item {
         super.setLore(lore);
     }
 
+    /**
+     * Create a {@link ShopItem} from an {@link ItemStack}
+     * @param itemStack Item stack that should be converted into a {@link ShopItem}
+     * */
     public static ShopItem fromItemStack(ItemStack itemStack) {
         if (itemStack == null || !itemStack.hasItemMeta()) return null;
 
@@ -53,7 +65,15 @@ public class ShopItem extends Item {
         return null;
     }
 
+    /**
+     * Get the price of an {@link ShopItem} to buy it
+     * */
     public Double getBuyPrice() { return buyPrice; }
+
+    /**
+     * Get the price of an {@link ShopItem} the player receives when
+     * selling the item
+     * */
     public Double getSellPrice() { return sellPrice; }
 
     @Override

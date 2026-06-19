@@ -9,6 +9,13 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class OnJoin implements Listener {
 
+    /**
+     * The general player join listener that handles stuff like:
+     * <ul>
+     *     <li>Setup default player settings
+     *     <li>Create the scoreboard for the player
+     * </ul>
+     * */
     @EventHandler
     public void playerJoinEvent(PlayerJoinEvent event) {
 

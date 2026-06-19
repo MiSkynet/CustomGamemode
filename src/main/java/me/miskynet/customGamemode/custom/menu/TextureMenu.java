@@ -20,9 +20,13 @@ public class TextureMenu extends Menu {
     private ArrayList<Integer> interactSlots = new ArrayList<>();
     private String unicode;
 
-    /*
-    * constructor
-    * */
+    /**
+     * The {@link TextureMenu} is a type of {@link Menu} that can have a custom GUI design.
+     * The design is applied by using Unicodes of a texture pack
+     * @param title The title of the {@link TextureMenu}
+     * @param size The size of the {@link TextureMenu} (A multiple of 9 and max 54)
+     * @param unicode The Unicode of the GUI in the Resource Pack
+     * */
     public TextureMenu(Component title, int size, String unicode) {
         super(Utils.component("§f\uE001" + unicode + "\uE002").append(title), size);
         this.unicode = unicode;
@@ -35,6 +39,7 @@ public class TextureMenu extends Menu {
      * Slots that the player should be able to interact with
      * every other slot will be occupied with items
      * The ArrayList has to be Index-Based
+     * @param slots The slots as an ArrayList
      */
     public void setInteractSlots(ArrayList<Integer> slots) {
         this.interactSlots = slots;
@@ -44,6 +49,7 @@ public class TextureMenu extends Menu {
     /**
      * Slots that the player should be able to interact with
      * every other slot will be occupied with items
+     * @param slots The slots as a varint
      */
     public void setInteractSlots(int... slots) {
         for (int slot : slots) {
@@ -57,6 +63,7 @@ public class TextureMenu extends Menu {
      * in this slot, the user can also put items in!
      * To define buttons, don't use this function and instead hard code the
      * buttons in the event listener
+     * @return Interact slots as ArrayList
      * */
     public ArrayList<Integer> getInteractSlots() {
         return this.interactSlots;
@@ -64,6 +71,7 @@ public class TextureMenu extends Menu {
 
     /**
      * The unicode is used to identify a specific TextureMenu
+     * @return Unicode as String
      * */
     public String getUnicode() {
         return this.unicode;
@@ -91,12 +99,4 @@ public class TextureMenu extends Menu {
             if (inventory.getItem(i) == null || inventory.getItem(i).getType().equals(Material.AIR)) super.inventory.setItem(i, item.toItemStack());
         }
     }
-
-    /**
-     * Open the menu for a player
-     * */
-    public void openForPlayer(Player player) {
-        player.openInventory(this.inventory);
-    }
-
 }

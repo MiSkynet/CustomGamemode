@@ -61,7 +61,7 @@ public class CustomConfig {
 
     /**
      * Get a key out of a config
-     * @return object out of config
+     * @return Object out of config
      * */
     public static Object get(String filePath, String key) {
         // load the file in case it isn't already

@@ -1,29 +1,20 @@
 package me.miskynet.customGamemode.custom.menu.shop;
 
 import me.miskynet.customGamemode.Main;
-import me.miskynet.customGamemode.custom.economy.EconomyManager;
 import me.miskynet.customGamemode.custom.item.Item;
-import me.miskynet.customGamemode.custom.item.PlayerHead;
 import me.miskynet.customGamemode.custom.item.shop.ShopItem;
-import me.miskynet.customGamemode.utils.Debugger;
 import me.miskynet.customGamemode.utils.Utils;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
 
 public class ShopListener implements Listener {
 
-    private final Map<UUID, Long> clickCooldown = new HashMap<>();
-
+    /**
+     * Get the clicks in the {@link Shop}
+     * */
     @EventHandler
     public void click(InventoryClickEvent event) {
 
@@ -35,20 +26,9 @@ public class ShopListener implements Listener {
 
             Player player = (Player) event.getWhoClicked();
 
-            // make a cooldown so pages don't get skipped when scrolling
-            long currentTime = System.currentTimeMillis();
-
-            if (clickCooldown.containsKey(player.getUniqueId())) {
-
-                long lastClick = clickCooldown.get(player.getUniqueId());
-                if (currentTime - lastClick < 200) {
-                    return;
-                }
-            }
-
-            clickCooldown.put(player.getUniqueId(), currentTime);
-
             Shop shop = (Shop) event.getClickedInventory().getHolder();
+
+            if (!Utils.checkForAllowedClick(player)) return;
 
             if (event.getSlot() == 48) {
                 shop.decreasePage();
@@ -77,10 +57,12 @@ public class ShopListener implements Listener {
                     Main.economyManager.addBalance(player, itemPrice * -1);
                     player.sendMessage(Utils.component("&7You bought " + event.getInventory().getItem(event.getSlot()).getType().name() +
                             " for &a" + itemPrice + Main.economyManager.getEcoSymbol() +
-                            "&7 (New Balance: &a" + Main.economyManager.getBalance(player) +
+                            "&7 (New Balance: &a" + Main.economyManager.getBalanceDisplayFormat(player) +
                             Main.economyManager.getEcoSymbol() + "&7)"));
                 }
             }
+
+            Utils.createClickCooldown(player);
         }
     }
 }

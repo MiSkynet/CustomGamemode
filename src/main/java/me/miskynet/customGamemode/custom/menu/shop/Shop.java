@@ -9,6 +9,9 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,6 +25,11 @@ public class Shop extends TextureMenu {
     // caching all the items for the shop
     private static final List<ShopItem> cachedItems = new ArrayList<>();
 
+    /**
+     * The Shop is a type of {@link TextureMenu} where players can
+     * buy and sell items.
+     * @param page The page at which the shop should be opened
+     * */
     public Shop(Integer page) {
         super(Utils.component("ShopCommand"), 54, "\uE003");
         shop = this;
@@ -29,6 +37,12 @@ public class Shop extends TextureMenu {
         buildShopSite(shop);
     }
 
+    /**
+     * This function is used to increase the page
+     * of the {@link Shop}.
+     * Please only use this function to increase the page
+     * of a player!
+     * */
     public void increasePage() {
         if (getShopItems().size() >= ((currentPage + 1) * itemsPerPage) + 1) {
             currentPage = currentPage + 1;
@@ -36,6 +50,12 @@ public class Shop extends TextureMenu {
         }
     }
 
+    /**
+     * This function is used to decrease the page
+     * of the {@link Shop}.
+     * Please only use this function to decrease the page
+     * of a player!
+     * */
     public void decreasePage() {
         if (currentPage >= 1) {
             currentPage = currentPage - 1;
@@ -79,9 +99,10 @@ public class Shop extends TextureMenu {
         shop.fillEmptySlots();
     }
 
-    /*
-    * fill the shop with shop items and ignore the outer left and right rows
-    */
+    /**
+     * Fill the shop with shop items and ignore the {@link #getEmptySlots()} slots
+     * @param shop The shop that the items should be put in
+     * */
     public static void fillShopItems(TextureMenu shop) {
         int shopItemStart = currentPage * itemsPerPage;
         int currentShopItem = shopItemStart;
@@ -106,7 +127,7 @@ public class Shop extends TextureMenu {
 
     /**
      * Caches all shop items so the items are ready when the first
-     * user loads the menu. Ff the cache is not performed, the menu
+     * user loads the menu. If the cache is not performed, the menu
      * will take around 0.7s to open, due to the large amount of
      * items that have to be created
      * */
@@ -127,26 +148,45 @@ public class Shop extends TextureMenu {
 
             Double buyPrice = random.nextDouble(1, 2000);
 
-            Double sellPrice = Math.max(1, buyPrice / 3);
+            // round the buy price to two decimals
+            BigDecimal buyPriceBigDecimal = new BigDecimal(Double.toString(buyPrice));
+            buyPriceBigDecimal = buyPriceBigDecimal.setScale(2, RoundingMode.HALF_UP);
+            double buyPriceRounded = buyPriceBigDecimal.doubleValue();
 
-            cachedItems.add(new ShopItem(material, buyPrice, sellPrice));
+            Double sellPrice = random.nextDouble(1, 2000);
+
+            // round the sell price to two decimals
+            BigDecimal sellPriceBigDecimal = new BigDecimal(Double.toString(sellPrice));
+            sellPriceBigDecimal = sellPriceBigDecimal.setScale(2, RoundingMode.HALF_UP);
+            double sellPriceRounded = sellPriceBigDecimal.doubleValue();
+
+            cachedItems.add(new ShopItem(material, buyPriceRounded, sellPriceRounded));
 
             current++;
         }
     }
 
     /**
+     * Get the Items from the {@link #cachedItems} map
      * @return ShopCommand items
      * */
     public static List<ShopItem> getShopItems() {
         return cachedItems;
     }
 
+    /**
+     * Get the inventory of the {@link Shop}
+     * @return Inventory of the shop
+     * */
     @Override
     public @NotNull Inventory getInventory() {
         return super.getInventory();
     }
 
+    /**
+     * Get the empty slots of the {@link Shop}
+     * @return Returns an ArrayList of the empty slots
+     * */
     public static ArrayList<Integer> getEmptySlots() {
         ArrayList<Integer> list = new ArrayList<>();
         list.add(45);

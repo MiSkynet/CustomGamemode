@@ -2,6 +2,7 @@ package me.miskynet.customGamemode.custom.scoreboard;
 
 import io.papermc.paper.scoreboard.numbers.NumberFormat;
 import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.custom.economy.EconomyManager;
 import me.miskynet.customGamemode.utils.Debugger;
 import me.miskynet.customGamemode.utils.Utils;
 import me.miskynet.customGamemode.utils.customConfig.PlayerSettings;
@@ -18,7 +19,8 @@ public class ScoreboardManager {
     Scoreboard scoreboard;
 
     /**
-     * Create the scoreboard for the player
+     * Create the scoreboard
+     * @param player The Scoreboard the player is for
      * */
     public void createScoreboard(Player player) {
         org.bukkit.scoreboard.ScoreboardManager manager = Bukkit.getScoreboardManager();
@@ -51,10 +53,18 @@ public class ScoreboardManager {
         this.scoreboard = scoreboard;
     }
 
+    /**
+     * Get the current scoreboard
+     * @return {@link Scoreboard}
+     * */
     public Scoreboard getScoreboard() {
         return this.scoreboard;
     }
 
+    /**
+     * Get the rows of the scoreboard
+     * @return Rows as a ArrayList
+     * */
     private ArrayList<String> getRows(Player player) {
 
         ArrayList<String> scores = new ArrayList<>();
@@ -64,7 +74,7 @@ public class ScoreboardManager {
         scores.add(Utils.coloredString("  &7MiSkynet"));
         scores.add(Utils.coloredString(" "));
         scores.add(Utils.coloredString("&7Your Balance:"));
-        scores.add(Utils.coloredString("&7  &a" + Main.economyManager.getBalance(player).toString() + Main.economyManager.getEcoSymbol()));
+        scores.add(Utils.coloredString("&7  &a" + Main.economyManager.getBalanceDisplayFormat(player) + Main.economyManager.getEcoSymbol()));
         scores.add(Utils.coloredString(" "));
 
 
@@ -76,7 +86,8 @@ public class ScoreboardManager {
     }
 
     /**
-     * update the scoreboard so changes like balance will be visible
+     * Update the scoreboard so changes like balance will be visible
+     * @param player Player the scoreboard should be updated for
      * */
     public void updateScoreboard(Player player) {
 
@@ -127,6 +138,9 @@ public class ScoreboardManager {
         this.scoreboard = scoreboard;
     }
 
+    /**
+     * Run the updates for the scoreboard
+     * */
     public void runUpdates() {
 
         new BukkitRunnable() {

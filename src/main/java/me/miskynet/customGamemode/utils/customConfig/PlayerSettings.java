@@ -12,6 +12,11 @@ import java.util.UUID;
 
 public class PlayerSettings {
 
+    /**
+     * Get the file path for the player settings file
+     * @param uuid The uuid of the player that settings should be got
+     * @return Filepath of the settings path
+     * */
     private static String getFilePath(UUID uuid) {
         return "playerData/" + uuid.toString() + ".yml";
     }
@@ -64,9 +69,9 @@ public class PlayerSettings {
 
     /**
      * Get an object out of a player settings file
-     * @return string/int/double/...
      * @param player Player the setting is for
      * @param key setting name that should be searched for
+     * @return {@link Object}
      * */
     public static Object get(Player player, String key) {
         return CustomConfig.get(getFilePath(player.getUniqueId()), key);
@@ -102,6 +107,7 @@ public class PlayerSettings {
     /**
      * Checks if the settings file of a player exists
      * @param player Player the check is for
+     * @return True if the file exists. False if the file does not exist
      * */
     public static boolean checkForExistence(Player player) {
         return CustomConfig.checkForExistence(getFilePath(player.getUniqueId()));

@@ -3,6 +3,7 @@ package me.miskynet.customGamemode.commands.economy;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.custom.economy.EconomyManager;
 import me.miskynet.customGamemode.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -41,6 +42,7 @@ public class EcoCommand implements BasicCommand {
                 case "set" -> {
                     Main.economyManager.setBalance(target, amount);
                     sender.sendMessage(Utils.component("&aBalance of " + target.getName() + " set to " + args[2] + Main.economyManager.getEcoSymbol()));
+                    Main.economyManager.getBalanceDisplayFormat(target.getPlayer());
                 }
                 case "add" -> {
                     Main.economyManager.addBalance(target, amount);

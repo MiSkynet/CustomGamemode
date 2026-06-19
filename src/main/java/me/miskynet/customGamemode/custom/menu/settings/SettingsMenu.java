@@ -16,11 +16,18 @@ public class SettingsMenu extends TextureMenu implements InventoryHolder {
 
     Inventory inventory;
 
+    /**
+     * Menu for the settings
+     * */
     public SettingsMenu() {
         super(Utils.component("Settings"), 36, "\uE004");
         this.inventory = super.getInventory();
     }
 
+    /**
+     * Build the settings page
+     * @param player Player that has opened the inventory
+     * */
     public void buildSettingsPage(Player player) {
 
         PlayerHead toggleScoreboard = new PlayerHead("4a2648a9e53613f0ab1266b72918f40788f84e160a52348cd67138410262f39f");

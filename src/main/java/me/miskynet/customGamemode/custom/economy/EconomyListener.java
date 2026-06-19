@@ -5,13 +5,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.math.BigDecimal;
-
 public class EconomyListener implements Listener {
 
-    /*
-    * Set the balance of a player, whose balance is null, to 0
-    * */
+    /**
+     * Set the player balance to 0.0 if he doesn't have a balance
+     * */
     @EventHandler
     public void playerJoin(PlayerJoinEvent event) {
 
