@@ -36,8 +36,10 @@ public class TextureMenu extends Menu {
      * setter, getter and everything else
      * */
     /**
-     * Slots that the player should be able to interact with
-     * every other slot will be occupied with items
+     * Slots that the player should be able to interact with.
+     * The player will also be able to put items into these slots!
+     * To create buttons, please hard code them in the listener.
+     * Every other slot will be occupied with items.
      * The ArrayList has to be Index-Based
      * @param slots The slots as an ArrayList
      */
@@ -48,7 +50,10 @@ public class TextureMenu extends Menu {
 
     /**
      * Slots that the player should be able to interact with
-     * every other slot will be occupied with items
+     * The player will also be able to put items into these slots!
+     * To create buttons, please hard code them in the listener.
+     * Every other slot will be occupied with items.
+     * The slots have to be Index-Based!
      * @param slots The slots as a varint
      */
     public void setInteractSlots(int... slots) {
@@ -59,10 +64,8 @@ public class TextureMenu extends Menu {
     }
 
     /**
-     * Define slots that the user can interact with.
-     * in this slot, the user can also put items in!
-     * To define buttons, don't use this function and instead hard code the
-     * buttons in the event listener
+     * Get the slots the play will be able to
+     * interact with.
      * @return Interact slots as ArrayList
      * */
     public ArrayList<Integer> getInteractSlots() {
