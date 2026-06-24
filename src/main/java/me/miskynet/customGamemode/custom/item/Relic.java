@@ -7,6 +7,10 @@ import org.bukkit.Material;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * The {@link Relic} is a type of {@link Item}. It is a
+ * custom, mythic item. No one really knows what it is or what it does
+ * */
 public class Relic extends Item {
 
     private final float purity;
@@ -19,6 +23,10 @@ public class Relic extends Item {
         this(getRandomPurity());
     }
 
+    /**
+     * @param purity The purity of {@link Relic}. The Value can be between 0.1 and 5.0,
+     * where 5.0 is the highest/best value.
+     * */
     public Relic(float purity) {
         super(Material.AMETHYST_SHARD, Utils.component(false, "§dAntic Relic"));
         this.purity = purity;
@@ -41,11 +49,22 @@ public class Relic extends Item {
     /*
      * setter, getter and everything else
      * */
-    public float getPurity() {
+
+    /**
+     * Get the purity of a {@link Relic}
+     *
+     * @return Purity as {@link Float}
+     * */
+    public Float getPurity() {
         return this.purity;
     }
 
-    private static float getRandomPurity() {
+    /**
+     * Get the an random purity for the {@link Relic}
+     *
+     * @return Purity as {@link Float}
+     * */
+    private static Float getRandomPurity() {
 
         int randomInt = ThreadLocalRandom.current().nextInt(1, 100);
         float randomFloat = 0;

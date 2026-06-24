@@ -1,20 +1,20 @@
 package me.miskynet.customGamemode.custom.menu.shop;
 
+import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.custom.item.PlayerHead;
 import me.miskynet.customGamemode.custom.item.shop.ShopItem;
 import me.miskynet.customGamemode.custom.menu.TextureMenu;
+import me.miskynet.customGamemode.utils.Debugger;
 import me.miskynet.customGamemode.utils.Utils;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Shop extends TextureMenu {
 
@@ -25,9 +25,11 @@ public class Shop extends TextureMenu {
     // caching all the items for the shop
     private static final List<ShopItem> cachedItems = new ArrayList<>();
 
+
     /**
      * The Shop is a type of {@link TextureMenu} where players can
      * buy and sell items.
+     *
      * @param page The page at which the shop should be opened
      * */
     public Shop(Integer page) {
@@ -101,6 +103,7 @@ public class Shop extends TextureMenu {
 
     /**
      * Fill the shop with shop items and ignore the {@link #getEmptySlots()} slots
+     *
      * @param shop The shop that the items should be put in
      * */
     public static void fillShopItems(TextureMenu shop) {
@@ -138,6 +141,8 @@ public class Shop extends TextureMenu {
 
         for (Material material : Material.values()) {
 
+            int id = current;
+
             if (current >= limit) break;
 
             if (material.isAir() || material.name().startsWith("LEGACY_") || !material.isItem()) {
@@ -160,14 +165,27 @@ public class Shop extends TextureMenu {
             sellPriceBigDecimal = sellPriceBigDecimal.setScale(2, RoundingMode.HALF_UP);
             double sellPriceRounded = sellPriceBigDecimal.doubleValue();
 
-            cachedItems.add(new ShopItem(material, buyPriceRounded, sellPriceRounded));
+
+            NamespacedKey id = new NamespacedKey(Main.getInstance(), "id");
+
+            ShopItem item = new ShopItem(material, buyPriceRounded, sellPriceRounded);
+            item.
+
+            Item resultItem = new Item(material, Utils.component("&aResult item"));
+
+            item.setResultItem(resultItem);
+
+            cachedItems.add(item);
 
             current++;
         }
     }
 
+
+
     /**
      * Get the Items from the {@link #cachedItems} map
+     *
      * @return ShopCommand items
      * */
     public static List<ShopItem> getShopItems() {
@@ -176,6 +194,7 @@ public class Shop extends TextureMenu {
 
     /**
      * Get the inventory of the {@link Shop}
+     *
      * @return Inventory of the shop
      * */
     @Override
@@ -185,6 +204,7 @@ public class Shop extends TextureMenu {
 
     /**
      * Get the empty slots of the {@link Shop}
+     *
      * @return Returns an ArrayList of the empty slots
      * */
     public static ArrayList<Integer> getEmptySlots() {

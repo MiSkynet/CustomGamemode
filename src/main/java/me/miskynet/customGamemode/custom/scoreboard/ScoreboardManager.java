@@ -20,6 +20,7 @@ public class ScoreboardManager {
 
     /**
      * Create the scoreboard
+     *
      * @param player The Scoreboard the player is for
      * */
     public void createScoreboard(Player player) {
@@ -55,6 +56,7 @@ public class ScoreboardManager {
 
     /**
      * Get the current scoreboard
+     *
      * @return {@link Scoreboard}
      * */
     public Scoreboard getScoreboard() {
@@ -63,7 +65,8 @@ public class ScoreboardManager {
 
     /**
      * Get the rows of the scoreboard
-     * @return Rows as a ArrayList
+     *
+     * @return Rows as a {@link ArrayList}
      * */
     private ArrayList<String> getRows(Player player) {
 
@@ -87,7 +90,7 @@ public class ScoreboardManager {
 
     /**
      * Update the scoreboard so changes like balance will be visible
-     * @param player Player the scoreboard should be updated for
+     * @param player {@link Player} the scoreboard should be updated for
      * */
     public void updateScoreboard(Player player) {
 

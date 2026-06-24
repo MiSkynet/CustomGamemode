@@ -61,7 +61,7 @@ public class CustomConfig {
 
     /**
      * Get a key out of a config
-     * @return Object out of config
+     * @return {@link Object} out of config
      * */
     public static Object get(String filePath, String key) {
         // load the file in case it isn't already
@@ -113,6 +113,7 @@ public class CustomConfig {
     /**
      * Checks if the settings file of a player exists
      * @param filepath Path to the file that should be checked
+     * @return True if the file exists, false if not
      * */
     public static boolean checkForExistence(String filepath) {
         File file = new File(Main.getInstance().getDataFolder(), filepath);

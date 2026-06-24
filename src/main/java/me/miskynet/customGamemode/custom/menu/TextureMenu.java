@@ -23,24 +23,22 @@ public class TextureMenu extends Menu {
     /**
      * The {@link TextureMenu} is a type of {@link Menu} that can have a custom GUI design.
      * The design is applied by using Unicodes of a texture pack
+     *
      * @param title The title of the {@link TextureMenu}
      * @param size The size of the {@link TextureMenu} (A multiple of 9 and max 54)
      * @param unicode The Unicode of the GUI in the Resource Pack
+     *
      * */
     public TextureMenu(Component title, int size, String unicode) {
         super(Utils.component("§f\uE001" + unicode + "\uE002").append(title), size);
         this.unicode = unicode;
     }
 
-    /*
-     * setter, getter and everything else
-     * */
     /**
-     * Slots that the player should be able to interact with.
-     * The player will also be able to put items into these slots!
-     * To create buttons, please hard code them in the listener.
-     * Every other slot will be occupied with items.
+     * Slots that the player should be able to interact with
+     * every other slot will be occupied with items
      * The ArrayList has to be Index-Based
+     *
      * @param slots The slots as an ArrayList
      */
     public void setInteractSlots(ArrayList<Integer> slots) {
@@ -50,10 +48,8 @@ public class TextureMenu extends Menu {
 
     /**
      * Slots that the player should be able to interact with
-     * The player will also be able to put items into these slots!
-     * To create buttons, please hard code them in the listener.
-     * Every other slot will be occupied with items.
-     * The slots have to be Index-Based!
+     * every other slot will be occupied with items
+     *
      * @param slots The slots as a varint
      */
     public void setInteractSlots(int... slots) {
@@ -64,8 +60,11 @@ public class TextureMenu extends Menu {
     }
 
     /**
-     * Get the slots the play will be able to
-     * interact with.
+     * Define slots that the user can interact with.
+     * in this slot, the user can also put items in!
+     * To define buttons, don't use this function and instead hard code the
+     * buttons in the event listener
+     *
      * @return Interact slots as ArrayList
      * */
     public ArrayList<Integer> getInteractSlots() {
@@ -74,6 +73,7 @@ public class TextureMenu extends Menu {
 
     /**
      * The unicode is used to identify a specific TextureMenu
+     *
      * @return Unicode as String
      * */
     public String getUnicode() {

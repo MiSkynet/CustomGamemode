@@ -1,5 +1,6 @@
 package me.miskynet.customGamemode.custom.menu.settings;
 
+import me.miskynet.customGamemode.custom.menu.Menu;
 import me.miskynet.customGamemode.custom.item.PlayerHead;
 import me.miskynet.customGamemode.custom.menu.TextureMenu;
 import me.miskynet.customGamemode.utils.Utils;
@@ -12,13 +13,15 @@ import org.bukkit.inventory.InventoryHolder;
 import java.awt.*;
 import java.util.ArrayList;
 
+
+/**
+ * The {@link SettingsMenu} is a type of {@link TextureMenu}. So it will have a custom texture.
+ * This {@link Menu} will contain all buttons to toggle settings
+ * */
 public class SettingsMenu extends TextureMenu implements InventoryHolder {
 
     Inventory inventory;
 
-    /**
-     * Menu for the settings
-     * */
     public SettingsMenu() {
         super(Utils.component("Settings"), 36, "\uE004");
         this.inventory = super.getInventory();
@@ -26,6 +29,7 @@ public class SettingsMenu extends TextureMenu implements InventoryHolder {
 
     /**
      * Build the settings page
+     *
      * @param player Player that has opened the inventory
      * */
     public void buildSettingsPage(Player player) {

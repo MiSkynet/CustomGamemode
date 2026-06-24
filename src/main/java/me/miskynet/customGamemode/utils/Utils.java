@@ -96,19 +96,19 @@ public class Utils {
     }
 
     /**
-     * Check if a player got an active cooldown
+     * Checks if a player has an active cooldown
      * @param player The player that should be checked
+     * @return True when the {@link Player} can click, false when not
      * */
     public static Boolean checkForAllowedClick(Player player) {
         long currentTime = System.currentTimeMillis();
 
         if (clickCooldownMap.containsKey(player.getUniqueId())) {
             long lastClick = clickCooldownMap.get(player.getUniqueId());
-            if (currentTime - lastClick > 200) {
-                clickCooldownMap.remove(player.getUniqueId());
-                return true;
+            if (currentTime - lastClick < 200) {
+                return false;
             }
-            return false;
+            clickCooldownMap.remove(player.getUniqueId());
         }
         return true;
     }

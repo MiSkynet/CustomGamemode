@@ -24,6 +24,7 @@ public class Menu implements InventoryHolder {
 
     /**
      * Set an {@link ItemStack} into a specific slot
+     *
      * @param slot Slot where the item should be put
      * @param itemStack The {@link ItemStack} that should be put into the slot
      * */
@@ -34,6 +35,7 @@ public class Menu implements InventoryHolder {
 
     /**
      * Set an {@link Item} into a specific slot
+     *
      * @param slot Slot where the item should be put
      * @param item The {@link Item} that should be put into the slot
      * */
@@ -44,6 +46,7 @@ public class Menu implements InventoryHolder {
 
     /**
      * Add an {@link Item} into a {@link Menu}
+     *
      * @param itemStack The {@link ItemStack} that should be added to the {@link Menu}
      * */
     public Menu addItem(ItemStack itemStack) {
@@ -53,6 +56,7 @@ public class Menu implements InventoryHolder {
 
     /**
      * Add an {@link Item} into a {@link Menu}
+     *
      * @param item The {@link Item} that should be added to the {@link Menu}
      * */
     public Menu addItem(Item item) {
@@ -62,6 +66,7 @@ public class Menu implements InventoryHolder {
 
     /**
      * Get an {@link ItemStack} out of a menu {@link Menu}
+     *
      * @param slot The slot the {@link ItemStack} should be got from
      * */
     public ItemStack getItem(int slot) {
@@ -70,6 +75,7 @@ public class Menu implements InventoryHolder {
 
     /**
      * Get the inventory of the {@link Shop}
+     *
      * @return Inventory of the shop
      * */
     @Override

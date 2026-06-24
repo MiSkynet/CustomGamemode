@@ -2,7 +2,6 @@ package me.miskynet.customGamemode.custom.item.shop;
 
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.item.Item;
-import me.miskynet.customGamemode.utils.Debugger;
 import me.miskynet.customGamemode.utils.Utils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -11,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +17,10 @@ public class ShopItem extends Item {
 
     Double buyPrice;
     Double sellPrice;
+    Item resultItem;
 
-    private static final NamespacedKey buyKey = new NamespacedKey(Main.getInstance(), "buy_price");
-    private static final NamespacedKey sellKey = new NamespacedKey(Main.getInstance(), "sell_price");
+    private static final NamespacedKey buyKey = new NamespacedKey(Main.getInstance(), "buyPrice");
+    private static final NamespacedKey sellKey = new NamespacedKey(Main.getInstance(), "sellPrice");
 
     /**
      * {@link ShopItem} is a type of {@link Item}. It is used to create
@@ -89,6 +88,14 @@ public class ShopItem extends Item {
         }
 
         return itemStack;
+    }
+
+    public void setResultItem(Item item) {
+        this.resultItem = item;
+    }
+
+    public Item getResultItem() {
+        return this.resultItem;
     }
 
 }

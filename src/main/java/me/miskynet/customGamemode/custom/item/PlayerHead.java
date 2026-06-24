@@ -1,7 +1,6 @@
 package me.miskynet.customGamemode.custom.item;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
-import com.destroystokyo.paper.profile.ProfileProperty;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -15,6 +14,10 @@ import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * The {@link PlayerHead} is a type {@link Item}. It is used
+ * to create a player head with a custom texture.
+ * */
 public class PlayerHead extends Item {
 
     private String textureHash;
@@ -43,14 +46,21 @@ public class PlayerHead extends Item {
         this.textureHash = textureHash;
     }
 
-    /*
-     * setter, getter and everything else
+    /**
+     * Set the texture for the {@link PlayerHead}
+     *
+     * @return {@link PlayerHead}
      * */
     public PlayerHead setTexture(String textureHash) {
         this.textureHash = textureHash;
         return this;
     }
 
+    /**
+     * Convert the {@link PlayerHead} into an {@link ItemStack}
+     *
+     * @return {@link ItemStack}
+     * */
     public ItemStack toItemStack() {
 
         ItemStack headItem = super.toItemStack();
@@ -77,6 +87,4 @@ public class PlayerHead extends Item {
 
         return headItem;
     }
-
-
 }

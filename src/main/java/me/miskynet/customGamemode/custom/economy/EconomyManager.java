@@ -1,6 +1,8 @@
 package me.miskynet.customGamemode.custom.economy;
 
-import me.miskynet.customGamemode.utils.customConfig.CustomConfig;
+import me.miskynet.customGamemode.utils.customConfig.PlayerData;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
@@ -67,8 +69,8 @@ public class EconomyManager {
      * Only used when starting the plugin!
      * */
     private void syncBalanceMapWithConfig() {
-        for (String uuid : CustomConfig.get("economy/playerData.yml").getConfigurationSection("").getKeys(false)) {
-            playerBalance.put(UUID.fromString(uuid), (Double) CustomConfig.get("economy/playerData.yml").get(uuid + ".balance"));
+        for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
+            playerBalance.put(offlinePlayer.getUniqueId(), (Double) PlayerData.get(PlayerData.PlayerFileType.BALANCE, offlinePlayer.getUniqueId(), offlinePlayer.getUniqueId() + ".balance"));
         }
     }
 
@@ -77,7 +79,7 @@ public class EconomyManager {
      * @param player Whose player balance should be saved in the config
      * */
     public void syncConfigWithUniquePlayer(Player player) {
-        CustomConfig.set("economy/playerData.yml", player.getUniqueId() + ".balance", playerBalance.get(player.getUniqueId()));
+        PlayerData.set(PlayerData.PlayerFileType.BALANCE, player.getUniqueId(), player.getUniqueId() + ".balance", playerBalance.get(player.getUniqueId()));
     }
 
     /**
@@ -85,7 +87,8 @@ public class EconomyManager {
      * */
     public void syncConfigWithBalanceMap() {
         for (UUID uuid : playerBalance.keySet()) {
-            CustomConfig.set("economy/playerData.yml", uuid.toString() + ".balance", playerBalance.get(uuid));
+            Player player = Bukkit.getPlayer(uuid);
+            PlayerData.set(PlayerData.PlayerFileType.BALANCE, player.getUniqueId(), player.getUniqueId() + ".balance", playerBalance.get(player.getUniqueId()));
         }
     }
 
@@ -98,19 +101,18 @@ public class EconomyManager {
     }
 
     /**
-     * Format a players balance into a more readable format
-     * @param player Players balance that should be formated
+     * Format a value into a more readable format
+     * @param value The value that should be formated
      * */
-    public String getBalanceDisplayFormat(Player player) {
-
-        double balance = this.getBalance(player);
+    public String getDisplayFormat(double value) {
 
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         DecimalFormat formatter = new DecimalFormat("#,##0.00", symbols);
 
-        String formatedNumber = formatter.format(balance);
+        String formatedNumber = formatter.format(value);
 
         return formatedNumber;
     }
+
 
 }
