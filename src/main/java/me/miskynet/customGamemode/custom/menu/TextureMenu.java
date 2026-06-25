@@ -40,23 +40,27 @@ public class TextureMenu extends Menu {
      * The ArrayList has to be Index-Based
      *
      * @param slots The slots as an ArrayList
+     * @return This {@link TextureMenu}
      */
-    public void setInteractSlots(ArrayList<Integer> slots) {
+    public TextureMenu setInteractSlots(ArrayList<Integer> slots) {
         this.interactSlots = slots;
         super.inventory.clear();
+        return this;
     }
 
     /**
      * Slots that the player should be able to interact with
      * every other slot will be occupied with items
      *
-     * @param slots The slots as a varint
+     * @param slots The slots as a variant
+     * @return This {@link TextureMenu}
      */
-    public void setInteractSlots(int... slots) {
+    public TextureMenu setInteractSlots(int... slots) {
         for (int slot : slots) {
             interactSlots.add(slot);
         }
         super.inventory.clear();
+        return this;
     }
 
     /**

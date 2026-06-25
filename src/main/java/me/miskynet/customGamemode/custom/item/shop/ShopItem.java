@@ -4,6 +4,7 @@ import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.utils.Utils;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -18,9 +19,11 @@ public class ShopItem extends Item {
     Double buyPrice;
     Double sellPrice;
     Item resultItem;
+    Integer id;
 
     private static final NamespacedKey buyKey = new NamespacedKey(Main.getInstance(), "buyPrice");
     private static final NamespacedKey sellKey = new NamespacedKey(Main.getInstance(), "sellPrice");
+    public static final NamespacedKey idKey = new NamespacedKey(Main.getInstance(), "id");
 
     /**
      * {@link ShopItem} is a type of {@link Item}. It is used to create
@@ -57,8 +60,12 @@ public class ShopItem extends Item {
 
             Double buy = container.get(buyKey, PersistentDataType.DOUBLE);
             Double sell = container.get(sellKey, PersistentDataType.DOUBLE);
+            Integer id = container.get(idKey, PersistentDataType.INTEGER);
 
-            return new ShopItem(itemStack.getType(), buy, sell);
+            ShopItem newShopItem = new ShopItem(itemStack.getType(), buy, sell);
+            newShopItem.setId(id);
+
+            return newShopItem;
         }
 
         return null;
@@ -84,6 +91,10 @@ public class ShopItem extends Item {
             meta.getPersistentDataContainer().set(buyKey, PersistentDataType.DOUBLE, this.buyPrice);
             meta.getPersistentDataContainer().set(sellKey, PersistentDataType.DOUBLE, this.sellPrice);
 
+            if (this.id != null) {
+                meta.getPersistentDataContainer().set(idKey, PersistentDataType.INTEGER, this.id);
+            }
+
             itemStack.setItemMeta(meta);
         }
 
@@ -97,5 +108,14 @@ public class ShopItem extends Item {
     public Item getResultItem() {
         return this.resultItem;
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return this.id;
+    }
+
 
 }

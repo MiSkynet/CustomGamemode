@@ -50,7 +50,7 @@ public class EconomyManager {
      * */
     public void addBalance(Player player, Double value) {
         playerBalance.put(player.getUniqueId(), playerBalance.get(player.getUniqueId()) + value);
-        syncConfigWithBalanceMap();
+        syncConfigWithUniquePlayer(player);
     }
 
     /**
@@ -70,7 +70,7 @@ public class EconomyManager {
      * */
     private void syncBalanceMapWithConfig() {
         for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
-            playerBalance.put(offlinePlayer.getUniqueId(), (Double) PlayerData.get(PlayerData.PlayerFileType.BALANCE, offlinePlayer.getUniqueId(), offlinePlayer.getUniqueId() + ".balance"));
+            playerBalance.put(offlinePlayer.getUniqueId(), (Double) PlayerData.get(PlayerData.FileType.BALANCE, offlinePlayer.getUniqueId(), offlinePlayer.getUniqueId() + ".balance"));
         }
     }
 
@@ -79,7 +79,7 @@ public class EconomyManager {
      * @param player Whose player balance should be saved in the config
      * */
     public void syncConfigWithUniquePlayer(Player player) {
-        PlayerData.set(PlayerData.PlayerFileType.BALANCE, player.getUniqueId(), player.getUniqueId() + ".balance", playerBalance.get(player.getUniqueId()));
+        PlayerData.set(PlayerData.FileType.BALANCE, player.getUniqueId(), player.getUniqueId() + ".balance", playerBalance.get(player.getUniqueId()));
     }
 
     /**
@@ -88,7 +88,7 @@ public class EconomyManager {
     public void syncConfigWithBalanceMap() {
         for (UUID uuid : playerBalance.keySet()) {
             Player player = Bukkit.getPlayer(uuid);
-            PlayerData.set(PlayerData.PlayerFileType.BALANCE, player.getUniqueId(), player.getUniqueId() + ".balance", playerBalance.get(player.getUniqueId()));
+            PlayerData.set(PlayerData.FileType.BALANCE, player.getUniqueId(), player.getUniqueId() + ".balance", playerBalance.get(player.getUniqueId()));
         }
     }
 

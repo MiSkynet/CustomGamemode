@@ -2,10 +2,8 @@ package me.miskynet.customGamemode.custom.scoreboard;
 
 import io.papermc.paper.scoreboard.numbers.NumberFormat;
 import me.miskynet.customGamemode.Main;
-import me.miskynet.customGamemode.custom.economy.EconomyManager;
-import me.miskynet.customGamemode.utils.Debugger;
 import me.miskynet.customGamemode.utils.Utils;
-import me.miskynet.customGamemode.utils.customConfig.PlayerSettings;
+import me.miskynet.customGamemode.utils.customConfig.PlayerData;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -77,9 +75,8 @@ public class ScoreboardManager {
         scores.add(Utils.coloredString("  &7MiSkynet"));
         scores.add(Utils.coloredString(" "));
         scores.add(Utils.coloredString("&7Your Balance:"));
-        scores.add(Utils.coloredString("&7  &a" + Main.economyManager.getBalanceDisplayFormat(player) + Main.economyManager.getEcoSymbol()));
+        scores.add(Utils.coloredString("&7  &a" + Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(player)) + Main.economyManager.getEcoSymbol()));
         scores.add(Utils.coloredString(" "));
-
 
         int repeat = 7;
         String centerIP = " ".repeat(repeat) + "&8michigames.net";
@@ -94,7 +91,7 @@ public class ScoreboardManager {
      * */
     public void updateScoreboard(Player player) {
 
-        if (!((Boolean) PlayerSettings.get(player, "settings.scoreboardStatus"))) {
+        if (!((Boolean) PlayerData.get(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus"))) {
             player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
             return;
         }

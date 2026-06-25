@@ -12,10 +12,7 @@ import java.util.UUID;
 
 public class PlayerData {
 
-    /**
-     * Enum for all type of player files
-     * */
-    public enum PlayerFileType {
+    public enum FileType {
 
         SETTINGS("settings.yml"),
         BALANCE("balance.yml"),
@@ -23,18 +20,24 @@ public class PlayerData {
 
         private final String fileName;
 
-        PlayerFileType(String fileName) {
+        FileType(String fileName) {
             this.fileName = fileName;
         }
 
-        public String getPath(UUID uuid) {
+        @Override
+        public String toString() {
+            return this.fileName;
+        }
+
+        public String getPath(java.util.UUID uuid) {
             return "playerData/" + uuid.toString() + "/" + this.fileName;
         }
+
     }
 
     /**
      * Get the file path for the player settings file
-     * @param uuid The uuid of the players file that should be got
+     * @param uuid The uuid of the player that settings should be got
      * @return Filepath of the settings path
      * */
     private static String getFilePath(UUID uuid) {
@@ -43,96 +46,79 @@ public class PlayerData {
 
     /**
      * Set up a new player settings file
-     * @param playerFileType The type of file that should be got
-     * @param uuid The uuid of the players file that should be got
      * */
-    public static void setup(PlayerFileType playerFileType, UUID uuid) {
-        String fullPath = playerFileType.getPath(uuid);
-        File file = new File(Main.getInstance().getDataFolder(), fullPath);
+    public static void setup(FileType fileType, UUID uuid) {
+
+        File file = new File(Main.getInstance().getDataFolder(), fileType.getPath(uuid));
+
+        Player player = Bukkit.getPlayer(uuid);
 
         if (!file.exists()) {
+
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+
             try {
-                if (file.getParentFile() != null) {
-                    file.getParentFile().mkdirs();
-                }
                 file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ex) {
+                Bukkit.getLogger().warning("Couldn't create settings file for: " + player.getName() + " - " + player.getUniqueId());
+                ex.printStackTrace();
                 return;
             }
         }
 
-        CustomConfig.files.put(fullPath, file);
-        CustomConfig.configs.put(fullPath, YamlConfiguration.loadConfiguration(file));
-
-        set(playerFileType, uuid, "playerUniqueData.uuid", uuid.toString());
-
-        org.bukkit.entity.Player player = Bukkit.getPlayer(uuid);
-        String name = (player != null) ? player.getName() : "Unknown";
-        set(playerFileType, uuid, "playerUniqueData.lastSeenAs", name);
-
-        save(playerFileType, uuid);
+        CustomConfig.files.put(fileType.getPath(uuid), file);
+        CustomConfig.configs.put(fileType.getPath(uuid), YamlConfiguration.loadConfiguration(file));
     }
 
     /**
      * Get an instance of a player settings file
-     * @param playerFileType The type of file that should be got
-     * @param uuid The uuid of the players file that should be got
-     * @return The config as {@link FileConfiguration}
+     * @return Config itself
      * */
-    public static FileConfiguration get(PlayerFileType playerFileType, UUID uuid) {
-        return CustomConfig.get(playerFileType.getPath(uuid));
+    public static FileConfiguration get(FileType fileType, UUID uuid) {
+        return CustomConfig.get(fileType.getPath(uuid));
     }
 
     /**
      * Get an object out of a player settings file
-     * @param playerFileType The type of file that should be got
-     * @param uuid The uuid of the players file that should be got
      * @param key setting name that should be searched for
      * @return {@link Object}
      * */
-    public static Object get(PlayerFileType playerFileType, UUID uuid, String key) {
-        return CustomConfig.get(playerFileType.getPath(uuid), key);
+    public static Object get(FileType fileType, UUID uuid, String key) {
+        return CustomConfig.get(fileType.getPath(uuid), key);
     }
 
     /**
      * Save data into a player setting
-     * @param playerFileType The type of file that should be got
-     * @param uuid The uuid of the players file that should be got
      * */
-    public static void save(PlayerFileType playerFileType, UUID uuid) {
-        CustomConfig.save(playerFileType.getPath(uuid));
+    public static void save(FileType fileType, UUID uuid) {
+        CustomConfig.save(fileType.getPath(uuid));
     }
 
     /**
      * Set a setting for a player
-     * @param playerFileType The type of file that should be got
-     * @param uuid The uuid of the players file that should be got
      * @param key key of the setting
      * @param value value of the setting
      * */
-    public static void set(PlayerFileType playerFileType, UUID uuid, String key, Object value) {
-        CustomConfig.set(playerFileType.getPath(uuid), key, value);
-        save(playerFileType, uuid);
+    public static void set(FileType fileType, UUID uuid, String key, Object value) {
+        CustomConfig.set(fileType.getPath(uuid), key, value);
+        save(fileType, uuid);
     }
 
     /**
      * Reload a player settings file
-     * @param playerFileType The type of file that should be got
-     * @param uuid The uuid of the players file that should be got
      * */
-    public static void reload(PlayerFileType playerFileType, UUID uuid) {
-        CustomConfig.reload(playerFileType.getPath(uuid));
+    public static void reload(FileType fileType, UUID uuid) {
+        CustomConfig.reload(fileType.getPath(uuid));
     }
 
     /**
      * Checks if the settings file of a player exists
-     * @param playerFileType The type of file that should be got
-     * @param uuid The uuid of the players file that should be got
      * @return True if the file exists. False if the file does not exist
      * */
-    public static boolean checkForExistence(PlayerFileType playerFileType, UUID uuid) {
-        return CustomConfig.checkForExistence(playerFileType.getPath(uuid));
+    public static boolean checkForExistence(FileType fileType, UUID uuid) {
+        return CustomConfig.checkForExistence(fileType.getPath(uuid));
     }
 
 }

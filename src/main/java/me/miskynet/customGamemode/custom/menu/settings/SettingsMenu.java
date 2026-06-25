@@ -4,13 +4,12 @@ import me.miskynet.customGamemode.custom.menu.Menu;
 import me.miskynet.customGamemode.custom.item.PlayerHead;
 import me.miskynet.customGamemode.custom.menu.TextureMenu;
 import me.miskynet.customGamemode.utils.Utils;
-import me.miskynet.customGamemode.utils.customConfig.PlayerSettings;
+import me.miskynet.customGamemode.utils.customConfig.PlayerData;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 
@@ -45,7 +44,7 @@ public class SettingsMenu extends TextureMenu implements InventoryHolder {
         toggleScoreboardLoreDisabled.add(Utils.component(false, "&8Click to enable scoreboard"));
 
 
-        if ((Boolean) PlayerSettings.get(player, "settings.scoreboardStatus")) {
+        if ((Boolean) PlayerData.get(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus")) {
             toggleScoreboard.setLore(toggleScoreboardLoreEnabled);
         }else {
             toggleScoreboard.setLore(toggleScoreboardLoreDisabled);

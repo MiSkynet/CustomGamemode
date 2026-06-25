@@ -1,9 +1,10 @@
 package me.miskynet.customGamemode.custom.item.shop;
 
 import me.miskynet.customGamemode.custom.item.Item;
-import me.miskynet.customGamemode.custom.menu.shop.ItemPreviewPage;
+import me.miskynet.customGamemode.custom.menu.shop.ItemPreview;
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.item.PlayerHead;
+import me.miskynet.customGamemode.utils.Debugger;
 import me.miskynet.customGamemode.utils.Utils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -15,7 +16,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 
 /**
- * This is a helper method for the {@link ItemPreviewPage}. It creates
+ * This is a helper method for the {@link ItemPreview}. It creates
  * the buttons to buy and sell a {@link ShopItem}. This creates an {@link PlayerHead}
  * and later can be turned into a {@link ItemStack} by using {@link #toItemStack()}
  * */
@@ -108,6 +109,11 @@ public class ItemPreviewItem {
 
         Integer maxStackSize = itemStack.getMaxStackSize();
 
+        Debugger.log("Amount: " + amount);
+        Debugger.log("Price: " + price);
+        Debugger.log("itemType: " + itemType);
+        Debugger.log("maxStackSize: " + maxStackSize);
+
         return new ItemPreviewItem(itemType, amount, price, maxStackSize);
     }
 
@@ -130,7 +136,7 @@ public class ItemPreviewItem {
     }
 
     /**
-     * The unavailable item will be set into the menu instead of the {@link ItemPreviewPage}
+     * The unavailable item will be set into the menu instead of the {@link ItemPreview}
      *
      * @return Unavailable item as {@link ItemStack}
      * */

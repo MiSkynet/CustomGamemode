@@ -2,7 +2,7 @@ package me.miskynet.customGamemode.commands;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import me.miskynet.customGamemode.utils.customConfig.PlayerSettings;
+import me.miskynet.customGamemode.utils.customConfig.PlayerData;
 import org.bukkit.entity.Player;
 
 public class ToggleScoreboard implements BasicCommand {
@@ -11,10 +11,10 @@ public class ToggleScoreboard implements BasicCommand {
 
         Player player = (Player) commandSourceStack.getSender();
 
-        if ((Boolean) PlayerSettings.get(player, "settings.scoreboardStatus")) {
-            PlayerSettings.set(player, "settings.scoreboardStatus", false);
+        if ((Boolean) PlayerData.get(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus")) {
+            PlayerData.set(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus", false);
         }else {
-            PlayerSettings.set(player, "settings.scoreboardStatus", true);
+            PlayerData.set(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus", true);
         }
     }
 }

@@ -1,11 +1,17 @@
 package me.miskynet.customGamemode.custom.menu.shop;
 
+import me.miskynet.customGamemode.custom.item.Item;
+import me.miskynet.customGamemode.custom.item.shop.ItemPreviewItem;
 import me.miskynet.customGamemode.custom.item.shop.ShopItem;
+import me.miskynet.customGamemode.utils.Debugger;
 import me.miskynet.customGamemode.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 public class ShopListener implements Listener {
 
@@ -37,10 +43,13 @@ public class ShopListener implements Listener {
 
             if (!shop.getEmptySlots().contains(event.getSlot())) {
 
-                ShopItem shopItem = ShopItem.fromItemStack(event.getInventory().getItem(event.getSlot()));
+                ItemStack clickedItem = event.getClickedInventory().getItem(event.getSlot());
+                ItemMeta meta = clickedItem.getItemMeta();
+                Integer id = meta.getPersistentDataContainer().get(ShopItem.idKey, PersistentDataType.INTEGER);
+                ShopItem shopItem = Shop.getItemById(id);
 
-                ItemPreviewPage itemPreviewPage = new ItemPreviewPage(Utils.component("Buy or sell"), 45, "\uE005", shopItem);
-                itemPreviewPage.openForPlayer(player);
+                ItemPreview itemPreview = new ItemPreview(Utils.component("Buy or sell"), 45, "\uE005", shop.getCurrentPage(), shopItem);
+                itemPreview.openForPlayer(player);
 
             }
 

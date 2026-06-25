@@ -6,14 +6,13 @@ import me.miskynet.customGamemode.commands.ToggleScoreboard;
 import me.miskynet.customGamemode.commands.economy.EcoCommand;
 import me.miskynet.customGamemode.commands.ShopCommand;
 import me.miskynet.customGamemode.commands.economy.PayCommand;
-import me.miskynet.customGamemode.custom.economy.EconomyListener;
 import me.miskynet.customGamemode.custom.economy.EconomyManager;
 import me.miskynet.customGamemode.custom.menu.settings.SettingsListener;
+import me.miskynet.customGamemode.custom.menu.shop.ItemPreviewListener;
 import me.miskynet.customGamemode.custom.menu.shop.Shop;
 import me.miskynet.customGamemode.custom.menu.shop.ShopListener;
 import me.miskynet.customGamemode.custom.scoreboard.ScoreboardManager;
 import me.miskynet.customGamemode.listener.OnJoin;
-import me.miskynet.customGamemode.utils.customConfig.CustomConfig;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,9 +28,6 @@ public final class Main extends JavaPlugin {
         // preload all shop items
         Shop.cacheShopItems();
 
-        // config setup
-        CustomConfig.setup("economy/playerData.yml");
-
         // setup managers
         economyManager = new EconomyManager();
         scoreboardManager = new ScoreboardManager();
@@ -40,10 +36,10 @@ public final class Main extends JavaPlugin {
 
         // listener setup
         PluginManager pluginManager = getServer().getPluginManager();
-        pluginManager.registerEvents(new ShopListener(), this);
-        pluginManager.registerEvents(new EconomyListener(), this);
         pluginManager.registerEvents(new OnJoin(), this);
+        pluginManager.registerEvents(new ShopListener(), this);
         pluginManager.registerEvents(new SettingsListener(), this);
+        pluginManager.registerEvents(new ItemPreviewListener(), this);
 
         // command setup
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS.newHandler(event -> {

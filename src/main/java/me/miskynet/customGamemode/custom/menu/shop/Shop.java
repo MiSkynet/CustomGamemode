@@ -10,6 +10,7 @@ import me.miskynet.customGamemode.utils.Utils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
@@ -19,11 +20,11 @@ import java.util.*;
 public class Shop extends TextureMenu {
 
     private static Shop shop;
-    public static int currentPage = 0;
+    private static int currentPage = 0;
     public static int itemsPerPage = 45;
 
     // caching all the items for the shop
-    private static final List<ShopItem> cachedItems = new ArrayList<>();
+    public static final List<ShopItem> cachedItems = new ArrayList<>();
 
 
     /**
@@ -165,23 +166,19 @@ public class Shop extends TextureMenu {
             sellPriceBigDecimal = sellPriceBigDecimal.setScale(2, RoundingMode.HALF_UP);
             double sellPriceRounded = sellPriceBigDecimal.doubleValue();
 
+            ShopItem shopItem = new ShopItem(material, buyPriceRounded, sellPriceRounded);
 
-            NamespacedKey id = new NamespacedKey(Main.getInstance(), "id");
+            shopItem.setId(id);
 
-            ShopItem item = new ShopItem(material, buyPriceRounded, sellPriceRounded);
-            item.
+            Item resultItem = new Item(material, Utils.component("&dCool Item Stack"));
 
-            Item resultItem = new Item(material, Utils.component("&aResult item"));
+            shopItem.setResultItem(resultItem);
 
-            item.setResultItem(resultItem);
-
-            cachedItems.add(item);
+            cachedItems.add(shopItem);
 
             current++;
         }
     }
-
-
 
     /**
      * Get the Items from the {@link #cachedItems} map
@@ -220,4 +217,22 @@ public class Shop extends TextureMenu {
         list.add(53);
         return list;
     }
+
+    public static List<ShopItem> getCachedItems() {
+        return cachedItems;
+    }
+
+    public static ShopItem getItemById(Integer id) {
+        for (ShopItem currentShopItem : getCachedItems()) {
+            if (currentShopItem.getId().equals(id)) {
+                return currentShopItem;
+            }
+        }
+        return null;
+    }
+
+    public Integer getCurrentPage() {
+        return currentPage;
+    }
+
 }

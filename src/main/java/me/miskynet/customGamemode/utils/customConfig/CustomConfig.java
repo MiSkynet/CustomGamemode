@@ -55,7 +55,6 @@ public class CustomConfig {
             configs.put(filePath, config);
             return config;
         }
-        setup(filePath);
         return configs.get(filePath);
     }
 

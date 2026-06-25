@@ -1,9 +1,7 @@
 package me.miskynet.customGamemode.custom.menu.settings;
 
-import me.miskynet.customGamemode.custom.item.shop.ShopItem;
 import me.miskynet.customGamemode.utils.Utils;
-import me.miskynet.customGamemode.utils.customConfig.PlayerSettings;
-import org.bukkit.Bukkit;
+import me.miskynet.customGamemode.utils.customConfig.PlayerData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,11 +26,11 @@ public class SettingsListener implements Listener {
 
             if (event.getSlot() == 10) {
 
-                if ((Boolean) PlayerSettings.get(player, "settings.scoreboardStatus")) {
-                    PlayerSettings.set((Player) event.getWhoClicked(), "settings.scoreboardStatus", false);
+                if ((Boolean) PlayerData.get(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus")) {
+                    PlayerData.set(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus", false);
                     settingsMenu.buildSettingsPage(player);
                 }else {
-                    PlayerSettings.set((Player) event.getWhoClicked(), "settings.scoreboardStatus", true);
+                    PlayerData.set(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus", true);
                     settingsMenu.buildSettingsPage(player);
                 }
             }

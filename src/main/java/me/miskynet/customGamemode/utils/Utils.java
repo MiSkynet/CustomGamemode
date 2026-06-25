@@ -1,6 +1,6 @@
 package me.miskynet.customGamemode.utils;
 
-import me.miskynet.customGamemode.utils.customConfig.PlayerSettings;
+import me.miskynet.customGamemode.utils.customConfig.PlayerData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -82,7 +82,7 @@ public class Utils {
      * @param player The player the settings should be set for to default
      * */
     public static void setupDefaultPlayerSettings(Player player) {
-        PlayerSettings.set(player, "settings.scoreboardStatus", true);
+        PlayerData.set(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus", true);
     }
 
     /**
