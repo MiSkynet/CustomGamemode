@@ -4,9 +4,7 @@ import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.custom.item.shop.ItemPreviewItem;
 import me.miskynet.customGamemode.custom.item.shop.ShopItem;
-import me.miskynet.customGamemode.utils.Debugger;
 import me.miskynet.customGamemode.utils.Utils;
-import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -48,8 +46,8 @@ public class ItemPreviewListener implements Listener {
 
                 if (event.getClickedInventory().getItem(event.getSlot()).equals(ItemPreviewItem.getUnavailableItem())) return;
 
-                if (Main.economyManager.getBalance(player) < clickedItem.getPrice()) {
-                    player.sendMessage("&cYou don't have enough money to buy this!");
+                if (Main.economyManager.getBalance(player) < finalPrice) {
+                    player.sendMessage(Utils.component("&cYou don't have enough money to buy this!"));
                     return;
                 }
 
@@ -62,8 +60,8 @@ public class ItemPreviewListener implements Listener {
                 }
 
                 Main.economyManager.addBalance(player, finalPrice * -1);
-                player.sendMessage(Utils.component("&7You bought " + event.getInventory().getItem(event.getSlot()).getType().name() +
-                        " for &a" + finalPrice + Main.economyManager.getEcoSymbol() +
+                player.sendMessage(Utils.component("&7You bought " + Utils.fromComponent(resultItem.getDisplayName()) +
+                        "&r&7 for &a" + finalPrice + Main.economyManager.getEcoSymbol() +
                         "&7 (New Balance: &a" + Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(player)) +
                         Main.economyManager.getEcoSymbol() + "&7)"));
 

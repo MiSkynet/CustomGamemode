@@ -1,5 +1,7 @@
 package me.miskynet.customGamemode.custom.menu.settings;
 
+import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.custom.scoreboard.ScoreboardManager;
 import me.miskynet.customGamemode.utils.Utils;
 import me.miskynet.customGamemode.utils.customConfig.PlayerData;
 import org.bukkit.entity.Player;
@@ -33,6 +35,7 @@ public class SettingsListener implements Listener {
                     PlayerData.set(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus", true);
                     settingsMenu.buildSettingsPage(player);
                 }
+                Main.scoreboardManager.updateScoreboard(player);
             }
 
             Utils.createClickCooldown(player);

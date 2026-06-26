@@ -72,10 +72,10 @@ public class ScoreboardManager {
 
         scores.add(Utils.coloredString(" "));
         scores.add(Utils.coloredString("&7Your Profile: "));
-        scores.add(Utils.coloredString("  &7MiSkynet"));
+        scores.add(Utils.coloredString("  &6" + player.getName()));
         scores.add(Utils.coloredString(" "));
         scores.add(Utils.coloredString("&7Your Balance:"));
-        scores.add(Utils.coloredString("&7  &a" + Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(player)) + Main.economyManager.getEcoSymbol()));
+        scores.add(Utils.coloredString("&7  &6" + Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(player)) + Main.economyManager.getEcoSymbol()));
         scores.add(Utils.coloredString(" "));
 
         int repeat = 7;
@@ -106,30 +106,32 @@ public class ScoreboardManager {
         Objective objective = scoreboard.getObjective("sidePanel");
         if (objective == null) {
             int repeat = 5;
-            Component scoreboardTitle = Utils.component(" ".repeat(repeat) + "&6Custom Gamemode" + " ".repeat(repeat));
+            Component scoreboardTitle = Utils.component(" ".repeat(repeat) + "&6&lCustom Gamemode" + " ".repeat(repeat));
             objective = scoreboard.registerNewObjective("sidePanel", Criteria.DUMMY, scoreboardTitle);
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         }
 
-        for (String entry : scoreboard.getEntries()) {
-            scoreboard.resetScores(entry);
-        }
-
         ArrayList<String> rows = getRows(player);
         int finalSize = rows.size();
+        ArrayList<String> newEntries = new ArrayList<>();
 
         for (String row : rows) {
             if (row.equals(" ")) {
-                row = row.repeat(finalSize);
+                row = row.repeat(finalSize + 1);
             }
 
             Score score = objective.getScore(row);
             score.setScore(finalSize);
-
             score.numberFormat(NumberFormat.blank());
 
-            objective.getScore(row).setScore(finalSize);
+            newEntries.add(row);
             finalSize--;
+        }
+
+        for (String oldEntry : scoreboard.getEntries()) {
+            if (!newEntries.contains(oldEntry)) {
+                scoreboard.resetScores(oldEntry);
+            }
         }
 
         if (player.getScoreboard() != scoreboard) {
@@ -151,7 +153,7 @@ public class ScoreboardManager {
                     updateScoreboard(player);
                 });
             }
-        }.runTaskTimer(Main.getInstance(), 0, 5);
+        }.runTaskTimer(Main.getInstance(), 0, 20);
 
     }
 

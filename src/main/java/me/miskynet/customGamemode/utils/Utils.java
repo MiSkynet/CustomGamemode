@@ -13,6 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * The {@link Utils} class contains helper methods for
+ * a verity of classes and methods in the plugin
+ * */
 public class Utils {
 
     private static final Map<UUID, Long> clickCooldownMap = new HashMap<>();
@@ -61,6 +65,10 @@ public class Utils {
         return LegacyComponentSerializer.legacySection().serialize(component);
     }
 
+    public static String fromComponent(Component component) {
+        return LegacyComponentSerializer.legacyAmpersand().serialize(component);
+    }
+
     /**
      * Check if a player is able to receive an {@link ItemStack}. If yes,
      * give it to the player. Else drop it on the players position
@@ -105,7 +113,7 @@ public class Utils {
 
         if (clickCooldownMap.containsKey(player.getUniqueId())) {
             long lastClick = clickCooldownMap.get(player.getUniqueId());
-            if (currentTime - lastClick < 200) {
+            if (currentTime - lastClick < clickCooldown) {
                 return false;
             }
             clickCooldownMap.remove(player.getUniqueId());

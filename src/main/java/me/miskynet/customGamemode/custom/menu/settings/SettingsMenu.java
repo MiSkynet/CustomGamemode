@@ -34,14 +34,14 @@ public class SettingsMenu extends TextureMenu implements InventoryHolder {
     public void buildSettingsPage(Player player) {
 
         PlayerHead toggleScoreboard = new PlayerHead("4a2648a9e53613f0ab1266b72918f40788f84e160a52348cd67138410262f39f");
-        toggleScoreboard.setDisplayName(Utils.component(false, "&6Toggle Scoreboard"));
+        toggleScoreboard.setDisplayName(Utils.component(false, "&6Click to toggle Scoreboard"));
 
         ArrayList<Component> toggleScoreboardLoreEnabled = new ArrayList<>();
+        toggleScoreboardLoreEnabled.add(Utils.component(" "));
         toggleScoreboardLoreEnabled.add(Utils.component(false, "&7Current Status: &aEnabled"));
-        toggleScoreboardLoreEnabled.add(Utils.component(false, "&8Click to disable scoreboard"));
         ArrayList<Component> toggleScoreboardLoreDisabled = new ArrayList<>();
+        toggleScoreboardLoreDisabled.add(Utils.component(" "));
         toggleScoreboardLoreDisabled.add(Utils.component(false, "&7Current Status: &cDisabled"));
-        toggleScoreboardLoreDisabled.add(Utils.component(false, "&8Click to enable scoreboard"));
 
 
         if ((Boolean) PlayerData.get(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus")) {
