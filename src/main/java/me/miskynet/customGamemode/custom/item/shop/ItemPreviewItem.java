@@ -109,11 +109,6 @@ public class ItemPreviewItem {
 
         Integer maxStackSize = itemStack.getMaxStackSize();
 
-        Debugger.log("Amount: " + amount);
-        Debugger.log("Price: " + price);
-        Debugger.log("itemType: " + itemType);
-        Debugger.log("maxStackSize: " + maxStackSize);
-
         return new ItemPreviewItem(itemType, amount, price, maxStackSize);
     }
 
