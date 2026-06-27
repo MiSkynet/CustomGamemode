@@ -50,7 +50,6 @@ public class ShopListener implements Listener {
 
                 ItemPreview itemPreview = new ItemPreview(Utils.component("Buy or sell"), 45, "\uE005", shop.getCurrentPage(), shopItem);
                 itemPreview.openForPlayer(player);
-
             }
 
             Utils.createClickCooldown(player);

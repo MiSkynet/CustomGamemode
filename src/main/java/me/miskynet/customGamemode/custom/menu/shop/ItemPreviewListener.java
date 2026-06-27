@@ -4,11 +4,13 @@ import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.custom.item.shop.ItemPreviewItem;
 import me.miskynet.customGamemode.custom.item.shop.ShopItem;
+import me.miskynet.customGamemode.utils.Debugger;
 import me.miskynet.customGamemode.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class ItemPreviewListener implements Listener {
 
@@ -64,14 +66,79 @@ public class ItemPreviewListener implements Listener {
                         "&r&7 for &a" + finalPrice + Main.economyManager.getEcoSymbol() +
                         "&7 (New Balance: &a" + Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(player)) +
                         Main.economyManager.getEcoSymbol() + "&7)"));
+            }
 
+            // slots to sell items
+            if (event.getSlot() >= 28 && event.getSlot() <= 34) {
 
+                if (event.getClickedInventory().getItem(event.getSlot()).equals(ItemPreviewItem.getUnavailableItem())) return;
+
+                Item resultItem = shopItem.getResultItem();
+
+                ItemPreviewItem clickedItem = ItemPreviewItem.fromItemStack(event.getClickedInventory().getItem(event.getSlot()));
+
+                Integer amount = clickedItem.getAmount();
+
+                if (!checkForAmount(player, resultItem.toItemStack(), amount)) {
+                    player.sendMessage(Utils.component("&cYou don't have enough to sell that much!"));
+                    return;
+                }
+
+                removeItems(player, resultItem.toItemStack(), amount);
+
+                Main.economyManager.addBalance(player, clickedItem.getPrice());
+                player.sendMessage(Utils.component("&7You sold " + Utils.fromComponent(resultItem.getDisplayName()) +
+                        "&r&7 for &a" + clickedItem.getPrice() + Main.economyManager.getEcoSymbol() +
+                        "&7 (New Balance: &a" + Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(player)) +
+                        Main.economyManager.getEcoSymbol() + "&7)"));
 
             }
 
             Utils.createClickCooldown(player);
         }
+    }
 
+    private boolean checkForAmount(Player player, ItemStack itemToFind, int amountNeeded) {
+        int count = 0;
+
+        for (ItemStack stack : player.getInventory().getContents()) {
+            if (stack != null && stack.isSimilar(itemToFind)) {
+                count += stack.getAmount();
+            }
+        }
+
+        if (count < amountNeeded) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean removeItems(Player player, ItemStack itemToFind, int amountNeeded) {
+        int remainingToRemove = amountNeeded;
+        ItemStack[] contents = player.getInventory().getContents();
+
+        for (int i = 0; i < contents.length; i++) {
+            ItemStack stack = contents[i];
+
+            if (stack != null && stack.isSimilar(itemToFind)) {
+                int stackAmount = stack.getAmount();
+
+                if (stackAmount <= remainingToRemove) {
+                    remainingToRemove -= stackAmount;
+                    contents[i] = null;
+                } else {
+                    stack.setAmount(stackAmount - remainingToRemove);
+                    remainingToRemove = 0;
+                }
+            }
+
+            if (remainingToRemove <= 0) {
+                break;
+            }
+        }
+
+        player.getInventory().setContents(contents);
+        return true;
     }
 
 }

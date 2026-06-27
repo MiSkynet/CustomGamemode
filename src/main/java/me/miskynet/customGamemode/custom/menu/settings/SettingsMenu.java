@@ -31,7 +31,7 @@ public class SettingsMenu extends TextureMenu implements InventoryHolder {
      *
      * @param player Player that has opened the inventory
      * */
-    public void buildSettingsPage(Player player) {
+    public void buildMenu(Player player) {
 
         PlayerHead toggleScoreboard = new PlayerHead("4a2648a9e53613f0ab1266b72918f40788f84e160a52348cd67138410262f39f");
         toggleScoreboard.setDisplayName(Utils.component(false, "&6Click to toggle Scoreboard"));

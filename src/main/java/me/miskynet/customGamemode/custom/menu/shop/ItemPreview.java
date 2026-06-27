@@ -3,6 +3,7 @@ package me.miskynet.customGamemode.custom.menu.shop;
 import me.miskynet.customGamemode.custom.item.PlayerHead;
 import me.miskynet.customGamemode.custom.item.shop.ItemPreviewItem;
 import me.miskynet.customGamemode.custom.item.shop.ShopItem;
+import me.miskynet.customGamemode.custom.menu.Menu;
 import me.miskynet.customGamemode.custom.menu.TextureMenu;
 import me.miskynet.customGamemode.utils.Utils;
 import net.kyori.adventure.text.Component;
@@ -13,7 +14,7 @@ public class ItemPreview extends TextureMenu {
     private Integer lastPage;
 
     /**
-     * The {@link TextureMenu} is a type of {@link me.miskynet.customGamemode.custom.menu.Menu} that can have a custom GUI design.
+     * The {@link TextureMenu} is a type of {@link Menu} that can have a custom GUI design.
      * The design is applied by using Unicodes of a texture pack
      *
      * @param title   The title of the {@link TextureMenu}
@@ -24,15 +25,16 @@ public class ItemPreview extends TextureMenu {
         super(title, size, unicode);
         this.shopItem = shopItem;
         this.lastPage = lastPage;
-        buildInventory();
+        this.buildMenu();
     }
 
     /**
      * Build the inventory for the player
      * */
-    public void buildInventory() {
+    @Override
+    public void buildMenu() {
 
-        PlayerHead backItem = new PlayerHead(Utils.component("&cBack"), "158a3e5617b7fc16ff436edab5996027986c584dd8837b63260577c32421bd1c");
+        PlayerHead backItem = new PlayerHead(Utils.component(false, "&cBack"), "158a3e5617b7fc16ff436edab5996027986c584dd8837b63260577c32421bd1c");
 
         this.getInventory().setItem(0, backItem.toItemStack());
 
@@ -61,6 +63,10 @@ public class ItemPreview extends TextureMenu {
         return this.shopItem;
     }
 
+    /**
+     * Get the last page of the shop the user had open
+     * @return Last page {@link Integer}
+     * */
     public Integer getLastPage() {
         return this.lastPage;
     }

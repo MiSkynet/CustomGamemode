@@ -30,10 +30,10 @@ public class SettingsListener implements Listener {
 
                 if ((Boolean) PlayerData.get(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus")) {
                     PlayerData.set(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus", false);
-                    settingsMenu.buildSettingsPage(player);
+                    settingsMenu.buildMenu(player);
                 }else {
                     PlayerData.set(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus", true);
-                    settingsMenu.buildSettingsPage(player);
+                    settingsMenu.buildMenu(player);
                 }
                 Main.scoreboardManager.updateScoreboard(player);
             }

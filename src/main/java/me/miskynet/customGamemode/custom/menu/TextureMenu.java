@@ -15,7 +15,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TextureMenu extends Menu {
+public abstract class TextureMenu extends Menu {
 
     private ArrayList<Integer> interactSlots = new ArrayList<>();
     private String unicode;
@@ -32,6 +32,13 @@ public class TextureMenu extends Menu {
     public TextureMenu(Component title, int size, String unicode) {
         super(Utils.component("§f\uE001" + unicode + "\uE002").append(title), size);
         this.unicode = unicode;
+    }
+
+    /**
+     * Build the menu
+     * */
+    public void buildMenu() {
+        fillEmptySlots();
     }
 
     /**

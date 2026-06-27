@@ -2,11 +2,15 @@ package me.miskynet.customGamemode;
 
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import me.miskynet.customGamemode.commands.SettingsCommand;
+import me.miskynet.customGamemode.commands.testCommands.GiveCopperGolem;
+import me.miskynet.customGamemode.commands.testCommands.SummonNPCCommand;
 import me.miskynet.customGamemode.commands.ToggleScoreboard;
 import me.miskynet.customGamemode.commands.economy.EcoCommand;
 import me.miskynet.customGamemode.commands.ShopCommand;
 import me.miskynet.customGamemode.commands.economy.PayCommand;
 import me.miskynet.customGamemode.custom.economy.EconomyManager;
+import me.miskynet.customGamemode.custom.entity.npc.NPCInteractEvent;
+import me.miskynet.customGamemode.custom.entity.npc.NPCMoveEvent;
 import me.miskynet.customGamemode.custom.menu.settings.SettingsListener;
 import me.miskynet.customGamemode.custom.menu.shop.ItemPreviewListener;
 import me.miskynet.customGamemode.custom.menu.shop.Shop;
@@ -40,6 +44,8 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new ShopListener(), this);
         pluginManager.registerEvents(new SettingsListener(), this);
         pluginManager.registerEvents(new ItemPreviewListener(), this);
+        pluginManager.registerEvents(new NPCMoveEvent(), this);
+        pluginManager.registerEvents(new NPCInteractEvent(), this);
 
         // command setup
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS.newHandler(event -> {

@@ -5,12 +5,10 @@ import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.custom.item.PlayerHead;
 import me.miskynet.customGamemode.custom.item.shop.ShopItem;
 import me.miskynet.customGamemode.custom.menu.TextureMenu;
-import me.miskynet.customGamemode.utils.Debugger;
 import me.miskynet.customGamemode.utils.Utils;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
@@ -19,13 +17,12 @@ import java.util.*;
 
 public class Shop extends TextureMenu {
 
-    private static Shop shop;
-    private static int currentPage = 0;
-    public static int itemsPerPage = 45;
+    private Shop shop;
+    private int currentPage;
+    public int itemsPerPage = 45;
 
     // caching all the items for the shop
     public static final List<ShopItem> cachedItems = new ArrayList<>();
-
 
     /**
      * The Shop is a type of {@link TextureMenu} where players can
@@ -35,9 +32,9 @@ public class Shop extends TextureMenu {
      * */
     public Shop(Integer page) {
         super(Utils.component("ShopCommand"), 54, "\uE003");
-        shop = this;
-        currentPage = page;
-        buildShopSite(shop);
+        this.shop = this;
+        this.currentPage = page;
+        buildMenu();
     }
 
     /**
@@ -49,7 +46,7 @@ public class Shop extends TextureMenu {
     public void increasePage() {
         if (getShopItems().size() >= ((currentPage + 1) * itemsPerPage) + 1) {
             currentPage = currentPage + 1;
-            buildShopSite(shop);
+            buildMenu();
         }
     }
 
@@ -62,7 +59,7 @@ public class Shop extends TextureMenu {
     public void decreasePage() {
         if (currentPage >= 1) {
             currentPage = currentPage - 1;
-            buildShopSite(shop);
+            buildMenu();
         }
     }
 
@@ -71,7 +68,8 @@ public class Shop extends TextureMenu {
      * It replaces every item and then sets it back into the inventory.
      * Don't directly call this function, use the {@link #increasePage()} or {@link #decreasePage()} function instead!
     * */
-    private void buildShopSite(TextureMenu shop) {
+    @Override
+    public void buildMenu() {
 
         PlayerHead arrowLeft = new PlayerHead(Utils.component(false, "&ePrevious Page"), "528b8cf405eaf606a0210f0303b013179f8f12eaa95824129ebeef9e44b68230");
         PlayerHead arrowRight = new PlayerHead(Utils.component(false, "&eNext Page"), "5dcda6e3c6dca7e9b8b6ba3febf5cd0917f997b64b2aef18c3f773765e3a579");
@@ -81,40 +79,38 @@ public class Shop extends TextureMenu {
         * when yes, put the button
         * when not, put a barrier instead of the button
         * */
-        if (getShopItems().size() >= ((currentPage + 1) * itemsPerPage) + 1) {
-            shop.getInventory().setItem(50, arrowRight.toItemStack());
+        if (getShopItems().size() >= ((this.currentPage + 1) * itemsPerPage) + 1) {
+            this.shop.getInventory().setItem(50, arrowRight.toItemStack());
         }else {
             Item item = new Item(Material.BARRIER, Utils.component(false, "&cNo next page"));
-            shop.getInventory().setItem(50, item.toItemStack());
+            this.shop.getInventory().setItem(50, item.toItemStack());
         }
 
-        if (currentPage != 0) {
-            shop.getInventory().setItem(48, arrowLeft.toItemStack());
+        if (this.currentPage != 0) {
+            this.shop.getInventory().setItem(48, arrowLeft.toItemStack());
         }else {
             Item item = new Item(Material.BARRIER, Utils.component(false, "&cNo previous page"));
-            shop.getInventory().setItem(48, item.toItemStack());
+            this.shop.getInventory().setItem(48, item.toItemStack());
         }
 
         // item to present the current page
-        shop.getInventory().setItem(49, new Item(Material.BOOK, Utils.component(false, "&eCurrent Page: " + (currentPage + 1))).toItemStack());
+        this.shop.getInventory().setItem(49, new Item(Material.BOOK, Utils.component(false, "&eCurrent Page: " + (this.currentPage + 1))).toItemStack());
 
-        fillShopItems(shop);
-        shop.fillEmptySlots();
+        fillShopItems();
+        this.shop.fillEmptySlots();
     }
 
     /**
      * Fill the shop with shop items and ignore the {@link #getEmptySlots()} slots
-     *
-     * @param shop The shop that the items should be put in
      * */
-    public static void fillShopItems(TextureMenu shop) {
-        int shopItemStart = currentPage * itemsPerPage;
+    public void fillShopItems() {
+        int shopItemStart = this.currentPage * this.itemsPerPage;
         int currentShopItem = shopItemStart;
 
         // clear the slots
         for (int i = 0; i < 54; i++) {
             if (!getEmptySlots().contains(i)) {
-                shop.getInventory().setItem(i, null);
+                this.shop.getInventory().setItem(i, null);
             }
         }
 
@@ -123,7 +119,7 @@ public class Shop extends TextureMenu {
 
             if (currentShopItem >= getShopItems().size()) break;
 
-            shop.getInventory().setItem(i, getShopItems().get(currentShopItem).toItemStack());
+            this.shop.getInventory().setItem(i, getShopItems().get(currentShopItem).toItemStack());
 
             currentShopItem++;
         }
@@ -218,10 +214,21 @@ public class Shop extends TextureMenu {
         return list;
     }
 
+    /**
+     * Get a {@link List} of all cached {@link ShopItem}
+     *
+     * @return {@link List} with all {@link ShopItem}
+     * */
     public static List<ShopItem> getCachedItems() {
         return cachedItems;
     }
 
+    /**
+     * Get an {@link ShopItem} by the id
+     *
+     * @param id The id of the item
+     * @return {@link ShopItem}
+     * */
     public static ShopItem getItemById(Integer id) {
         for (ShopItem currentShopItem : getCachedItems()) {
             if (currentShopItem.getId().equals(id)) {
@@ -231,8 +238,12 @@ public class Shop extends TextureMenu {
         return null;
     }
 
+    /**
+     * Get the current page of the {@link Shop}
+     *
+     * @return The current page of the {@link Shop}
+     * */
     public Integer getCurrentPage() {
         return currentPage;
     }
-
 }

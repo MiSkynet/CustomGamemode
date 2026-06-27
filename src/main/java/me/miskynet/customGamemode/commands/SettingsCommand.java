@@ -13,7 +13,7 @@ public class SettingsCommand implements BasicCommand {
 
         SettingsMenu menu = new SettingsMenu();
 
-        menu.buildSettingsPage(player);
+        menu.buildMenu(player);
         menu.openForPlayer(player);
 
     }

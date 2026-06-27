@@ -18,8 +18,8 @@ public class ShopItem extends Item {
 
     Double buyPrice;
     Double sellPrice;
-    Item resultItem;
-    Integer id;
+    Item resultItem = null;
+    Integer id = null;
 
     private static final NamespacedKey buyKey = new NamespacedKey(Main.getInstance(), "buyPrice");
     private static final NamespacedKey sellKey = new NamespacedKey(Main.getInstance(), "sellPrice");
@@ -82,6 +82,10 @@ public class ShopItem extends Item {
      * */
     public Double getSellPrice() { return sellPrice; }
 
+    /**
+     * Convert the {@link ShopItem} into an {@link ItemStack}
+     * @return {@link ShopItem} as {@link ItemStack}
+     * */
     @Override
     public ItemStack toItemStack() {
         ItemStack itemStack = super.toItemStack();
@@ -101,18 +105,36 @@ public class ShopItem extends Item {
         return itemStack;
     }
 
+    /**
+     * Set the result item of the {@link ShopItem}. The Result item is
+     * {@link Item} that is later converted into an {@link ItemStack}
+     * @param item The {@link Item} that should be the result item
+     * */
     public void setResultItem(Item item) {
         this.resultItem = item;
     }
 
+    /**
+     * Get the result item
+     * @return Result item as {@link Item} or null when none is set
+     * */
     public Item getResultItem() {
         return this.resultItem;
     }
 
+    /**
+     * Set an id for the {@link ShopItem} to help identifying
+     * an item
+     * @param id The id of the {@link ShopItem} as {@link Integer}
+     * */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Get the id of an {@link ShopItem}
+     * @return Id as {@link Integer} or null when non is set
+     * */
     public Integer getId() {
         return this.id;
     }

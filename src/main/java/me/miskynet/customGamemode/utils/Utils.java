@@ -6,8 +6,11 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,6 +68,11 @@ public class Utils {
         return LegacyComponentSerializer.legacySection().serialize(component);
     }
 
+    /**
+     * Convert a {@link Component} into a {@link String} with text formation
+     * @param component The {@link Component} that should be converted into a string
+     * @return {@link Component} as {@link String}
+     * */
     public static String fromComponent(Component component) {
         return LegacyComponentSerializer.legacyAmpersand().serialize(component);
     }
@@ -122,5 +130,12 @@ public class Utils {
     }
 
 
+    public static Object getPDCOfEntity(Entity entity, NamespacedKey namespacedKey, PersistentDataType persistentDataType) {
+        return entity.getPersistentDataContainer().get(namespacedKey, persistentDataType);
+    }
+
+    public static Object getPDCOfItem(ItemStack itemStack, NamespacedKey namespacedKey, PersistentDataType persistentDataType) {
+        return itemStack.getItemMeta().getPersistentDataContainer().get(namespacedKey, persistentDataType);
+    }
 
 }
