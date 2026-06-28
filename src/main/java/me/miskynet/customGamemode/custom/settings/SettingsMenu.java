@@ -1,4 +1,4 @@
-package me.miskynet.customGamemode.custom.menu.settings;
+package me.miskynet.customGamemode.custom.settings;
 
 import me.miskynet.customGamemode.custom.menu.Menu;
 import me.miskynet.customGamemode.custom.item.PlayerHead;

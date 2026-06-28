@@ -2,7 +2,7 @@ package me.miskynet.customGamemode.commands;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import me.miskynet.customGamemode.custom.menu.settings.SettingsMenu;
+import me.miskynet.customGamemode.custom.settings.SettingsMenu;
 import org.bukkit.entity.Player;
 
 public class SettingsCommand implements BasicCommand {

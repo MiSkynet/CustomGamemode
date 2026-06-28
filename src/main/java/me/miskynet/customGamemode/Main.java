@@ -13,13 +13,13 @@ import me.miskynet.customGamemode.commands.economy.PayCommand;
 import me.miskynet.customGamemode.custom.economy.EconomyManager;
 import me.miskynet.customGamemode.custom.entity.npc.NPCInteractEvent;
 import me.miskynet.customGamemode.custom.entity.npc.NPCMoveEvent;
-import me.miskynet.customGamemode.custom.menu.settings.SettingsListener;
-import me.miskynet.customGamemode.custom.menu.shop.ItemPreviewListener;
-import me.miskynet.customGamemode.custom.menu.shop.Shop;
-import me.miskynet.customGamemode.custom.menu.shop.ShopListener;
-import me.miskynet.customGamemode.custom.menu.skillsMenu.SkillsMenuListener;
+import me.miskynet.customGamemode.custom.settings.SettingsListener;
+import me.miskynet.customGamemode.custom.shop.ShopMenu;
+import me.miskynet.customGamemode.custom.shop.itemPreview.ItemPreviewListener;
+import me.miskynet.customGamemode.custom.shop.ShopListener;
+import me.miskynet.customGamemode.custom.skills.SkillsMenuListener;
 import me.miskynet.customGamemode.custom.scoreboard.ScoreboardManager;
-import me.miskynet.customGamemode.custom.skills.FightingSkill;
+import me.miskynet.customGamemode.custom.skills.skillTypes.FightingSkill;
 import me.miskynet.customGamemode.listener.OnJoin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,30 +31,34 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
 
         // preload all shop items
-        Shop.cacheShopItems();
+        ShopMenu.cacheShopItems();
 
-        // setup managers
-        economyManager = new EconomyManager();
-        scoreboardManager = new ScoreboardManager();
+        setupManagers();
+        setupCommands();
+        setupListener();
+        setupSkills();
 
         scoreboardManager.runUpdates();
+    }
 
-        FightingSkill fightingSkill = new FightingSkill();
+    @Override
+    public void onDisable() {
+        // Plugin shutdown logic
+    }
 
-        // listener setup
-        PluginManager pluginManager = getServer().getPluginManager();
-        pluginManager.registerEvents(new OnJoin(), this);
-        pluginManager.registerEvents(new ShopListener(), this);
-        pluginManager.registerEvents(new SettingsListener(), this);
-        pluginManager.registerEvents(new ItemPreviewListener(), this);
-        pluginManager.registerEvents(new NPCMoveEvent(), this);
-        pluginManager.registerEvents(new NPCInteractEvent(), this);
-        pluginManager.registerEvents(new SkillsMenuListener(), this);
+    public static Main getInstance() {
+        return Main.getPlugin(Main.class);
+    }
 
-        // command setup
+    private void setupManagers() {
+        economyManager = new EconomyManager();
+        scoreboardManager = new ScoreboardManager();
+    }
+
+    // setup commands
+    private void setupCommands() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS.newHandler(event -> {
             var registrar = event.registrar();
 
@@ -73,13 +77,20 @@ public final class Main extends JavaPlugin {
         }));
     }
 
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
+    // setup listeners
+    private void setupListener() {
+        PluginManager pluginManager = getServer().getPluginManager();
+        pluginManager.registerEvents(new OnJoin(), this);
+        pluginManager.registerEvents(new ShopListener(), this);
+        pluginManager.registerEvents(new SettingsListener(), this);
+        pluginManager.registerEvents(new ItemPreviewListener(), this);
+        pluginManager.registerEvents(new NPCMoveEvent(), this);
+        pluginManager.registerEvents(new NPCInteractEvent(), this);
+        pluginManager.registerEvents(new SkillsMenuListener(), this);
     }
 
-    public static Main getInstance() {
-        return Main.getPlugin(Main.class);
+    // setup skills
+    private void setupSkills() {
+        new FightingSkill();
     }
-
 }

@@ -1,10 +1,9 @@
-package me.miskynet.customGamemode.custom.menu.shop;
+package me.miskynet.customGamemode.custom.shop.itemPreview;
 
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.item.Item;
-import me.miskynet.customGamemode.custom.item.shop.ItemPreviewItem;
-import me.miskynet.customGamemode.custom.item.shop.ShopItem;
-import me.miskynet.customGamemode.utils.Debugger;
+import me.miskynet.customGamemode.custom.shop.ShopMenu;
+import me.miskynet.customGamemode.custom.shop.ShopItem;
 import me.miskynet.customGamemode.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,7 +18,7 @@ public class ItemPreviewListener implements Listener {
 
         if (event.getClickedInventory() == null) return;
 
-        if (event.getClickedInventory().getHolder() instanceof ItemPreview itemPreview) {
+        if (event.getClickedInventory().getHolder() instanceof ItemPreviewMenu itemPreview) {
 
             ShopItem shopItem = itemPreview.getShopItem();
 
@@ -30,8 +29,8 @@ public class ItemPreviewListener implements Listener {
             if (!Utils.checkForAllowedClick(player)) return;
 
             if (event.getSlot() == 0) {
-                Shop shop = new Shop(itemPreview.getLastPage());
-                shop.openForPlayer(player);
+                ShopMenu shopMenu = new ShopMenu(itemPreview.getLastPage());
+                shopMenu.openForPlayer(player);
             }
 
             // slots to buy stuff

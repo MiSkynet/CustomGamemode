@@ -1,9 +1,9 @@
-package me.miskynet.customGamemode.custom.item.skillsMenu;
+package me.miskynet.customGamemode.custom.skills;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.miskynet.customGamemode.custom.item.Item;
-import me.miskynet.customGamemode.custom.skills.Skill;
+import me.miskynet.customGamemode.custom.skills.skillTypes.Skill;
 import me.miskynet.customGamemode.utils.Utils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -27,15 +27,7 @@ public class SkillsMenuItem {
      * */
     public static ItemStack getCopperGolemItem(Skill.SkillType skillType, Player player) {
 
-        Skill currentSkill = null;
-
-        // check if the skill exists
-        for (Skill skill : Skill.skillsList) {
-            if (skill.getSkillType().equals(skillType)) {
-                currentSkill = skill;
-                break;
-            }
-        }
+        Skill currentSkill = Skill.getSkillBySkillType(skillType);
 
         // if not, return an unavailable item
         if (currentSkill == null) return new Item(Material.BARRIER, Utils.component(false, "&cSkill Unavailable")).toItemStack();
@@ -49,18 +41,21 @@ public class SkillsMenuItem {
 
         Item item = new Item(Material.COPPER_GOLEM_STATUE);
 
-        item.setDisplayName(Utils.component(false,Utils.fromComponent(currentSkill.getName()) + " Skill"));
+        String displayName = Utils.fromComponent(currentSkill.getName()) + " Skill";
+
+        item.setDisplayName(Utils.component(false, displayName));
 
         ArrayList<Component> lore = new ArrayList();
 
         lore.add(Utils.component(false, " "));
-        lore.add(Utils.component(false, "&7Current Mining Skill: &a" + currentLevel));
+        lore.add(Utils.component(false, "&7Current " + displayName + "&7 Level: &a" + currentLevel));
         lore.add(Utils.component(false, " "));
         lore.add(Utils.component(false, "&7Current Progress:"));
         lore.add(Utils.component(false, "&a" + currentXP + "&7/&a" + levelUpOnLevel + " &7EXP"));
         lore.add(Utils.component(false, "&7" + progessPercentage + "% [ " + progessBar(progessPercentage) + " &7]"));
         lore.add(Utils.component(false, " "));
-        lore.add(Utils.component(false, "&8Click to view more"));
+        lore.add(Utils.component(false, "&8Click to increase XP"));
+        lore.add(Utils.component(false, "&8Shift-Click to view more"));
 
         item.setLore(lore);
 
@@ -124,5 +119,27 @@ public class SkillsMenuItem {
         return item;
     }
 
-    public static Item
+
+    public static Item skillUnavailableItem() {
+        Item item = new Item(Material.BARRIER, Utils.component(false, "&cSkill Unavailable"));
+        return item;
+    }
+
+    public static Item getSkillExplanationItem(Skill skill) {
+
+        if (skill == null) return skillUnavailableItem();
+
+        Item item = new Item(Material.NAME_TAG, Utils.component(false, Utils.fromComponent(skill.getName()) + " Skill"));
+
+        List<Component> lore = new ArrayList<>(skill.getDescription());
+
+        lore.addFirst(Utils.component(" "));
+
+        item.setLore(lore);
+
+        return item;
+    }
+
+
+
 }

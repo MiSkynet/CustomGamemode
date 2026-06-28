@@ -2,7 +2,7 @@ package me.miskynet.customGamemode.commands;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import me.miskynet.customGamemode.custom.menu.shop.Shop;
+import me.miskynet.customGamemode.custom.shop.ShopMenu;
 import org.bukkit.entity.Player;
 
 public class ShopCommand implements BasicCommand {
@@ -10,8 +10,8 @@ public class ShopCommand implements BasicCommand {
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
 
         if (commandSourceStack.getSender() instanceof Player player) {
-            Shop shop = new Shop(0);
-            shop.openForPlayer(player);
+            ShopMenu shopMenu = new ShopMenu(0);
+            shopMenu.openForPlayer(player);
         }
 
     }

@@ -1,7 +1,7 @@
-package me.miskynet.customGamemode.custom.menu.skillsMenu;
+package me.miskynet.customGamemode.custom.skills;
 
-import me.miskynet.customGamemode.custom.skills.FightingSkill;
-import me.miskynet.customGamemode.custom.skills.Skill;
+import me.miskynet.customGamemode.custom.skills.skillTypes.FightingSkill;
+import me.miskynet.customGamemode.custom.skills.skillTypes.Skill;
 import me.miskynet.customGamemode.utils.Debugger;
 import me.miskynet.customGamemode.utils.Utils;
 import org.bukkit.entity.Player;
@@ -29,6 +29,9 @@ public class SkillsMenuListener implements Listener {
 
                 if (event.isShiftClick()) {
                     Debugger.log("Shift Click!");
+
+
+
                 }else {
                     ItemStack currentItemStack = event.getClickedInventory().getItem(event.getSlot());
                     String PDC = (String) Utils.getPDCOfItem(currentItemStack, Skill.skillKey, PersistentDataType.STRING);
@@ -37,19 +40,20 @@ public class SkillsMenuListener implements Listener {
 
                     if (skill == null) return;
 
+                    Skill.increasePlayerXP(skillType, player);
+
                     // get the current player XP
                     int currentPlayerXP = Skill.getCurrentPlayerXP(skillType, player);
 
-                    Skill.increasePlayerXP(skillType, player);
+                    player.sendMessage(Utils.component("&aIncreased " + Utils.fromComponent(skill.getName()) + " Skill &aXP by one! (Current XP: &d" + currentPlayerXP + "&a/&d" + skill.getLevelUpOnLevel() + "&a)"));
 
                     if (currentPlayerXP >= skill.getLevelUpOnLevel()) {
                         Skill.increasePlayerLevel(skillType, player);
+                        player.sendMessage(Utils.component("&aCongratulations! You have leveled up your &d" + Utils.fromComponent(skill.getName()) + " Skill&a! (Current Level: &d" + Skill.getCurrentPlayerLevel(skillType, player) + "&a)"));
                     }
 
                     skillsMenu.buildMenu(player);
                 }
-
-
             }
 
             Utils.createClickCooldown(player);

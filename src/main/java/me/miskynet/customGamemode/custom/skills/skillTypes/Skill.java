@@ -1,4 +1,4 @@
-package me.miskynet.customGamemode.custom.skills;
+package me.miskynet.customGamemode.custom.skills.skillTypes;
 
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.config.PlayerData;
@@ -9,6 +9,9 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is the base for all other skills.
+ * */
 public class Skill {
 
     public enum SkillType {
@@ -101,6 +104,12 @@ public class Skill {
         return PlayerData.get(PlayerData.FileType.SKILLS, player.getUniqueId()).getInt("skills." + skillType.name().toLowerCase() + ".currentXP");
     }
 
+    /**
+     * Increases the current Level of a {@link Player} of the {@link Skill} and resets the current XP to 0
+     *
+     * @param skillType The type of skill to increase the level of
+     * @param player The player whose level should be increased
+     * */
     public static void increasePlayerLevel(SkillType skillType, Player player) {
         Integer currentPlayerLevel = getCurrentPlayerLevel(skillType, player);
 
@@ -108,10 +117,26 @@ public class Skill {
         PlayerData.set(PlayerData.FileType.SKILLS, player.getUniqueId(), "skills." + skillType.name().toLowerCase() + ".currentXP", 0);
     }
 
+
+    /**
+     * Increases the current XP of a {@link Player} of the {@link Skill}
+     *
+     * @param skillType The type of skill to increase the XP of
+     * @param player The player whose XP should be increased
+     * */
     public static void increasePlayerXP(SkillType skillType, Player player) {
         Integer currentPlayerXP = getCurrentPlayerXP(skillType, player);
 
         PlayerData.set(PlayerData.FileType.SKILLS, player.getUniqueId(), "skills." + skillType.name().toLowerCase() + ".currentXP", currentPlayerXP + 1);
+    }
+
+    public static Skill getSkillBySkillType(SkillType skillType) {
+        for (Skill skill : skillsList) {
+            if (skill.getSkillType().equals(skillType)) {
+                return skill;
+            }
+        }
+        return null;
     }
 
 }

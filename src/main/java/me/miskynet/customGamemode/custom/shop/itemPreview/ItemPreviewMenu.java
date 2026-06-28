@@ -1,14 +1,13 @@
-package me.miskynet.customGamemode.custom.menu.shop;
+package me.miskynet.customGamemode.custom.shop.itemPreview;
 
 import me.miskynet.customGamemode.custom.item.PlayerHead;
-import me.miskynet.customGamemode.custom.item.shop.ItemPreviewItem;
-import me.miskynet.customGamemode.custom.item.shop.ShopItem;
 import me.miskynet.customGamemode.custom.menu.Menu;
 import me.miskynet.customGamemode.custom.menu.TextureMenu;
+import me.miskynet.customGamemode.custom.shop.ShopItem;
 import me.miskynet.customGamemode.utils.Utils;
 import net.kyori.adventure.text.Component;
 
-public class ItemPreview extends TextureMenu {
+public class ItemPreviewMenu extends TextureMenu {
 
     private ShopItem shopItem;
     private Integer lastPage;
@@ -21,7 +20,7 @@ public class ItemPreview extends TextureMenu {
      * @param size    The size of the {@link TextureMenu} (A multiple of 9 and max 54)
      * @param unicode The Unicode of the GUI in the Resource Pack
      */
-    public ItemPreview(Component title, int size, String unicode, int lastPage, ShopItem shopItem) {
+    public ItemPreviewMenu(Component title, int size, String unicode, int lastPage, ShopItem shopItem) {
         super(title, size, unicode);
         this.shopItem = shopItem;
         this.lastPage = lastPage;

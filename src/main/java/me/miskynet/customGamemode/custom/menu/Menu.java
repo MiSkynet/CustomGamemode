@@ -1,7 +1,7 @@
 package me.miskynet.customGamemode.custom.menu;
 
 import me.miskynet.customGamemode.custom.item.Item;
-import me.miskynet.customGamemode.custom.menu.shop.Shop;
+import me.miskynet.customGamemode.custom.shop.ShopMenu;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -76,7 +76,7 @@ public class Menu implements InventoryHolder {
     }
 
     /**
-     * Gets the inventory of the {@link Shop}
+     * Gets the inventory of the {@link ShopMenu}
      *
      * @return Inventory of the shop
      * */

@@ -1,13 +1,10 @@
-package me.miskynet.customGamemode.custom.menu.shop;
+package me.miskynet.customGamemode.custom.shop;
 
-import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.custom.item.PlayerHead;
-import me.miskynet.customGamemode.custom.item.shop.ShopItem;
 import me.miskynet.customGamemode.custom.menu.TextureMenu;
 import me.miskynet.customGamemode.utils.Utils;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,31 +12,31 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
 
-public class Shop extends TextureMenu {
+public class ShopMenu extends TextureMenu {
 
-    private Shop shop;
+    private ShopMenu shopMenu;
     private int currentPage;
     public int itemsPerPage = 45;
 
-    // caching all the items for the shop
+    // caching all the items for the shopMenu
     public static final List<ShopItem> cachedItems = new ArrayList<>();
 
     /**
-     * The Shop is a type of {@link TextureMenu} where players can
+     * The ShopMenu is a type of {@link TextureMenu} where players can
      * buy and sell items.
      *
-     * @param page The page at which the shop should be opened
+     * @param page The page at which the shopMenu should be opened
      * */
-    public Shop(Integer page) {
+    public ShopMenu(Integer page) {
         super(Utils.component("ShopCommand"), 54, "\uE003");
-        this.shop = this;
+        this.shopMenu = this;
         this.currentPage = page;
         buildMenu();
     }
 
     /**
      * This function is used to increase the page
-     * of the {@link Shop}.
+     * of the {@link ShopMenu}.
      * Please only use this function to increase the page
      * of a player!
      * */
@@ -52,7 +49,7 @@ public class Shop extends TextureMenu {
 
     /**
      * This function is used to decrease the page
-     * of the {@link Shop}.
+     * of the {@link ShopMenu}.
      * Please only use this function to decrease the page
      * of a player!
      * */
@@ -80,28 +77,28 @@ public class Shop extends TextureMenu {
         * when not, put a barrier instead of the button
         * */
         if (getShopItems().size() >= ((this.currentPage + 1) * itemsPerPage) + 1) {
-            this.shop.getInventory().setItem(50, arrowRight.toItemStack());
+            this.shopMenu.getInventory().setItem(50, arrowRight.toItemStack());
         }else {
             Item item = new Item(Material.BARRIER, Utils.component(false, "&cNo next page"));
-            this.shop.getInventory().setItem(50, item.toItemStack());
+            this.shopMenu.getInventory().setItem(50, item.toItemStack());
         }
 
         if (this.currentPage != 0) {
-            this.shop.getInventory().setItem(48, arrowLeft.toItemStack());
+            this.shopMenu.getInventory().setItem(48, arrowLeft.toItemStack());
         }else {
             Item item = new Item(Material.BARRIER, Utils.component(false, "&cNo previous page"));
-            this.shop.getInventory().setItem(48, item.toItemStack());
+            this.shopMenu.getInventory().setItem(48, item.toItemStack());
         }
 
         // item to present the current page
-        this.shop.getInventory().setItem(49, new Item(Material.BOOK, Utils.component(false, "&eCurrent Page: " + (this.currentPage + 1))).toItemStack());
+        this.shopMenu.getInventory().setItem(49, new Item(Material.BOOK, Utils.component(false, "&eCurrent Page: " + (this.currentPage + 1))).toItemStack());
 
         fillShopItems();
-        this.shop.fillEmptySlots();
+        this.shopMenu.fillEmptySlots();
     }
 
     /**
-     * Fill the shop with shop items and ignore the {@link #getEmptySlots()} slots
+     * Fill the shopMenu with shopMenu items and ignore the {@link #getEmptySlots()} slots
      * */
     public void fillShopItems() {
         int shopItemStart = this.currentPage * this.itemsPerPage;
@@ -110,7 +107,7 @@ public class Shop extends TextureMenu {
         // clear the slots
         for (int i = 0; i < 54; i++) {
             if (!getEmptySlots().contains(i)) {
-                this.shop.getInventory().setItem(i, null);
+                this.shopMenu.getInventory().setItem(i, null);
             }
         }
 
@@ -119,14 +116,14 @@ public class Shop extends TextureMenu {
 
             if (currentShopItem >= getShopItems().size()) break;
 
-            this.shop.getInventory().setItem(i, getShopItems().get(currentShopItem).toItemStack());
+            this.shopMenu.getInventory().setItem(i, getShopItems().get(currentShopItem).toItemStack());
 
             currentShopItem++;
         }
     }
 
     /**
-     * Caches all shop items so the items are ready when the first
+     * Caches all shopMenu items so the items are ready when the first
      * user loads the menu. If the cache is not performed, the menu
      * will take around 0.7s to open, due to the large amount of
      * items that have to be created
@@ -186,9 +183,9 @@ public class Shop extends TextureMenu {
     }
 
     /**
-     * Get the inventory of the {@link Shop}
+     * Get the inventory of the {@link ShopMenu}
      *
-     * @return Inventory of the shop
+     * @return Inventory of the shopMenu
      * */
     @Override
     public @NotNull Inventory getInventory() {
@@ -196,7 +193,7 @@ public class Shop extends TextureMenu {
     }
 
     /**
-     * Gets the empty slots of the {@link Shop}
+     * Gets the empty slots of the {@link ShopMenu}
      *
      * @return Returns an ArrayList of the empty slots
      * */
@@ -239,9 +236,9 @@ public class Shop extends TextureMenu {
     }
 
     /**
-     * Gets the current page of the {@link Shop}
+     * Gets the current page of the {@link ShopMenu}
      *
-     * @return The current page of the {@link Shop}
+     * @return The current page of the {@link ShopMenu}
      * */
     public Integer getCurrentPage() {
         return currentPage;

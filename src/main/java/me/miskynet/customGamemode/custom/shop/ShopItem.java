@@ -1,10 +1,9 @@
-package me.miskynet.customGamemode.custom.item.shop;
+package me.miskynet.customGamemode.custom.shop;
 
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.utils.Utils;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -27,7 +26,7 @@ public class ShopItem extends Item {
 
     /**
      * {@link ShopItem} is a type of {@link Item}. It is used to create
-     * items in the {@link me.miskynet.customGamemode.custom.menu.shop.Shop}. It contains
+     * items in the {@link ShopMenu}. It contains
      * information like the price to buy and sell the Item
      * @param material Material of the Item
      * @param buyPrice Price to buy the Item
