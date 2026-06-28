@@ -15,19 +15,19 @@ import org.bukkit.scheduler.BukkitScheduler;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The {@link TextureMenu} is a type of {@link Menu} that can have a custom GUI design.
+ * The design is applied by using Unicodes of a texture pack
+ * */
 public abstract class TextureMenu extends Menu {
 
     private ArrayList<Integer> interactSlots = new ArrayList<>();
     private String unicode;
 
     /**
-     * The {@link TextureMenu} is a type of {@link Menu} that can have a custom GUI design.
-     * The design is applied by using Unicodes of a texture pack
-     *
      * @param title The title of the {@link TextureMenu}
      * @param size The size of the {@link TextureMenu} (A multiple of 9 and max 54)
      * @param unicode The Unicode of the GUI in the Resource Pack
-     *
      * */
     public TextureMenu(Component title, int size, String unicode) {
         super(Utils.component("§f\uE001" + unicode + "\uE002").append(title), size);
@@ -35,7 +35,7 @@ public abstract class TextureMenu extends Menu {
     }
 
     /**
-     * Build the menu
+     * Builds the menu
      * */
     public void buildMenu() {
         fillEmptySlots();
@@ -71,7 +71,7 @@ public abstract class TextureMenu extends Menu {
     }
 
     /**
-     * Define slots that the user can interact with.
+     * Defines slots that the user can interact with.
      * in this slot, the user can also put items in!
      * To define buttons, don't use this function and instead hard code the
      * buttons in the event listener

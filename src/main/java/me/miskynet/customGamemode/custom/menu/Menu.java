@@ -10,20 +10,24 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * An {@link Menu} is an {@link Inventory}. The {@link Menu} Class
+ * can help create an {@link Inventory} more easy.
+ * */
 public class Menu implements InventoryHolder {
 
     Inventory inventory;
 
     /**
-     * Constructor to create simple menus. Listeners have to
-     * be written all by yourself!
+     * @param title The title of the {@link Menu}
+     * @param size The size of the Inventory (A multiple of 9 and max 54)
      * */
     public Menu(Component title, int size) {
         this.inventory = Bukkit.createInventory(this, size, title);
     }
 
     /**
-     * Set an {@link ItemStack} into a specific slot
+     * Sets an {@link ItemStack} into a specific slot
      *
      * @param slot Slot where the item should be put
      * @param itemStack The {@link ItemStack} that should be put into the slot
@@ -34,7 +38,7 @@ public class Menu implements InventoryHolder {
     }
 
     /**
-     * Set an {@link Item} into a specific slot
+     * Sets an {@link Item} into a specific slot
      *
      * @param slot Slot where the item should be put
      * @param item The {@link Item} that should be put into the slot
@@ -45,7 +49,7 @@ public class Menu implements InventoryHolder {
     }
 
     /**
-     * Add an {@link Item} into a {@link Menu}
+     * Adds an {@link Item} into a {@link Menu}
      *
      * @param itemStack The {@link ItemStack} that should be added to the {@link Menu}
      * */
@@ -54,9 +58,7 @@ public class Menu implements InventoryHolder {
         return this;
     }
 
-    /**
-     * Add an {@link Item} into a {@link Menu}
-     *
+    /**A
      * @param item The {@link Item} that should be added to the {@link Menu}
      * */
     public Menu addItem(Item item) {
@@ -65,7 +67,7 @@ public class Menu implements InventoryHolder {
     }
 
     /**
-     * Get an {@link ItemStack} out of a menu {@link Menu}
+     * Gets an {@link ItemStack} out of a menu {@link Menu}
      *
      * @param slot The slot the {@link ItemStack} should be got from
      * */
@@ -74,7 +76,7 @@ public class Menu implements InventoryHolder {
     }
 
     /**
-     * Get the inventory of the {@link Shop}
+     * Gets the inventory of the {@link Shop}
      *
      * @return Inventory of the shop
      * */
@@ -84,7 +86,7 @@ public class Menu implements InventoryHolder {
     }
 
     /**
-     * Open the {@link Menu} for a player
+     * Opens the {@link Menu} for a player
      * */
     public void openForPlayer(Player player) {
         player.openInventory(this.inventory);

@@ -29,7 +29,7 @@ public class ItemPreview extends TextureMenu {
     }
 
     /**
-     * Build the inventory for the player
+     * Builds the inventory for the player
      * */
     @Override
     public void buildMenu() {
@@ -56,7 +56,7 @@ public class ItemPreview extends TextureMenu {
     }
 
     /**
-     * Get the {@link #shopItem}
+     * Gets the {@link #shopItem}
      * @return ShopItem
      * */
     public ShopItem getShopItem() {
@@ -64,7 +64,7 @@ public class ItemPreview extends TextureMenu {
     }
 
     /**
-     * Get the last page of the shop the user had open
+     * Gets the last page of the shop the user had open
      * @return Last page {@link Integer}
      * */
     public Integer getLastPage() {

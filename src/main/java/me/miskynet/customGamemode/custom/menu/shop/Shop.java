@@ -196,7 +196,7 @@ public class Shop extends TextureMenu {
     }
 
     /**
-     * Get the empty slots of the {@link Shop}
+     * Gets the empty slots of the {@link Shop}
      *
      * @return Returns an ArrayList of the empty slots
      * */
@@ -215,7 +215,7 @@ public class Shop extends TextureMenu {
     }
 
     /**
-     * Get a {@link List} of all cached {@link ShopItem}
+     * Gets a {@link List} of all cached {@link ShopItem}
      *
      * @return {@link List} with all {@link ShopItem}
      * */
@@ -224,7 +224,7 @@ public class Shop extends TextureMenu {
     }
 
     /**
-     * Get an {@link ShopItem} by the id
+     * Gets an {@link ShopItem} by the id
      *
      * @param id The id of the item
      * @return {@link ShopItem}
@@ -239,7 +239,7 @@ public class Shop extends TextureMenu {
     }
 
     /**
-     * Get the current page of the {@link Shop}
+     * Gets the current page of the {@link Shop}
      *
      * @return The current page of the {@link Shop}
      * */

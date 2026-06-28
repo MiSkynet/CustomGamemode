@@ -1,4 +1,4 @@
-package me.miskynet.customGamemode.utils.customConfig;
+package me.miskynet.customGamemode.custom.config;
 
 import me.miskynet.customGamemode.Main;
 import org.bukkit.Bukkit;
@@ -39,7 +39,7 @@ public class CustomConfig {
     }
 
     /**
-     * Get an instance of a file
+     * Gets an instance of a file
      * @param filePath Path to the file
      * @return Instance of a config
      * */
@@ -59,7 +59,7 @@ public class CustomConfig {
     }
 
     /**
-     * Get a key out of a config
+     * Gets a key out of a config
      * @return {@link Object} out of config
      * */
     public static Object get(String filePath, String key) {
@@ -78,7 +78,7 @@ public class CustomConfig {
     }
 
     /**
-     * Save content into a file
+     * Saves content into a file
      * @param filePath
      * */
     public static void save(String filePath) {
@@ -90,7 +90,7 @@ public class CustomConfig {
     }
 
     /**
-     * Set a key and value into a filepath (this must be an)
+     * Sets a key and value into a filepath (this must be an)
      * existing fileconfiguration / config
      * @param filepath Path to the file
      * @param key Key for the setting
@@ -102,7 +102,7 @@ public class CustomConfig {
     }
 
     /**
-     * Reload a file
+     * Reloads a file
      * @param filePath Path to the file that should be reloaded
      * */
     public static void reload(String filePath) {

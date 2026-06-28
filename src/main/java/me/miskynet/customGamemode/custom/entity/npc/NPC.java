@@ -14,7 +14,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Mannequin;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.profile.PlayerTextures;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -43,7 +46,7 @@ public class NPC {
     }
 
     /**
-     * Create a new {@link NPC}
+     * Creates a new {@link NPC}
      * @param name The name of the {@link NPC}
      * @param location The {@link Location} where the {@link NPC} should be spawned at
      * */
@@ -53,7 +56,7 @@ public class NPC {
     }
 
     /**
-     * Summon an NPC into the set location
+     * Summons an NPC into the set location
      * */
     public void spawn() {
         World world = location.getWorld();
@@ -76,7 +79,7 @@ public class NPC {
     }
 
     /**
-     * Set an {@link InteractType} that is being used when interacted with the {@link NPC}
+     * Sets an {@link InteractType} that is being used when interacted with the {@link NPC}
      * @param interactType The {@link InteractType} that will be opened when right-clicking the {@link NPC}
      * */
     public void setInteractMenu(InteractType interactType) {
@@ -84,7 +87,7 @@ public class NPC {
     }
 
     /**
-     * Get the interact menu of the current npc
+     * Gets the interact menu of the current npc
      * @return {@link Menu}
      * */
     public InteractType getInteractMenu() {
@@ -92,7 +95,7 @@ public class NPC {
     }
 
     /**
-     * Get the {@link UUID} of an entity
+     * Gets the {@link UUID} of an entity
      * @return {@link UUID}
      * */
     public UUID getUuid() {
@@ -101,5 +104,26 @@ public class NPC {
 
     public void setResolvableProfile(ResolvableProfile resolvableProfile) {
         this.resolvableProfile = resolvableProfile;
+    }
+
+    /**
+     * Sets the skin texture of the {@link NPC}
+     *
+     * @param textureHash The texture hash of the skin
+     * */
+    public NPC setSkinHash(String textureHash) {
+        PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID());
+        PlayerTextures textureUrl = profile.getTextures();
+        URL url;
+        try {
+            url = new URL("https://textures.minecraft.net/texture/" + textureHash);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        textureUrl.setSkin(url);
+        profile.setTextures(textureUrl);
+        ResolvableProfile resolvableProfile = ResolvableProfile.resolvableProfile(profile);
+        this.setResolvableProfile(resolvableProfile);
+        return this;
     }
 }

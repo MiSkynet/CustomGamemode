@@ -2,7 +2,7 @@ package me.miskynet.customGamemode.commands;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import me.miskynet.customGamemode.utils.customConfig.PlayerData;
+import me.miskynet.customGamemode.custom.config.PlayerData;
 import org.bukkit.entity.Player;
 
 public class ToggleScoreboard implements BasicCommand {

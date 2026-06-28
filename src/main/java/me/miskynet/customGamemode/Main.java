@@ -1,8 +1,10 @@
 package me.miskynet.customGamemode;
 
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import me.miskynet.customGamemode.commands.testCommands.ReloadCommand;
 import me.miskynet.customGamemode.commands.SettingsCommand;
 import me.miskynet.customGamemode.commands.testCommands.GiveCopperGolem;
+import me.miskynet.customGamemode.commands.testCommands.SkillsMenuCommand;
 import me.miskynet.customGamemode.commands.testCommands.SummonNPCCommand;
 import me.miskynet.customGamemode.commands.ToggleScoreboard;
 import me.miskynet.customGamemode.commands.economy.EcoCommand;
@@ -15,7 +17,9 @@ import me.miskynet.customGamemode.custom.menu.settings.SettingsListener;
 import me.miskynet.customGamemode.custom.menu.shop.ItemPreviewListener;
 import me.miskynet.customGamemode.custom.menu.shop.Shop;
 import me.miskynet.customGamemode.custom.menu.shop.ShopListener;
+import me.miskynet.customGamemode.custom.menu.skillsMenu.SkillsMenuListener;
 import me.miskynet.customGamemode.custom.scoreboard.ScoreboardManager;
+import me.miskynet.customGamemode.custom.skills.FightingSkill;
 import me.miskynet.customGamemode.listener.OnJoin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -38,6 +42,8 @@ public final class Main extends JavaPlugin {
 
         scoreboardManager.runUpdates();
 
+        FightingSkill fightingSkill = new FightingSkill();
+
         // listener setup
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new OnJoin(), this);
@@ -46,6 +52,7 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new ItemPreviewListener(), this);
         pluginManager.registerEvents(new NPCMoveEvent(), this);
         pluginManager.registerEvents(new NPCInteractEvent(), this);
+        pluginManager.registerEvents(new SkillsMenuListener(), this);
 
         // command setup
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS.newHandler(event -> {
@@ -56,6 +63,13 @@ public final class Main extends JavaPlugin {
             registrar.register("eco", new EcoCommand());
             registrar.register("pay", new PayCommand());
             registrar.register("shop", new ShopCommand());
+
+            // test commands
+            registrar.register("summonnpc", new SummonNPCCommand());
+            registrar.register("getcoppergolem", new GiveCopperGolem());
+            registrar.register("skills", new SkillsMenuCommand());
+            registrar.register("reload", new ReloadCommand());
+
         }));
     }
 

@@ -4,7 +4,7 @@ import me.miskynet.customGamemode.custom.menu.Menu;
 import me.miskynet.customGamemode.custom.item.PlayerHead;
 import me.miskynet.customGamemode.custom.menu.TextureMenu;
 import me.miskynet.customGamemode.utils.Utils;
-import me.miskynet.customGamemode.utils.customConfig.PlayerData;
+import me.miskynet.customGamemode.custom.config.PlayerData;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -27,7 +27,7 @@ public class SettingsMenu extends TextureMenu implements InventoryHolder {
     }
 
     /**
-     * Build the settings page
+     * Builds the settings page
      *
      * @param player Player that has opened the inventory
      * */

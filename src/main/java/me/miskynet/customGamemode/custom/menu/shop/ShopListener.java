@@ -16,7 +16,7 @@ import org.bukkit.persistence.PersistentDataType;
 public class ShopListener implements Listener {
 
     /**
-     * Get the clicks in the {@link Shop}
+     * Gets the clicks in the {@link Shop}
      * */
     @EventHandler
     public void click(InventoryClickEvent event) {

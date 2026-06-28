@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * The {@link Relic} is a type of {@link Item}. It is a
- * custom, mythic item. No one really knows what it is or what it does
+ * custom, mythical item. No one really knows what it is or what it does
  * */
 public class Relic extends Item {
 
@@ -24,7 +24,7 @@ public class Relic extends Item {
     }
 
     /**
-     * @param purity The purity of {@link Relic}. The Value can be between 0.1 and 5.0,
+     * @param purity The purity of a {@link Relic}. The Value can be between 0.1 and 5.0,
      * where 5.0 is the highest/best value.
      * */
     public Relic(float purity) {
@@ -51,7 +51,7 @@ public class Relic extends Item {
      * */
 
     /**
-     * Get the purity of a {@link Relic}
+     * Gets the purity of a {@link Relic}
      *
      * @return Purity as {@link Float}
      * */
@@ -60,7 +60,7 @@ public class Relic extends Item {
     }
 
     /**
-     * Get the an random purity for the {@link Relic}
+     * Gets a random purity for the {@link Relic}
      *
      * @return Purity as {@link Float}
      * */

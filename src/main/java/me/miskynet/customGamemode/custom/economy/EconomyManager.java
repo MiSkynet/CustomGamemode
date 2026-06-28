@@ -1,6 +1,6 @@
 package me.miskynet.customGamemode.custom.economy;
 
-import me.miskynet.customGamemode.utils.customConfig.PlayerData;
+import me.miskynet.customGamemode.custom.config.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -10,6 +10,11 @@ import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
 import java.util.UUID;
 
+/**
+ * The {@link EconomyManager} contains useful methods related to
+ * everything an economy function would need like {@link #getBalance(Player)}, {@link #setBalance(Player, Double)}
+ * and {@link #transfer(Player, Player, Double)}
+ * */
 public class EconomyManager {
 
     HashMap<UUID, Double> playerBalance = new HashMap<>();
@@ -21,7 +26,7 @@ public class EconomyManager {
     }
 
     /**
-     * Get the balance of a player
+     * Gets the balance of a player
      * @param player Player whose balance should be got
      * @return Player balance as double
      * */
@@ -34,7 +39,7 @@ public class EconomyManager {
     }
 
     /**
-     * Set the balance of a player
+     * Sets the balance of a player
      * @param player Player whose balance should be changed
      * @param value New balance
      * */

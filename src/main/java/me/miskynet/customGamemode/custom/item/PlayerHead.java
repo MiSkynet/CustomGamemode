@@ -25,29 +25,54 @@ public class PlayerHead extends Item {
     /*
     * constructor
     * */
+    /**
+     * @param textureHash The texture hash of the {@link PlayerHead}
+     * */
     public PlayerHead(String textureHash) {
         this(null, null, 1, null, textureHash);
     }
 
+    /**
+     * @param displayName The display name of the {@link PlayerHead}
+     * @param textureHash The texture hash of the {@link PlayerHead}
+     * */
     public PlayerHead(Component displayName, String textureHash) {
         this(displayName, null, 1, null, textureHash);
     }
 
+    /**
+     * @param displayName The display name of the {@link PlayerHead}
+     * @param lore The lore of the {@link PlayerHead} as {@link List} of {@link Component}
+     * @param textureHash The texture hash of the {@link PlayerHead}
+     * */
     public PlayerHead(Component displayName, List<Component> lore, String textureHash) {
         this(displayName, lore, 1, null, textureHash);
     }
 
+    /**
+     * @param displayName The display name of the {@link PlayerHead}
+     * @param lore The lore of the {@link PlayerHead} as {@link List} of {@link Component}
+     * @param amount The amount of the {@link PlayerHead}
+     * @param textureHash The texture hash of the {@link PlayerHead}
+     * */
     public PlayerHead(Component displayName, List<Component> lore, int amount, String textureHash) {
         this(displayName, lore, amount, null, textureHash);
     }
 
+    /**
+     * @param displayName The display name of the {@link PlayerHead}
+     * @param lore The lore of the {@link PlayerHead} as {@link List} of {@link Component}
+     * @param amount The amount of the {@link PlayerHead}
+     * @param customModelDataComponent The {@link CustomModelDataComponent} of the {@link PlayerHead}
+     * @param textureHash The texture hash of the {@link PlayerHead}
+     * */
     public PlayerHead(Component displayName, List<Component> lore, int amount, CustomModelDataComponent customModelDataComponent, String textureHash) {
         super(Material.PLAYER_HEAD, displayName, lore, amount, customModelDataComponent);
         this.textureHash = textureHash;
     }
 
     /**
-     * Set the texture for the {@link PlayerHead}
+     * Sets the texture for the {@link PlayerHead}
      *
      * @return {@link PlayerHead}
      * */
@@ -57,7 +82,7 @@ public class PlayerHead extends Item {
     }
 
     /**
-     * Convert the {@link PlayerHead} into an {@link ItemStack}
+     * Converts the {@link PlayerHead} into an {@link ItemStack}
      *
      * @return {@link ItemStack}
      * */

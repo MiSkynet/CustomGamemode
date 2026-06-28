@@ -3,7 +3,7 @@ package me.miskynet.customGamemode.custom.scoreboard;
 import io.papermc.paper.scoreboard.numbers.NumberFormat;
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.utils.Utils;
-import me.miskynet.customGamemode.utils.customConfig.PlayerData;
+import me.miskynet.customGamemode.custom.config.PlayerData;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -17,7 +17,7 @@ public class ScoreboardManager {
     Scoreboard scoreboard;
 
     /**
-     * Create the scoreboard
+     * Creates the scoreboard
      *
      * @param player The Scoreboard the player is for
      * */
@@ -53,7 +53,7 @@ public class ScoreboardManager {
     }
 
     /**
-     * Get the current scoreboard
+     * Gets the current scoreboard
      *
      * @return {@link Scoreboard}
      * */
@@ -62,7 +62,7 @@ public class ScoreboardManager {
     }
 
     /**
-     * Get the rows of the scoreboard
+     * Gets the rows of the scoreboard
      *
      * @return Rows as a {@link ArrayList}
      * */
@@ -86,7 +86,7 @@ public class ScoreboardManager {
     }
 
     /**
-     * Update the scoreboard so changes like balance will be visible
+     * Updates the scoreboard so changes like balance will be visible
      * @param player {@link Player} the scoreboard should be updated for
      * */
     public void updateScoreboard(Player player) {
@@ -141,7 +141,7 @@ public class ScoreboardManager {
     }
 
     /**
-     * Run the updates for the scoreboard
+     * Runs the updates for the scoreboard
      * */
     public void runUpdates() {
 

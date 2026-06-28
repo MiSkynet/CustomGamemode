@@ -47,7 +47,7 @@ public class ShopItem extends Item {
     }
 
     /**
-     * Create a {@link ShopItem} from an {@link ItemStack}
+     * Creates a {@link ShopItem} from an {@link ItemStack}
      * @param itemStack Item stack that should be converted into a {@link ShopItem}
      * */
     public static ShopItem fromItemStack(ItemStack itemStack) {
@@ -72,18 +72,18 @@ public class ShopItem extends Item {
     }
 
     /**
-     * Get the price of an {@link ShopItem} to buy it
+     * Gets the price of an {@link ShopItem} to buy it
      * */
     public Double getBuyPrice() { return buyPrice; }
 
     /**
-     * Get the price of an {@link ShopItem} the player receives when
+     * Gets the price of an {@link ShopItem} the player receives when
      * selling the item
      * */
     public Double getSellPrice() { return sellPrice; }
 
     /**
-     * Convert the {@link ShopItem} into an {@link ItemStack}
+     * Converts the {@link ShopItem} into an {@link ItemStack}
      * @return {@link ShopItem} as {@link ItemStack}
      * */
     @Override
@@ -106,7 +106,7 @@ public class ShopItem extends Item {
     }
 
     /**
-     * Set the result item of the {@link ShopItem}. The Result item is
+     * Sets the result item of the {@link ShopItem}. The Result item is
      * {@link Item} that is later converted into an {@link ItemStack}
      * @param item The {@link Item} that should be the result item
      * */
@@ -115,7 +115,7 @@ public class ShopItem extends Item {
     }
 
     /**
-     * Get the result item
+     * Gets the result item
      * @return Result item as {@link Item} or null when none is set
      * */
     public Item getResultItem() {
@@ -123,7 +123,7 @@ public class ShopItem extends Item {
     }
 
     /**
-     * Set an id for the {@link ShopItem} to help identifying
+     * Sets an id for the {@link ShopItem} to help identifying
      * an item
      * @param id The id of the {@link ShopItem} as {@link Integer}
      * */
@@ -132,7 +132,7 @@ public class ShopItem extends Item {
     }
 
     /**
-     * Get the id of an {@link ShopItem}
+     * Gets the id of an {@link ShopItem}
      * @return Id as {@link Integer} or null when non is set
      * */
     public Integer getId() {

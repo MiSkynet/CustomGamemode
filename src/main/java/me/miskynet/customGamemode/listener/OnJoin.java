@@ -1,8 +1,8 @@
 package me.miskynet.customGamemode.listener;
 
 import me.miskynet.customGamemode.Main;
-import me.miskynet.customGamemode.utils.Utils;
-import me.miskynet.customGamemode.utils.customConfig.PlayerData;
+import me.miskynet.customGamemode.utils.Settings;
+import me.miskynet.customGamemode.custom.config.PlayerData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,7 +27,7 @@ public class OnJoin implements Listener {
 
         if (!PlayerData.checkForExistence(PlayerData.FileType.SETTINGS, playerUUID)) {
             PlayerData.setup(PlayerData.FileType.SETTINGS, playerUUID);
-            Utils.setupDefaultPlayerSettings(event.getPlayer());
+            Settings.setupDefaultPlayerSettings(event.getPlayer());
         }
 
         if (!PlayerData.checkForExistence(PlayerData.FileType.BALANCE, playerUUID)) {
@@ -36,6 +36,10 @@ public class OnJoin implements Listener {
 
         if (Main.economyManager.getBalance(player) == null) {
             Main.economyManager.setBalance(player, 0.0);
+        }
+
+        if (!PlayerData.checkForExistence(PlayerData.FileType.SKILLS, playerUUID)) {
+            PlayerData.setup(PlayerData.FileType.SKILLS, playerUUID);
         }
 
         Main.scoreboardManager.createScoreboard(event.getPlayer());

@@ -52,7 +52,7 @@ public class ItemPreviewItem {
     }
 
     /**
-     * Convert the {@link ItemPreviewItem} into an {@link ItemStack}
+     * Converts the {@link ItemPreviewItem} into an {@link ItemStack}
      *
      * @return {@link ItemStack}
      * */
@@ -87,7 +87,7 @@ public class ItemPreviewItem {
     }
 
     /**
-     * Create an {@link ItemPreviewItem} from an {@link ItemStack}
+     * Creates an {@link ItemPreviewItem} from an {@link ItemStack}
      *
      * @return {@link ItemPreviewItem}
      * */
@@ -113,7 +113,7 @@ public class ItemPreviewItem {
     }
 
     /**
-     * Get the price it will cost to buy the {@link ShopItem} at a specific quantity
+     * Gets the price it will cost to buy the {@link ShopItem} at a specific quantity
      *
      * @return Price as {@link Double}
      * */
@@ -122,7 +122,7 @@ public class ItemPreviewItem {
     }
 
     /**
-     * Get the amount that the item will be returned/required
+     * Gets the amount that the item will be returned/required
      *
      @return Amount as {@link Integer}
      * */
@@ -131,7 +131,8 @@ public class ItemPreviewItem {
     }
 
     /**
-     * The unavailable item will be set into the menu instead of the {@link ItemPreview}
+     * Gets the unavailable item, that will be set into the
+     * menu instead of the {@link ItemPreview}
      *
      * @return Unavailable item as {@link ItemStack}
      * */

@@ -1,6 +1,5 @@
 package me.miskynet.customGamemode.utils;
 
-import me.miskynet.customGamemode.utils.customConfig.PlayerData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -26,7 +25,7 @@ public class Utils {
     private static final int clickCooldown = 200;
 
     /**
-     * Create a {@link Component} and always unsets italic by default
+     * Creates a {@link Component} and always unsets italic by default
      * (used to use text formation in messages)
      * @param string The string that gets converted into a Component
      * @return {@link Component}
@@ -36,7 +35,7 @@ public class Utils {
     }
 
     /**
-     * Create a component and define if the message should be italic
+     * Creates a component and define if the message should be italic
      * (used to use text formation in messages)
      * @param italic True if the message should be italic. False if not
      * @param string The string that gets converted into a Component
@@ -47,7 +46,7 @@ public class Utils {
     }
 
     /**
-     * Create a {@link String} that has text formation and italic unset
+     * Creates a {@link String} that has text formation and italic unset
      * @param string String that should be formated
      * @return Formated {@link String}
      * */
@@ -57,7 +56,7 @@ public class Utils {
     }
 
     /**
-     * Create a {@link String} that has text formation and define if the
+     * Creates a {@link String} that has text formation and define if the
      * message should be italic
      * @param italic True if the message should be italic. False if not
      * @param string String that should be formated
@@ -69,7 +68,7 @@ public class Utils {
     }
 
     /**
-     * Convert a {@link Component} into a {@link String} with text formation
+     * Converts a {@link Component} into a {@link String} with text formation
      * @param component The {@link Component} that should be converted into a string
      * @return {@link Component} as {@link String}
      * */
@@ -78,7 +77,7 @@ public class Utils {
     }
 
     /**
-     * Check if a player is able to receive an {@link ItemStack}. If yes,
+     * Checks if a player is able to receive an {@link ItemStack}. If yes,
      * give it to the player. Else drop it on the players position
      * @param player Player that should be checked
      * @param itemStack The item stack that should be given or dropped
@@ -94,15 +93,7 @@ public class Utils {
     }
 
     /**
-     * Set the default player settings for a specific player
-     * @param player The player the settings should be set for to default
-     * */
-    public static void setupDefaultPlayerSettings(Player player) {
-        PlayerData.set(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus", true);
-    }
-
-    /**
-     * Create a new click cooldown. This prevents players from
+     * Creates a new click cooldown. This prevents players from
      * clicking again in an inventory
      * @param player The player that the cooldown should be applied on
      * */

@@ -1,9 +1,8 @@
 package me.miskynet.customGamemode.custom.menu.settings;
 
 import me.miskynet.customGamemode.Main;
-import me.miskynet.customGamemode.custom.scoreboard.ScoreboardManager;
 import me.miskynet.customGamemode.utils.Utils;
-import me.miskynet.customGamemode.utils.customConfig.PlayerData;
+import me.miskynet.customGamemode.custom.config.PlayerData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

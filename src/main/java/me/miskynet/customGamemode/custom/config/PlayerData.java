@@ -1,4 +1,4 @@
-package me.miskynet.customGamemode.utils.customConfig;
+package me.miskynet.customGamemode.custom.config;
 
 import me.miskynet.customGamemode.Main;
 import org.bukkit.Bukkit;
@@ -12,23 +12,45 @@ import java.util.UUID;
 
 public class PlayerData {
 
+    /**
+     * The {@link FileType} defines what type of file a config is
+     * and contains the path to each config. The file path can be
+     * got by using {@link #getFilePath(UUID)}
+     * */
     public enum FileType {
 
         SETTINGS("settings.yml"),
         BALANCE("balance.yml"),
-        STATS("stats.yml");
+        STATS("stats.yml"),
+        SKILLS("skills.yml");
 
         private final String fileName;
 
+        /**
+         * Sets the file name of the {@link FileType}
+         *
+         * @param fileName Name of the file
+         * */
         FileType(String fileName) {
             this.fileName = fileName;
         }
 
+        /**
+         * Converts the {@link FileType} into a {@link String}
+         *
+         * @return {@link String}
+         * */
         @Override
         public String toString() {
             return this.fileName;
         }
 
+        /**
+         * Gets the path of the current file
+         *
+         * @param uuid The {@link UUID} of the player whose file should be got
+         * @return Path as {@link String}
+         * */
         public String getPath(java.util.UUID uuid) {
             return "playerData/" + uuid.toString() + "/" + this.fileName;
         }
@@ -36,7 +58,7 @@ public class PlayerData {
     }
 
     /**
-     * Get the file path for the player settings file
+     * Gets the file path for the player settings file
      * @param uuid The uuid of the player that settings should be got
      * @return Filepath of the settings path
      * */
