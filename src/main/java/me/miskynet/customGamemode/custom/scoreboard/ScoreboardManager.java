@@ -2,6 +2,7 @@ package me.miskynet.customGamemode.custom.scoreboard;
 
 import io.papermc.paper.scoreboard.numbers.NumberFormat;
 import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.utils.ComponentManager;
 import me.miskynet.customGamemode.utils.Utils;
 import me.miskynet.customGamemode.custom.config.PlayerData;
 import net.kyori.adventure.text.Component;
@@ -26,7 +27,7 @@ public class ScoreboardManager {
         Scoreboard scoreboard = manager.getNewScoreboard();
 
         int repeat = 5;
-        Component scoreboardTitle = Utils.component(" ".repeat(repeat) + "&6Custom Gamemode" + " ".repeat(repeat));
+        Component scoreboardTitle = ComponentManager.component(" ".repeat(repeat) + "&6Custom Gamemode" + " ".repeat(repeat));
         Objective objective = scoreboard.registerNewObjective("sidePanel",Criteria.DUMMY, scoreboardTitle);
 
         int rowSize = getRows(player).size();
@@ -70,23 +71,24 @@ public class ScoreboardManager {
 
         ArrayList<String> scores = new ArrayList<>();
 
-        scores.add(Utils.coloredString(" "));
-        scores.add(Utils.coloredString("&7Your Profile: "));
-        scores.add(Utils.coloredString("  &6" + player.getName()));
-        scores.add(Utils.coloredString(" "));
-        scores.add(Utils.coloredString("&7Your Balance:"));
-        scores.add(Utils.coloredString("&7  &6" + Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(player)) + Main.economyManager.getEcoSymbol()));
-        scores.add(Utils.coloredString(" "));
+        scores.add(ComponentManager.coloredString(" "));
+        scores.add(ComponentManager.coloredString("&7Your Profile: "));
+        scores.add(ComponentManager.coloredString("  &6" + player.getName()));
+        scores.add(ComponentManager.coloredString(" "));
+        scores.add(ComponentManager.coloredString("&7Your Balance:"));
+        scores.add(ComponentManager.coloredString("&7  &6" + Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(player)) + Main.economyManager.getEcoSymbol()));
+        scores.add(ComponentManager.coloredString(" "));
 
         int repeat = 7;
         String centerIP = " ".repeat(repeat) + "&8michigames.net";
-        scores.add(Utils.coloredString(centerIP));
+        scores.add(ComponentManager.coloredString(centerIP));
 
         return scores;
     }
 
     /**
      * Updates the scoreboard so changes like balance will be visible
+     *
      * @param player {@link Player} the scoreboard should be updated for
      * */
     public void updateScoreboard(Player player) {
@@ -106,7 +108,7 @@ public class ScoreboardManager {
         Objective objective = scoreboard.getObjective("sidePanel");
         if (objective == null) {
             int repeat = 5;
-            Component scoreboardTitle = Utils.component(" ".repeat(repeat) + "&6&lCustom Gamemode" + " ".repeat(repeat));
+            Component scoreboardTitle = ComponentManager.component(" ".repeat(repeat) + "&6&lCustom Gamemode" + " ".repeat(repeat));
             objective = scoreboard.registerNewObjective("sidePanel", Criteria.DUMMY, scoreboardTitle);
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         }

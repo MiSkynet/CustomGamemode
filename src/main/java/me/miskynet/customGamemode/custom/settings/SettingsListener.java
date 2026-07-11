@@ -11,7 +11,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 public class SettingsListener implements Listener {
 
     /**
-     * Listener to check for clicks in the {@link SettingsMenu}
+     * IndexMenuListener to check for clicks in the {@link SettingsMenu}
      * */
     @EventHandler
     public void clickListener(InventoryClickEvent event) {
@@ -24,6 +24,7 @@ public class SettingsListener implements Listener {
             Player player = (Player) event.getWhoClicked();
 
             if (!Utils.checkForAllowedClick(player)) return;
+            Utils.createClickCooldown(player);
 
             if (event.getSlot() == 10) {
 
@@ -36,8 +37,6 @@ public class SettingsListener implements Listener {
                 }
                 Main.scoreboardManager.updateScoreboard(player);
             }
-
-            Utils.createClickCooldown(player);
         }
     }
 

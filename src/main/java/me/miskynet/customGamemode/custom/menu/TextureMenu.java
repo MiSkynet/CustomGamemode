@@ -1,6 +1,7 @@
 package me.miskynet.customGamemode.custom.menu;
 
 import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.utils.ComponentManager;
 import me.miskynet.customGamemode.utils.Utils;
 import me.miskynet.customGamemode.custom.item.Item;
 import net.kyori.adventure.text.Component;
@@ -30,7 +31,7 @@ public abstract class TextureMenu extends Menu {
      * @param unicode The Unicode of the GUI in the Resource Pack
      * */
     public TextureMenu(Component title, int size, String unicode) {
-        super(Utils.component("§f\uE001" + unicode + "\uE002").append(title), size);
+        super(ComponentManager.component("§f\uE001" + unicode + "\uE002").append(title), size);
         this.unicode = unicode;
     }
 
@@ -51,7 +52,7 @@ public abstract class TextureMenu extends Menu {
      */
     public TextureMenu setInteractSlots(ArrayList<Integer> slots) {
         this.interactSlots = slots;
-        super.inventory.clear();
+        super.getInventory().clear();
         return this;
     }
 
@@ -66,7 +67,7 @@ public abstract class TextureMenu extends Menu {
         for (int slot : slots) {
             interactSlots.add(slot);
         }
-        super.inventory.clear();
+        super.getInventory().clear();
         return this;
     }
 
@@ -108,9 +109,9 @@ public abstract class TextureMenu extends Menu {
         itemMeta.setCustomModelDataComponent(component);
         item.setItemMeta(itemMeta);
 
-        for (int i = 0; i < super.inventory.getSize(); i++) {
+        for (int i = 0; i < super.getInventory().getSize(); i++) {
             if (interactSlots.contains(i)) continue;
-            if (inventory.getItem(i) == null || inventory.getItem(i).getType().equals(Material.AIR)) super.inventory.setItem(i, item.toItemStack());
+            if (getInventory().getItem(i) == null || getInventory().getItem(i).getType().equals(Material.AIR)) super.getInventory().setItem(i, item.toItemStack());
         }
     }
 }

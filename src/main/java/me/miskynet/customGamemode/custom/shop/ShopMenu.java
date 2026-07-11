@@ -3,7 +3,10 @@ package me.miskynet.customGamemode.custom.shop;
 import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.custom.item.PlayerHead;
 import me.miskynet.customGamemode.custom.menu.TextureMenu;
+import me.miskynet.customGamemode.utils.ComponentManager;
+import me.miskynet.customGamemode.utils.Debugger;
 import me.miskynet.customGamemode.utils.Utils;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +17,6 @@ import java.util.*;
 
 public class ShopMenu extends TextureMenu {
 
-    private ShopMenu shopMenu;
     private int currentPage;
     public int itemsPerPage = 45;
 
@@ -28,8 +30,7 @@ public class ShopMenu extends TextureMenu {
      * @param page The page at which the shopMenu should be opened
      * */
     public ShopMenu(Integer page) {
-        super(Utils.component("ShopCommand"), 54, "\uE003");
-        this.shopMenu = this;
+        super(ComponentManager.component("ShopCommand"), 54, "\uE003");
         this.currentPage = page;
         buildMenu();
     }
@@ -54,8 +55,8 @@ public class ShopMenu extends TextureMenu {
      * of a player!
      * */
     public void decreasePage() {
-        if (currentPage >= 1) {
-            currentPage = currentPage - 1;
+        if (currentPage > 0) {
+            currentPage--;
             buildMenu();
         }
     }
@@ -68,8 +69,8 @@ public class ShopMenu extends TextureMenu {
     @Override
     public void buildMenu() {
 
-        PlayerHead arrowLeft = new PlayerHead(Utils.component(false, "&ePrevious Page"), "528b8cf405eaf606a0210f0303b013179f8f12eaa95824129ebeef9e44b68230");
-        PlayerHead arrowRight = new PlayerHead(Utils.component(false, "&eNext Page"), "5dcda6e3c6dca7e9b8b6ba3febf5cd0917f997b64b2aef18c3f773765e3a579");
+        PlayerHead arrowLeft = new PlayerHead(ComponentManager.component(false, "&ePrevious Page"), "528b8cf405eaf606a0210f0303b013179f8f12eaa95824129ebeef9e44b68230");
+        PlayerHead arrowRight = new PlayerHead(ComponentManager.component(false, "&eNext Page"), "5dcda6e3c6dca7e9b8b6ba3febf5cd0917f997b64b2aef18c3f773765e3a579");
 
         /*
         * calculate if there is at least one item to fit in a new page
@@ -77,24 +78,24 @@ public class ShopMenu extends TextureMenu {
         * when not, put a barrier instead of the button
         * */
         if (getShopItems().size() >= ((this.currentPage + 1) * itemsPerPage) + 1) {
-            this.shopMenu.getInventory().setItem(50, arrowRight.toItemStack());
+            this.getInventory().setItem(50, arrowRight.toItemStack());
         }else {
-            Item item = new Item(Material.BARRIER, Utils.component(false, "&cNo next page"));
-            this.shopMenu.getInventory().setItem(50, item.toItemStack());
+            Item item = new Item(Material.BARRIER, ComponentManager.component(false, "&cNo next page"));
+            this.getInventory().setItem(50, item.toItemStack());
         }
 
         if (this.currentPage != 0) {
-            this.shopMenu.getInventory().setItem(48, arrowLeft.toItemStack());
+            this.getInventory().setItem(48, arrowLeft.toItemStack());
         }else {
-            Item item = new Item(Material.BARRIER, Utils.component(false, "&cNo previous page"));
-            this.shopMenu.getInventory().setItem(48, item.toItemStack());
+            Item item = new Item(Material.BARRIER, ComponentManager.component(false, "&cNo previous page"));
+            this.getInventory().setItem(48, item.toItemStack());
         }
 
         // item to present the current page
-        this.shopMenu.getInventory().setItem(49, new Item(Material.BOOK, Utils.component(false, "&eCurrent Page: " + (this.currentPage + 1))).toItemStack());
+        this.getInventory().setItem(49, new Item(Material.BOOK, ComponentManager.component(false, "&eCurrent Page: " + (this.currentPage + 1))).toItemStack());
 
         fillShopItems();
-        this.shopMenu.fillEmptySlots();
+        this.fillEmptySlots();
     }
 
     /**
@@ -107,7 +108,7 @@ public class ShopMenu extends TextureMenu {
         // clear the slots
         for (int i = 0; i < 54; i++) {
             if (!getEmptySlots().contains(i)) {
-                this.shopMenu.getInventory().setItem(i, null);
+                this.getInventory().setItem(i, null);
             }
         }
 
@@ -116,13 +117,15 @@ public class ShopMenu extends TextureMenu {
 
             if (currentShopItem >= getShopItems().size()) break;
 
-            this.shopMenu.getInventory().setItem(i, getShopItems().get(currentShopItem).toItemStack());
+            this.getInventory().setItem(i, getShopItems().get(currentShopItem).toItemStack());
 
             currentShopItem++;
         }
     }
 
     /**
+     * <strong>This list is only Temporary for testing!!</strong> <br>
+     *
      * Caches all shopMenu items so the items are ready when the first
      * user loads the menu. If the cache is not performed, the menu
      * will take around 0.7s to open, due to the large amount of
@@ -161,11 +164,13 @@ public class ShopMenu extends TextureMenu {
 
             ShopItem shopItem = new ShopItem(material, buyPriceRounded, sellPriceRounded);
 
-            shopItem.setId(id);
+            Item resultItem = new Item(material);
 
-            Item resultItem = new Item(material, Utils.component("&dCool Item Stack"));
+            resultItem.setDisplayName(ComponentManager.component(false, "&d" + Utils.formatEnumToString(material.toString())));
 
             shopItem.setResultItem(resultItem);
+
+            shopItem.setId(id);
 
             cachedItems.add(shopItem);
 

@@ -10,6 +10,7 @@ public class ShopCommand implements BasicCommand {
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
 
         if (commandSourceStack.getSender() instanceof Player player) {
+
             ShopMenu shopMenu = new ShopMenu(0);
             shopMenu.openForPlayer(player);
         }

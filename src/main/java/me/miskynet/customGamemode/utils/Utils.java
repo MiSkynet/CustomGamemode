@@ -24,57 +24,7 @@ public class Utils {
     private static final Map<UUID, Long> clickCooldownMap = new HashMap<>();
     private static final int clickCooldown = 200;
 
-    /**
-     * Creates a {@link Component} and always unsets italic by default
-     * (used to use text formation in messages)
-     * @param string The string that gets converted into a Component
-     * @return {@link Component}
-     * */
-    public static Component component(String string) {
-        return LegacyComponentSerializer.legacyAmpersand().deserialize(string);
-    }
 
-    /**
-     * Creates a component and define if the message should be italic
-     * (used to use text formation in messages)
-     * @param italic True if the message should be italic. False if not
-     * @param string The string that gets converted into a Component
-     * @return {@link Component}
-     * */
-    public static Component component(boolean italic, String string) {
-        return LegacyComponentSerializer.legacyAmpersand().deserialize(string).decoration(TextDecoration.ITALIC, italic);
-    }
-
-    /**
-     * Creates a {@link String} that has text formation and italic unset
-     * @param string String that should be formated
-     * @return Formated {@link String}
-     * */
-    public static String coloredString(String string) {
-        Component component = component(string);
-        return LegacyComponentSerializer.legacySection().serialize(component);
-    }
-
-    /**
-     * Creates a {@link String} that has text formation and define if the
-     * message should be italic
-     * @param italic True if the message should be italic. False if not
-     * @param string String that should be formated
-     * @return Formated {@link String}
-     * */
-    public static String coloredString(boolean italic, String string) {
-        Component component = component(italic, string);
-        return LegacyComponentSerializer.legacySection().serialize(component);
-    }
-
-    /**
-     * Converts a {@link Component} into a {@link String} with text formation
-     * @param component The {@link Component} that should be converted into a string
-     * @return {@link Component} as {@link String}
-     * */
-    public static String fromComponent(Component component) {
-        return LegacyComponentSerializer.legacyAmpersand().serialize(component);
-    }
 
     /**
      * Checks if a player is able to receive an {@link ItemStack}. If yes,
@@ -120,13 +70,66 @@ public class Utils {
         return true;
     }
 
-
+    /**
+     * Gets the value of a {@link PersistentDataType} from an {@link Entity}
+     *
+     * @param entity The {@link Entity} that should be checked
+     * @param namespacedKey The {@link NamespacedKey} that should be checked
+     * @param persistentDataType The {@link PersistentDataType} that should be checked
+     * @return The value of the {@link PersistentDataType} or null if not found
+     * */
     public static Object getPDCOfEntity(Entity entity, NamespacedKey namespacedKey, PersistentDataType persistentDataType) {
         return entity.getPersistentDataContainer().get(namespacedKey, persistentDataType);
     }
 
+    /**
+     * Gets the value of a {@link PersistentDataType} from an {@link ItemStack}
+     *
+     * @param itemStack The {@link ItemStack} that should be checked
+     * @param namespacedKey The {@link NamespacedKey}
+     * @param persistentDataType The {@link PersistentDataType}
+     * @return The value of the {@link PersistentDataType}
+     * */
     public static Object getPDCOfItem(ItemStack itemStack, NamespacedKey namespacedKey, PersistentDataType persistentDataType) {
         return itemStack.getItemMeta().getPersistentDataContainer().get(namespacedKey, persistentDataType);
     }
 
+    /**
+     * Sets a value of a {@link PersistentDataType} to an {@link ItemStack}
+     *
+     * @param itemStack The {@link ItemStack} that should be modified
+     * @param namespacedKey The {@link NamespacedKey}
+     * @param persistentDataType The {@link PersistentDataType}
+     * @param value The value to set
+     * */
+    public static void setPDCOfItem(ItemStack itemStack, NamespacedKey namespacedKey, PersistentDataType persistentDataType, Object value) {
+        itemStack.getItemMeta().getPersistentDataContainer().set(namespacedKey, persistentDataType, value);
+    }
+
+    /**
+     * Formats an enum constant to a more readable string
+     *
+     * @param string The enum constant to format
+     * @return A formatted string
+     */
+    /*
+    * Coded by AI c:
+    * */
+    public static String formatEnumToString(String string) {
+
+        String lowerCase = string.toLowerCase().replace('_', ' ');
+
+        String[] words = lowerCase.split(" ");
+        StringBuilder formattedName = new StringBuilder();
+
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                formattedName.append(word.substring(0, 1).toUpperCase())
+                        .append(word.substring(1))
+                        .append(" ");
+            }
+        }
+
+        return formattedName.toString().trim();
+    }
 }

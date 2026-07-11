@@ -22,7 +22,7 @@ public class PlayerData {
         SETTINGS("settings.yml"),
         BALANCE("balance.yml"),
         STATS("stats.yml"),
-        SKILLS("skills.yml");
+        INDEX("index.yml");
 
         private final String fileName;
 
@@ -59,6 +59,7 @@ public class PlayerData {
 
     /**
      * Gets the file path for the player settings file
+     *
      * @param uuid The uuid of the player that settings should be got
      * @return Filepath of the settings path
      * */
@@ -96,6 +97,7 @@ public class PlayerData {
 
     /**
      * Get an instance of a player settings file
+     *
      * @return Config itself
      * */
     public static FileConfiguration get(FileType fileType, UUID uuid) {
@@ -104,6 +106,7 @@ public class PlayerData {
 
     /**
      * Get an object out of a player settings file
+     *
      * @param key setting name that should be searched for
      * @return {@link Object}
      * */
@@ -120,6 +123,7 @@ public class PlayerData {
 
     /**
      * Set a setting for a player
+     *
      * @param key key of the setting
      * @param value value of the setting
      * */
@@ -137,6 +141,7 @@ public class PlayerData {
 
     /**
      * Checks if the settings file of a player exists
+     *
      * @return True if the file exists. False if the file does not exist
      * */
     public static boolean checkForExistence(FileType fileType, UUID uuid) {

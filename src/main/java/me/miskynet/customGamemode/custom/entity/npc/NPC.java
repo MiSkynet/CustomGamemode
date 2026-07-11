@@ -4,6 +4,7 @@ import com.destroystokyo.paper.profile.PlayerProfile;
 import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.menu.Menu;
+import me.miskynet.customGamemode.utils.ComponentManager;
 import me.miskynet.customGamemode.utils.Utils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -32,7 +33,7 @@ public class NPC {
     InteractType interactType = null;
     ResolvableProfile resolvableProfile;
 
-    public static NamespacedKey interactTypeKey = new NamespacedKey(Main.getInstance(), "interacttype");
+    public static NamespacedKey interactTypeKey = new NamespacedKey(Main.getInstance(), "interactType");
 
     /**
      * This enum contains all the available types of Interact Menus that
@@ -47,6 +48,7 @@ public class NPC {
 
     /**
      * Creates a new {@link NPC}
+     *
      * @param name The name of the {@link NPC}
      * @param location The {@link Location} where the {@link NPC} should be spawned at
      * */
@@ -65,7 +67,7 @@ public class NPC {
         entity.setInvulnerable(true);
         entity.setSilent(true);
         entity.setCustomNameVisible(true);
-        entity.customName(Utils.component("&dShop NPC"));
+        entity.customName(ComponentManager.component("&dShop NPC"));
 
         Mannequin mannequin = (Mannequin) entity;
         mannequin.setDescription(null);
@@ -80,6 +82,7 @@ public class NPC {
 
     /**
      * Sets an {@link InteractType} that is being used when interacted with the {@link NPC}
+     *
      * @param interactType The {@link InteractType} that will be opened when right-clicking the {@link NPC}
      * */
     public void setInteractMenu(InteractType interactType) {
@@ -88,6 +91,7 @@ public class NPC {
 
     /**
      * Gets the interact menu of the current npc
+     *
      * @return {@link Menu}
      * */
     public InteractType getInteractMenu() {
@@ -96,12 +100,18 @@ public class NPC {
 
     /**
      * Gets the {@link UUID} of an entity
+     *
      * @return {@link UUID}
      * */
     public UUID getUuid() {
         return this.uuid;
     }
 
+    /**
+     * Sets the {@link ResolvableProfile} of the {@link NPC}
+     *
+     * @param resolvableProfile The {@link ResolvableProfile} that will be set
+     * */
     public void setResolvableProfile(ResolvableProfile resolvableProfile) {
         this.resolvableProfile = resolvableProfile;
     }

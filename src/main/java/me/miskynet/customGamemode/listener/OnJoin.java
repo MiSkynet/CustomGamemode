@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.List;
 import java.util.UUID;
 
 public class OnJoin implements Listener {
@@ -38,8 +39,11 @@ public class OnJoin implements Listener {
             Main.economyManager.setBalance(player, 0.0);
         }
 
-        if (!PlayerData.checkForExistence(PlayerData.FileType.SKILLS, playerUUID)) {
-            PlayerData.setup(PlayerData.FileType.SKILLS, playerUUID);
+        if (!PlayerData.checkForExistence(PlayerData.FileType.INDEX, playerUUID)) {
+            PlayerData.setup(PlayerData.FileType.INDEX, playerUUID);
+
+            PlayerData.set(PlayerData.FileType.INDEX, playerUUID, "currentLevel", 0);
+            PlayerData.set(PlayerData.FileType.INDEX, playerUUID, "currentXP", 0);
         }
 
         Main.scoreboardManager.createScoreboard(event.getPlayer());

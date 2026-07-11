@@ -4,6 +4,8 @@ import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.custom.shop.ShopMenu;
 import me.miskynet.customGamemode.custom.shop.ShopItem;
+import me.miskynet.customGamemode.utils.ComponentManager;
+import me.miskynet.customGamemode.utils.Debugger;
 import me.miskynet.customGamemode.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,6 +29,7 @@ public class ItemPreviewListener implements Listener {
             event.setCancelled(true);
 
             if (!Utils.checkForAllowedClick(player)) return;
+            Utils.createClickCooldown(player);
 
             if (event.getSlot() == 0) {
                 ShopMenu shopMenu = new ShopMenu(itemPreview.getLastPage());
@@ -48,7 +51,7 @@ public class ItemPreviewListener implements Listener {
                 if (event.getClickedInventory().getItem(event.getSlot()).equals(ItemPreviewItem.getUnavailableItem())) return;
 
                 if (Main.economyManager.getBalance(player) < finalPrice) {
-                    player.sendMessage(Utils.component("&cYou don't have enough money to buy this!"));
+                    player.sendMessage(ComponentManager.component("&cYou don't have enough money to buy this!"));
                     return;
                 }
 
@@ -56,15 +59,15 @@ public class ItemPreviewListener implements Listener {
 
                 // cancel the buy if the item couldn't be added to the player inventory
                 if (!giveItem.isEmpty()) {
-                    player.sendMessage(Utils.component("&cSorry, but the item couldn't be added to your inventory and the buy was cancelled"));
+                    player.sendMessage(ComponentManager.component("&cSorry, but the item couldn't be added to your inventory and the buy was cancelled"));
                     return;
                 }
 
                 Main.economyManager.addBalance(player, finalPrice * -1);
-                player.sendMessage(Utils.component("&7You bought " + Utils.fromComponent(resultItem.getDisplayName()) +
-                        "&r&7 for &a" + finalPrice + Main.economyManager.getEcoSymbol() +
-                        "&7 (New Balance: &a" + Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(player)) +
-                        Main.economyManager.getEcoSymbol() + "&7)"));
+
+                player.sendMessage(ComponentManager.component("&7You bought " + ComponentManager.fromComponent(resultItem.toItemStack().getItemMeta().displayName()) +
+                        "&r&7 for &a" + finalPrice + Main.economyManager.getEcoSymbol() + "&7 (New Balance: &a" +
+                        Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(player)) + Main.economyManager.getEcoSymbol() + "&7)"));
             }
 
             // slots to sell items
@@ -79,21 +82,18 @@ public class ItemPreviewListener implements Listener {
                 Integer amount = clickedItem.getAmount();
 
                 if (!checkForAmount(player, resultItem.toItemStack(), amount)) {
-                    player.sendMessage(Utils.component("&cYou don't have enough to sell that much!"));
+                    player.sendMessage(ComponentManager.component("&cYou don't have enough of this item to sell that much!"));
                     return;
                 }
 
                 removeItems(player, resultItem.toItemStack(), amount);
 
                 Main.economyManager.addBalance(player, clickedItem.getPrice());
-                player.sendMessage(Utils.component("&7You sold " + Utils.fromComponent(resultItem.getDisplayName()) +
-                        "&r&7 for &a" + clickedItem.getPrice() + Main.economyManager.getEcoSymbol() +
-                        "&7 (New Balance: &a" + Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(player)) +
-                        Main.economyManager.getEcoSymbol() + "&7)"));
 
+                player.sendMessage(ComponentManager.component("&7You sold " + ComponentManager.fromComponent(resultItem.toItemStack().getItemMeta().displayName()) +
+                        "&r&7 for &a" + clickedItem.getPrice() + Main.economyManager.getEcoSymbol() + "&7 (New Balance: &a" +
+                        Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(player)) + Main.economyManager.getEcoSymbol() + "&7)"));
             }
-
-            Utils.createClickCooldown(player);
         }
     }
 

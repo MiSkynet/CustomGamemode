@@ -2,6 +2,7 @@ package me.miskynet.customGamemode.custom.shop;
 
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.item.Item;
+import me.miskynet.customGamemode.utils.ComponentManager;
 import me.miskynet.customGamemode.utils.Utils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -28,6 +29,7 @@ public class ShopItem extends Item {
      * {@link ShopItem} is a type of {@link Item}. It is used to create
      * items in the {@link ShopMenu}. It contains
      * information like the price to buy and sell the Item
+     *
      * @param material Material of the Item
      * @param buyPrice Price to buy the Item
      * @param sellPrice Price a player will receive when selling the Item
@@ -36,8 +38,8 @@ public class ShopItem extends Item {
         super(material, null, new ArrayList<>());
 
         List<Component> lore = new ArrayList<>();
-        lore.add(Utils.component(false, "&7Buy Price: &6" + buyPrice));
-        lore.add(Utils.component(false, "&7Sell Price: &6" + sellPrice));
+        lore.add(ComponentManager.component(false, "&7Buy Price: &6" + buyPrice));
+        lore.add(ComponentManager.component(false, "&7Sell Price: &6" + sellPrice));
 
         this.buyPrice = buyPrice;
         this.sellPrice = sellPrice;
@@ -47,6 +49,7 @@ public class ShopItem extends Item {
 
     /**
      * Creates a {@link ShopItem} from an {@link ItemStack}
+     *
      * @param itemStack Item stack that should be converted into a {@link ShopItem}
      * */
     public static ShopItem fromItemStack(ItemStack itemStack) {
@@ -83,6 +86,7 @@ public class ShopItem extends Item {
 
     /**
      * Converts the {@link ShopItem} into an {@link ItemStack}
+     *
      * @return {@link ShopItem} as {@link ItemStack}
      * */
     @Override
@@ -106,6 +110,7 @@ public class ShopItem extends Item {
 
     /**
      * Sets the result item of the {@link ShopItem}. The Result item is
+     *
      * {@link Item} that is later converted into an {@link ItemStack}
      * @param item The {@link Item} that should be the result item
      * */
@@ -115,6 +120,7 @@ public class ShopItem extends Item {
 
     /**
      * Gets the result item
+     *
      * @return Result item as {@link Item} or null when none is set
      * */
     public Item getResultItem() {
@@ -124,6 +130,7 @@ public class ShopItem extends Item {
     /**
      * Sets an id for the {@link ShopItem} to help identifying
      * an item
+     *
      * @param id The id of the {@link ShopItem} as {@link Integer}
      * */
     public void setId(Integer id) {
@@ -132,6 +139,7 @@ public class ShopItem extends Item {
 
     /**
      * Gets the id of an {@link ShopItem}
+     *
      * @return Id as {@link Integer} or null when non is set
      * */
     public Integer getId() {

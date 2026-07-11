@@ -17,6 +17,7 @@ public class CustomConfig {
 
     /**
      * Set up a new file
+     *
      * @param filePath Path where the file should be created
      * */
     public static void setup(String filePath) {
@@ -40,6 +41,7 @@ public class CustomConfig {
 
     /**
      * Gets an instance of a file
+     *
      * @param filePath Path to the file
      * @return Instance of a config
      * */
@@ -60,6 +62,7 @@ public class CustomConfig {
 
     /**
      * Gets a key out of a config
+     *
      * @return {@link Object} out of config
      * */
     public static Object get(String filePath, String key) {
@@ -79,6 +82,7 @@ public class CustomConfig {
 
     /**
      * Saves content into a file
+     *
      * @param filePath
      * */
     public static void save(String filePath) {
@@ -92,6 +96,7 @@ public class CustomConfig {
     /**
      * Sets a key and value into a filepath (this must be an)
      * existing fileconfiguration / config
+     *
      * @param filepath Path to the file
      * @param key Key for the setting
      * @param value Value for the setting
@@ -103,6 +108,7 @@ public class CustomConfig {
 
     /**
      * Reloads a file
+     *
      * @param filePath Path to the file that should be reloaded
      * */
     public static void reload(String filePath) {
@@ -111,6 +117,7 @@ public class CustomConfig {
 
     /**
      * Checks if the settings file of a player exists
+     *
      * @param filepath Path to the file that should be checked
      * @return True if the file exists, false if not
      * */

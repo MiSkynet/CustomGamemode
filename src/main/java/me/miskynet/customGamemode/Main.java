@@ -1,11 +1,8 @@
 package me.miskynet.customGamemode;
 
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
-import me.miskynet.customGamemode.commands.testCommands.ReloadCommand;
+import me.miskynet.customGamemode.commands.testCommands.*;
 import me.miskynet.customGamemode.commands.SettingsCommand;
-import me.miskynet.customGamemode.commands.testCommands.GiveCopperGolem;
-import me.miskynet.customGamemode.commands.testCommands.SkillsMenuCommand;
-import me.miskynet.customGamemode.commands.testCommands.SummonNPCCommand;
 import me.miskynet.customGamemode.commands.ToggleScoreboard;
 import me.miskynet.customGamemode.commands.economy.EcoCommand;
 import me.miskynet.customGamemode.commands.ShopCommand;
@@ -17,9 +14,7 @@ import me.miskynet.customGamemode.custom.settings.SettingsListener;
 import me.miskynet.customGamemode.custom.shop.ShopMenu;
 import me.miskynet.customGamemode.custom.shop.itemPreview.ItemPreviewListener;
 import me.miskynet.customGamemode.custom.shop.ShopListener;
-import me.miskynet.customGamemode.custom.skills.SkillsMenuListener;
 import me.miskynet.customGamemode.custom.scoreboard.ScoreboardManager;
-import me.miskynet.customGamemode.custom.skills.skillTypes.FightingSkill;
 import me.miskynet.customGamemode.listener.OnJoin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -38,7 +33,6 @@ public final class Main extends JavaPlugin {
         setupManagers();
         setupCommands();
         setupListener();
-        setupSkills();
 
         scoreboardManager.runUpdates();
     }
@@ -70,10 +64,9 @@ public final class Main extends JavaPlugin {
 
             // test commands
             registrar.register("summonnpc", new SummonNPCCommand());
-            registrar.register("getcoppergolem", new GiveCopperGolem());
-            registrar.register("skills", new SkillsMenuCommand());
             registrar.register("reload", new ReloadCommand());
-
+            registrar.register("moditem", new BuildItem());
+            registrar.register("index", new IndexMenuCommand());
         }));
     }
 
@@ -86,11 +79,6 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new ItemPreviewListener(), this);
         pluginManager.registerEvents(new NPCMoveEvent(), this);
         pluginManager.registerEvents(new NPCInteractEvent(), this);
-        pluginManager.registerEvents(new SkillsMenuListener(), this);
     }
 
-    // setup skills
-    private void setupSkills() {
-        new FightingSkill();
-    }
 }

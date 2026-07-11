@@ -1,5 +1,6 @@
 package me.miskynet.customGamemode.custom.item;
 
+import me.miskynet.customGamemode.utils.ComponentManager;
 import me.miskynet.customGamemode.utils.Utils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -28,20 +29,20 @@ public class Relic extends Item {
      * where 5.0 is the highest/best value.
      * */
     public Relic(float purity) {
-        super(Material.AMETHYST_SHARD, Utils.component(false, "§dAntic Relic"));
+        super(Material.AMETHYST_SHARD, ComponentManager.component(false, "§dAntic Relic"));
         this.purity = purity;
 
         super.setEnchantmentGlint(true);
 
         ArrayList<Component> lore = new ArrayList<>();
-        lore.add(Utils.component(" "));
-        lore.add(Utils.component("§7Purity: " + getPurity()));
-        lore.add(Utils.component(" "));
-        lore.add(Utils.component("§8Antic relic's are remains from"));
-        lore.add(Utils.component("§8long before the player was a thing."));
-        lore.add(Utils.component("§8No one knows, how exactly these were"));
-        lore.add(Utils.component("§8created, but one is for sure, they"));
-        lore.add(Utils.component("§8contain a great power within them..."));
+        lore.add(ComponentManager.component(" "));
+        lore.add(ComponentManager.component("§7Purity: " + getPurity()));
+        lore.add(ComponentManager.component(" "));
+        lore.add(ComponentManager.component("§8Antic relic's are remains from"));
+        lore.add(ComponentManager.component("§8long before the player was a thing."));
+        lore.add(ComponentManager.component("§8No one knows, how exactly these were"));
+        lore.add(ComponentManager.component("§8created, but one is for sure, they"));
+        lore.add(ComponentManager.component("§8contain a great power within them..."));
 
         super.setLore(lore);
     }

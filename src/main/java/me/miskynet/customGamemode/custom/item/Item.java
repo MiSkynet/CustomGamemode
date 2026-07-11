@@ -1,5 +1,8 @@
 package me.miskynet.customGamemode.custom.item;
 
+import me.miskynet.customGamemode.utils.ComponentManager;
+import me.miskynet.customGamemode.utils.Debugger;
+import me.miskynet.customGamemode.utils.Utils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -245,7 +248,11 @@ public class Item {
         }
 
         if (itemMeta != null) {
-            if (this.displayName != null) itemMeta.displayName(this.displayName);
+            if (this.displayName != null) {
+                itemMeta.displayName(this.displayName);
+            } else {
+                itemMeta.displayName(ComponentManager.component(false, Utils.formatEnumToString(this.material.toString())));
+            }
             if (this.lore != null) itemMeta.lore(this.lore);
             if (this.customModelDataComponent != null) itemMeta.setCustomModelDataComponent(this.customModelDataComponent);
 
@@ -263,6 +270,7 @@ public class Item {
      * Converts an {@link ItemStack} into an {@link Item}. It is possible that
      * data is lost by converting since an {@link Item} doesn't support
      * every Paper {@link ItemStack} attributes
+     *
      * @return {@link Item}
      * */
     public Item parseData(ItemStack itemStack) {

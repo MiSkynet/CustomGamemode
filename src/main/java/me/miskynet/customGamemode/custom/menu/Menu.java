@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
  * */
 public class Menu implements InventoryHolder {
 
-    Inventory inventory;
+    private Inventory inventory;
 
     /**
      * @param title The title of the {@link Menu}

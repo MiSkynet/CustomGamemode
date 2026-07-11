@@ -27,6 +27,7 @@ public class EconomyManager {
 
     /**
      * Gets the balance of a player
+     *
      * @param player Player whose balance should be got
      * @return Player balance as double
      * */
@@ -40,6 +41,7 @@ public class EconomyManager {
 
     /**
      * Sets the balance of a player
+     *
      * @param player Player whose balance should be changed
      * @param value New balance
      * */
@@ -50,6 +52,7 @@ public class EconomyManager {
 
     /**
      * Add an amount to a player Balance
+     *
      * @param player Player whose balance should be changed
      * @param value Value that should be added
      * */
@@ -60,6 +63,7 @@ public class EconomyManager {
 
     /**
      * Transfer an amount from one player to another
+     *
      * @param sender Player that send the amount
      * @param target Player that receives the amount
      * @param value Amount that is being transferred
@@ -81,6 +85,7 @@ public class EconomyManager {
 
     /**
      * Sync a specific player Balance in the config with the {@link #playerBalance} HashMap
+     *
      * @param player Whose player balance should be saved in the config
      * */
     public void syncConfigWithUniquePlayer(Player player) {
@@ -99,6 +104,7 @@ public class EconomyManager {
 
     /**
      * Get the economy symbol for texts
+     *
      * @return String of the Symbol
      * */
     public String getEcoSymbol() {
@@ -107,6 +113,7 @@ public class EconomyManager {
 
     /**
      * Format a value into a more readable format
+     *
      * @param value The value that should be formated
      * */
     public String getDisplayFormat(double value) {

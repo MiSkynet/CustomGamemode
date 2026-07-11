@@ -4,6 +4,7 @@ import me.miskynet.customGamemode.custom.item.PlayerHead;
 import me.miskynet.customGamemode.custom.menu.Menu;
 import me.miskynet.customGamemode.custom.menu.TextureMenu;
 import me.miskynet.customGamemode.custom.shop.ShopItem;
+import me.miskynet.customGamemode.utils.ComponentManager;
 import me.miskynet.customGamemode.utils.Utils;
 import net.kyori.adventure.text.Component;
 
@@ -33,7 +34,7 @@ public class ItemPreviewMenu extends TextureMenu {
     @Override
     public void buildMenu() {
 
-        PlayerHead backItem = new PlayerHead(Utils.component(false, "&cBack"), "158a3e5617b7fc16ff436edab5996027986c584dd8837b63260577c32421bd1c");
+        PlayerHead backItem = new PlayerHead(ComponentManager.component(false, "&cBack"), "158a3e5617b7fc16ff436edab5996027986c584dd8837b63260577c32421bd1c");
 
         this.getInventory().setItem(0, backItem.toItemStack());
 
@@ -56,6 +57,7 @@ public class ItemPreviewMenu extends TextureMenu {
 
     /**
      * Gets the {@link #shopItem}
+     *
      * @return ShopItem
      * */
     public ShopItem getShopItem() {
@@ -64,6 +66,7 @@ public class ItemPreviewMenu extends TextureMenu {
 
     /**
      * Gets the last page of the shop the user had open
+     *
      * @return Last page {@link Integer}
      * */
     public Integer getLastPage() {
