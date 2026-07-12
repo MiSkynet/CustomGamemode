@@ -13,6 +13,7 @@ import me.miskynet.customGamemode.custom.entity.npc.NPCInteractEvent;
 import me.miskynet.customGamemode.custom.entity.npc.NPCMoveEvent;
 import me.miskynet.customGamemode.custom.index.IndexMenu;
 import me.miskynet.customGamemode.custom.index.IndexMenuListener;
+import me.miskynet.customGamemode.custom.index.IndexPlayerLevelUpListener;
 import me.miskynet.customGamemode.custom.settings.SettingsListener;
 import me.miskynet.customGamemode.custom.shop.ShopMenu;
 import me.miskynet.customGamemode.custom.shop.itemPreview.ItemPreviewListener;
@@ -86,6 +87,7 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new NPCMoveEvent(), this);
         pluginManager.registerEvents(new NPCInteractEvent(), this);
         pluginManager.registerEvents(new IndexMenuListener(), this);
+        pluginManager.registerEvents(new IndexPlayerLevelUpListener(), this);
     }
 
 }

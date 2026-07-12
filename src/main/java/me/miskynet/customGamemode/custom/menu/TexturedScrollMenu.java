@@ -49,10 +49,6 @@ public class TexturedScrollMenu extends TextureMenu {
             this.getInventory().setItem(this.getInventory().getSize() - nextPageButtonSlot, item.toItemStack());
         }
 
-        Debugger.log("RENDER!");
-        Debugger.log("Current Page: " + this.currentPage);
-        Debugger.log("Max Page: " + this.getMaxPage());
-
         if (this.currentPage > 0) {
             this.getInventory().setItem(this.getInventory().getSize() - previousPageButtonSlot, arrowLeft.toItemStack());
         }else {
@@ -73,6 +69,10 @@ public class TexturedScrollMenu extends TextureMenu {
 
     public int getCurrentPage() {
         return this.currentPage;
+    }
+
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
     }
 
     public void increasePage() {

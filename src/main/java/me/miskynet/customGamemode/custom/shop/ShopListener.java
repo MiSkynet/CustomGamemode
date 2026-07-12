@@ -1,7 +1,9 @@
 package me.miskynet.customGamemode.custom.shop;
 
+import me.miskynet.customGamemode.custom.menu.TexturedScrollMenu;
 import me.miskynet.customGamemode.custom.shop.itemPreview.ItemPreviewMenu;
 import me.miskynet.customGamemode.utils.ComponentUtils;
+import me.miskynet.customGamemode.utils.Debugger;
 import me.miskynet.customGamemode.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,19 +34,24 @@ public class ShopListener implements Listener {
             if (!Utils.checkForAllowedClick(player)) return;
             Utils.createClickCooldown(player);
 
-            if (event.getSlot() == 48) {
+            if (event.getSlot() == event.getInventory().getSize() - TexturedScrollMenu.previousPageButtonSlot) {
                 shopMenu.decreasePage();
+                shopMenu.buildMenu();
             }
 
-            if (event.getSlot() == 50) {
+            if (event.getSlot() == event.getInventory().getSize() - TexturedScrollMenu.nextPageButtonSlot) {
                 shopMenu.increasePage();
+                shopMenu.buildMenu();
             }
 
-            if (!shopMenu.getEmptySlots().contains(event.getSlot())) {
+            if (event.getSlot() < event.getClickedInventory().getSize() - 9) {
+
+                if (event.getClickedInventory().getItem(event.getSlot()) == null) return;
 
                 ItemStack clickedItem = event.getClickedInventory().getItem(event.getSlot());
                 ItemMeta meta = clickedItem.getItemMeta();
                 Integer id = meta.getPersistentDataContainer().get(ShopItem.idKey, PersistentDataType.INTEGER);
+
                 ShopItem shopItem = ShopMenu.getItemById(id);
 
                 ItemPreviewMenu itemPreview = new ItemPreviewMenu(ComponentUtils.component("Buy or sell"), 45, "\uE005", shopMenu.getCurrentPage(), shopItem);

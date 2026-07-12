@@ -15,13 +15,6 @@ public class IndexMenuCommand implements BasicCommand {
         IndexMenu indexMenu = new IndexMenu(ComponentUtils.component("Index"));
         indexMenu.buildMenu(player);
         indexMenu.openForPlayer(player);
-
-    }
-
-    private void createProgressBarForNextLevel(Player player) {
-
-
-
     }
 
 }
