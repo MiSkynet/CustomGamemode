@@ -1,13 +1,13 @@
 package me.miskynet.customGamemode.custom.index;
 
 import me.miskynet.customGamemode.Main;
-import me.miskynet.customGamemode.custom.item.Relic;
+import me.miskynet.customGamemode.custom.item.Item;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 public class Reward {
 
-    private Object reward = null;
+    private Object reward;
     private Component name = null;
 
     public Reward(Object reward, Component name) {
@@ -32,10 +32,10 @@ public class Reward {
     }
 
     public Boolean giveToPlayer(Player player) {
-        if (reward instanceof Relic relic) {
-            player.getInventory().addItem(relic.toItemStack());
+        if (reward instanceof Item item) {
+            player.getInventory().addItem(item.toItemStack());
             return true;
-        } else if (reward instanceof Integer level) {
+        }else if (reward instanceof Integer level) {
             player.setLevel(player.getLevel() + level);
             return true;
         } else if (reward instanceof Double amount) {

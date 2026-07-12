@@ -3,7 +3,8 @@ package me.miskynet.customGamemode.custom.entity.npc;
 import me.miskynet.customGamemode.custom.menu.Menu;
 import me.miskynet.customGamemode.custom.settings.SettingsMenu;
 import me.miskynet.customGamemode.custom.shop.ShopMenu;
-import me.miskynet.customGamemode.utils.ComponentManager;
+import me.miskynet.customGamemode.utils.ComponentUtils;
+import me.miskynet.customGamemode.utils.PDCUtils;
 import me.miskynet.customGamemode.utils.Utils;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
@@ -22,11 +23,11 @@ public class NPCInteractEvent implements Listener {
 
         if (!Utils.checkForAllowedClick(event.getPlayer())) return;
 
-        Menu menu = new Menu(ComponentManager.component("&cERROR WHILE CREATING INVENTORY"), 9);
+        Menu menu = new Menu(ComponentUtils.component("&cERROR WHILE CREATING INVENTORY"), 9);
 
-        if (Utils.getPDCOfEntity(entity, NPC.interactTypeKey, PersistentDataType.STRING).equals("SHOP")) {
+        if (PDCUtils.getPDC(entity, NPC.interactTypeKey, PersistentDataType.STRING).equals("SHOP")) {
             menu = new ShopMenu(0);
-        }else if (Utils.getPDCOfEntity(entity, NPC.interactTypeKey, PersistentDataType.STRING).equals("SETTINGS")) {
+        }else if (PDCUtils.getPDC(entity, NPC.interactTypeKey, PersistentDataType.STRING).equals("SETTINGS")) {
             menu = new SettingsMenu();
         }
 

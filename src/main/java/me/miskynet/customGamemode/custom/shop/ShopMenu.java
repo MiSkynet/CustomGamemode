@@ -3,10 +3,8 @@ package me.miskynet.customGamemode.custom.shop;
 import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.custom.item.PlayerHead;
 import me.miskynet.customGamemode.custom.menu.TextureMenu;
-import me.miskynet.customGamemode.utils.ComponentManager;
-import me.miskynet.customGamemode.utils.Debugger;
+import me.miskynet.customGamemode.utils.ComponentUtils;
 import me.miskynet.customGamemode.utils.Utils;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +28,7 @@ public class ShopMenu extends TextureMenu {
      * @param page The page at which the shopMenu should be opened
      * */
     public ShopMenu(Integer page) {
-        super(ComponentManager.component("ShopCommand"), 54, "\uE003");
+        super(ComponentUtils.component("ShopCommand"), 54, "\uE003");
         this.currentPage = page;
         buildMenu();
     }
@@ -69,8 +67,8 @@ public class ShopMenu extends TextureMenu {
     @Override
     public void buildMenu() {
 
-        PlayerHead arrowLeft = new PlayerHead(ComponentManager.component(false, "&ePrevious Page"), "528b8cf405eaf606a0210f0303b013179f8f12eaa95824129ebeef9e44b68230");
-        PlayerHead arrowRight = new PlayerHead(ComponentManager.component(false, "&eNext Page"), "5dcda6e3c6dca7e9b8b6ba3febf5cd0917f997b64b2aef18c3f773765e3a579");
+        PlayerHead arrowLeft = new PlayerHead(ComponentUtils.component(false, "&ePrevious Page"), "528b8cf405eaf606a0210f0303b013179f8f12eaa95824129ebeef9e44b68230");
+        PlayerHead arrowRight = new PlayerHead(ComponentUtils.component(false, "&eNext Page"), "5dcda6e3c6dca7e9b8b6ba3febf5cd0917f997b64b2aef18c3f773765e3a579");
 
         /*
         * calculate if there is at least one item to fit in a new page
@@ -80,19 +78,19 @@ public class ShopMenu extends TextureMenu {
         if (getShopItems().size() >= ((this.currentPage + 1) * itemsPerPage) + 1) {
             this.getInventory().setItem(50, arrowRight.toItemStack());
         }else {
-            Item item = new Item(Material.BARRIER, ComponentManager.component(false, "&cNo next page"));
+            Item item = new Item(Material.BARRIER, ComponentUtils.component(false, "&cNo next page"));
             this.getInventory().setItem(50, item.toItemStack());
         }
 
         if (this.currentPage != 0) {
             this.getInventory().setItem(48, arrowLeft.toItemStack());
         }else {
-            Item item = new Item(Material.BARRIER, ComponentManager.component(false, "&cNo previous page"));
+            Item item = new Item(Material.BARRIER, ComponentUtils.component(false, "&cNo previous page"));
             this.getInventory().setItem(48, item.toItemStack());
         }
 
         // item to present the current page
-        this.getInventory().setItem(49, new Item(Material.BOOK, ComponentManager.component(false, "&eCurrent Page: " + (this.currentPage + 1))).toItemStack());
+        this.getInventory().setItem(49, new Item(Material.BOOK, ComponentUtils.component(false, "&eCurrent Page: " + (this.currentPage + 1))).toItemStack());
 
         fillShopItems();
         this.fillEmptySlots();
@@ -166,7 +164,7 @@ public class ShopMenu extends TextureMenu {
 
             Item resultItem = new Item(material);
 
-            resultItem.setDisplayName(ComponentManager.component(false, "&d" + Utils.formatEnumToString(material.toString())));
+            resultItem.setDisplayName(ComponentUtils.component(false, "&d" + Utils.formatEnumToString(material.toString())));
 
             shopItem.setResultItem(resultItem);
 

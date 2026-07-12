@@ -1,17 +1,12 @@
 package me.miskynet.customGamemode.custom.menu;
 
-import me.miskynet.customGamemode.Main;
-import me.miskynet.customGamemode.utils.ComponentManager;
-import me.miskynet.customGamemode.utils.Utils;
+import me.miskynet.customGamemode.utils.ComponentUtils;
 import me.miskynet.customGamemode.custom.item.Item;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +26,7 @@ public abstract class TextureMenu extends Menu {
      * @param unicode The Unicode of the GUI in the Resource Pack
      * */
     public TextureMenu(Component title, int size, String unicode) {
-        super(ComponentManager.component("§f\uE001" + unicode + "\uE002").append(title), size);
+        super(ComponentUtils.component("§f\uE001" + unicode + "\uE002").append(title), size);
         this.unicode = unicode;
     }
 
@@ -114,4 +109,5 @@ public abstract class TextureMenu extends Menu {
             if (getInventory().getItem(i) == null || getInventory().getItem(i).getType().equals(Material.AIR)) super.getInventory().setItem(i, item.toItemStack());
         }
     }
+
 }

@@ -1,7 +1,6 @@
 package me.miskynet.customGamemode.custom.item;
 
-import me.miskynet.customGamemode.utils.ComponentManager;
-import me.miskynet.customGamemode.utils.Debugger;
+import me.miskynet.customGamemode.utils.ComponentUtils;
 import me.miskynet.customGamemode.utils.Utils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -251,7 +250,7 @@ public class Item {
             if (this.displayName != null) {
                 itemMeta.displayName(this.displayName);
             } else {
-                itemMeta.displayName(ComponentManager.component(false, Utils.formatEnumToString(this.material.toString())));
+                itemMeta.displayName(ComponentUtils.component(false, Utils.formatEnumToString(this.material.toString())));
             }
             if (this.lore != null) itemMeta.lore(this.lore);
             if (this.customModelDataComponent != null) itemMeta.setCustomModelDataComponent(this.customModelDataComponent);

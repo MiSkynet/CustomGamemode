@@ -2,8 +2,7 @@ package me.miskynet.customGamemode.custom.shop;
 
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.item.Item;
-import me.miskynet.customGamemode.utils.ComponentManager;
-import me.miskynet.customGamemode.utils.Utils;
+import me.miskynet.customGamemode.utils.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -38,39 +37,13 @@ public class ShopItem extends Item {
         super(material, null, new ArrayList<>());
 
         List<Component> lore = new ArrayList<>();
-        lore.add(ComponentManager.component(false, "&7Buy Price: &6" + buyPrice));
-        lore.add(ComponentManager.component(false, "&7Sell Price: &6" + sellPrice));
+        lore.add(ComponentUtils.component(false, "&7Buy Price: &6" + buyPrice));
+        lore.add(ComponentUtils.component(false, "&7Sell Price: &6" + sellPrice));
 
         this.buyPrice = buyPrice;
         this.sellPrice = sellPrice;
 
         super.setLore(lore);
-    }
-
-    /**
-     * Creates a {@link ShopItem} from an {@link ItemStack}
-     *
-     * @param itemStack Item stack that should be converted into a {@link ShopItem}
-     * */
-    public static ShopItem fromItemStack(ItemStack itemStack) {
-        if (itemStack == null || !itemStack.hasItemMeta()) return null;
-
-        ItemMeta meta = itemStack.getItemMeta();
-        var container = meta.getPersistentDataContainer();
-
-        if (container.has(buyKey, PersistentDataType.DOUBLE) && container.has(sellKey, PersistentDataType.DOUBLE)) {
-
-            Double buy = container.get(buyKey, PersistentDataType.DOUBLE);
-            Double sell = container.get(sellKey, PersistentDataType.DOUBLE);
-            Integer id = container.get(idKey, PersistentDataType.INTEGER);
-
-            ShopItem newShopItem = new ShopItem(itemStack.getType(), buy, sell);
-            newShopItem.setId(id);
-
-            return newShopItem;
-        }
-
-        return null;
     }
 
     /**

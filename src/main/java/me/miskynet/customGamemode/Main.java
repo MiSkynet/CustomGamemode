@@ -1,6 +1,7 @@
 package me.miskynet.customGamemode;
 
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import me.miskynet.customGamemode.commands.IndexMenuCommand;
 import me.miskynet.customGamemode.commands.testCommands.*;
 import me.miskynet.customGamemode.commands.SettingsCommand;
 import me.miskynet.customGamemode.commands.ToggleScoreboard;
@@ -10,6 +11,8 @@ import me.miskynet.customGamemode.commands.economy.PayCommand;
 import me.miskynet.customGamemode.custom.economy.EconomyManager;
 import me.miskynet.customGamemode.custom.entity.npc.NPCInteractEvent;
 import me.miskynet.customGamemode.custom.entity.npc.NPCMoveEvent;
+import me.miskynet.customGamemode.custom.index.IndexMenu;
+import me.miskynet.customGamemode.custom.index.IndexMenuListener;
 import me.miskynet.customGamemode.custom.settings.SettingsListener;
 import me.miskynet.customGamemode.custom.shop.ShopMenu;
 import me.miskynet.customGamemode.custom.shop.itemPreview.ItemPreviewListener;
@@ -35,6 +38,9 @@ public final class Main extends JavaPlugin {
         setupListener();
 
         scoreboardManager.runUpdates();
+
+        IndexMenu.createRewardList();
+
     }
 
     @Override
@@ -79,6 +85,7 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new ItemPreviewListener(), this);
         pluginManager.registerEvents(new NPCMoveEvent(), this);
         pluginManager.registerEvents(new NPCInteractEvent(), this);
+        pluginManager.registerEvents(new IndexMenuListener(), this);
     }
 
 }

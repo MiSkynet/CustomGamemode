@@ -4,8 +4,7 @@ import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.economy.EconomyManager;
-import me.miskynet.customGamemode.utils.ComponentManager;
-import me.miskynet.customGamemode.utils.Utils;
+import me.miskynet.customGamemode.utils.ComponentUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jspecify.annotations.Nullable;
@@ -27,12 +26,12 @@ public class PayCommand implements BasicCommand {
         Player target = Bukkit.getPlayer(args[0].toLowerCase());
 
         if (target == null) {
-            player.sendMessage(ComponentManager.component("&cPlayer " + args[1] + " is not a valid player"));
+            player.sendMessage(ComponentUtils.component("&cPlayer " + args[1] + " is not a valid player"));
             return;
         }
 
         if (target.getName().equalsIgnoreCase(player.getName())) {
-            player.sendMessage(ComponentManager.component("&cYou cannot send yourself money!"));
+            player.sendMessage(ComponentUtils.component("&cYou cannot send yourself money!"));
             return;
         }
 
@@ -40,25 +39,25 @@ public class PayCommand implements BasicCommand {
         try {
             amount = Double.parseDouble(args[1]);
         }catch (NumberFormatException e) {
-            player.sendMessage(ComponentManager.component("&cPlease enter a valid amount!"));
+            player.sendMessage(ComponentUtils.component("&cPlease enter a valid amount!"));
             return;
         }
 
         if (amount < 0) {
-            player.sendMessage(ComponentManager.component("&cYou have to at least send 1" + ecoManager.getEcoSymbol()));
+            player.sendMessage(ComponentUtils.component("&cYou have to at least send 1" + ecoManager.getEcoSymbol()));
             return;
         }
 
         if (amount > ecoManager.getBalance(player)) {
-            player.sendMessage(ComponentManager.component("&cYou cannot send " + amount + ecoManager.getEcoSymbol() +
+            player.sendMessage(ComponentUtils.component("&cYou cannot send " + amount + ecoManager.getEcoSymbol() +
                     " to " + target.getName() + " since you only got " + ecoManager.getBalance(player)  +
                     ecoManager.getEcoSymbol() + "!"));
             return;
         }
 
         ecoManager.transfer(player, target, amount);
-        player.sendMessage(ComponentManager.component("&7You payed " + target.getName() + " " + amount + ecoManager.getEcoSymbol()));
-        target.sendMessage(ComponentManager.component("&7" + player.getName() + " payed you " + amount + ecoManager.getEcoSymbol()));
+        player.sendMessage(ComponentUtils.component("&7You payed " + target.getName() + " " + amount + ecoManager.getEcoSymbol()));
+        target.sendMessage(ComponentUtils.component("&7" + player.getName() + " payed you " + amount + ecoManager.getEcoSymbol()));
 
     }
 

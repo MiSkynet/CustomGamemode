@@ -1,7 +1,7 @@
 package me.miskynet.customGamemode.custom.shop;
 
 import me.miskynet.customGamemode.custom.shop.itemPreview.ItemPreviewMenu;
-import me.miskynet.customGamemode.utils.ComponentManager;
+import me.miskynet.customGamemode.utils.ComponentUtils;
 import me.miskynet.customGamemode.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,7 +47,7 @@ public class ShopListener implements Listener {
                 Integer id = meta.getPersistentDataContainer().get(ShopItem.idKey, PersistentDataType.INTEGER);
                 ShopItem shopItem = ShopMenu.getItemById(id);
 
-                ItemPreviewMenu itemPreview = new ItemPreviewMenu(ComponentManager.component("Buy or sell"), 45, "\uE005", shopMenu.getCurrentPage(), shopItem);
+                ItemPreviewMenu itemPreview = new ItemPreviewMenu(ComponentUtils.component("Buy or sell"), 45, "\uE005", shopMenu.getCurrentPage(), shopItem);
                 itemPreview.openForPlayer(player);
             }
         }

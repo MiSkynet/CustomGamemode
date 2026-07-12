@@ -4,7 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
-public class ComponentManager {
+public class ComponentUtils {
 
     /**
      * Creates a {@link Component} and always unsets italic by default

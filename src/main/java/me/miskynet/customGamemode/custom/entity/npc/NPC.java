@@ -4,8 +4,7 @@ import com.destroystokyo.paper.profile.PlayerProfile;
 import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.menu.Menu;
-import me.miskynet.customGamemode.utils.ComponentManager;
-import me.miskynet.customGamemode.utils.Utils;
+import me.miskynet.customGamemode.utils.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -67,7 +66,7 @@ public class NPC {
         entity.setInvulnerable(true);
         entity.setSilent(true);
         entity.setCustomNameVisible(true);
-        entity.customName(ComponentManager.component("&dShop NPC"));
+        entity.customName(ComponentUtils.component("&dShop NPC"));
 
         Mannequin mannequin = (Mannequin) entity;
         mannequin.setDescription(null);

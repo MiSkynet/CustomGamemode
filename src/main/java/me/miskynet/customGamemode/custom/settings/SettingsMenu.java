@@ -3,8 +3,7 @@ package me.miskynet.customGamemode.custom.settings;
 import me.miskynet.customGamemode.custom.menu.Menu;
 import me.miskynet.customGamemode.custom.item.PlayerHead;
 import me.miskynet.customGamemode.custom.menu.TextureMenu;
-import me.miskynet.customGamemode.utils.ComponentManager;
-import me.miskynet.customGamemode.utils.Utils;
+import me.miskynet.customGamemode.utils.ComponentUtils;
 import me.miskynet.customGamemode.custom.config.PlayerData;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
@@ -23,7 +22,7 @@ public class SettingsMenu extends TextureMenu implements InventoryHolder {
     Inventory inventory;
 
     public SettingsMenu() {
-        super(ComponentManager.component("Settings"), 36, "\uE004");
+        super(ComponentUtils.component("Settings"), 36, "\uE004");
         this.inventory = super.getInventory();
     }
 
@@ -35,14 +34,14 @@ public class SettingsMenu extends TextureMenu implements InventoryHolder {
     public void buildMenu(Player player) {
 
         PlayerHead toggleScoreboard = new PlayerHead("4a2648a9e53613f0ab1266b72918f40788f84e160a52348cd67138410262f39f");
-        toggleScoreboard.setDisplayName(ComponentManager.component(false, "&6Click to toggle Scoreboard"));
+        toggleScoreboard.setDisplayName(ComponentUtils.component(false, "&6Click to toggle Scoreboard"));
 
         ArrayList<Component> toggleScoreboardLoreEnabled = new ArrayList<>();
-        toggleScoreboardLoreEnabled.add(ComponentManager.component(" "));
-        toggleScoreboardLoreEnabled.add(ComponentManager.component(false, "&7Current Status: &aEnabled"));
+        toggleScoreboardLoreEnabled.add(ComponentUtils.component(" "));
+        toggleScoreboardLoreEnabled.add(ComponentUtils.component(false, "&7Current Status: &aEnabled"));
         ArrayList<Component> toggleScoreboardLoreDisabled = new ArrayList<>();
-        toggleScoreboardLoreDisabled.add(ComponentManager.component(" "));
-        toggleScoreboardLoreDisabled.add(ComponentManager.component(false, "&7Current Status: &cDisabled"));
+        toggleScoreboardLoreDisabled.add(ComponentUtils.component(" "));
+        toggleScoreboardLoreDisabled.add(ComponentUtils.component(false, "&7Current Status: &cDisabled"));
 
 
         if ((Boolean) PlayerData.get(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus")) {

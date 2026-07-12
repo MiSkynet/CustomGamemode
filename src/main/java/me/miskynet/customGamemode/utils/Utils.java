@@ -71,42 +71,6 @@ public class Utils {
     }
 
     /**
-     * Gets the value of a {@link PersistentDataType} from an {@link Entity}
-     *
-     * @param entity The {@link Entity} that should be checked
-     * @param namespacedKey The {@link NamespacedKey} that should be checked
-     * @param persistentDataType The {@link PersistentDataType} that should be checked
-     * @return The value of the {@link PersistentDataType} or null if not found
-     * */
-    public static Object getPDCOfEntity(Entity entity, NamespacedKey namespacedKey, PersistentDataType persistentDataType) {
-        return entity.getPersistentDataContainer().get(namespacedKey, persistentDataType);
-    }
-
-    /**
-     * Gets the value of a {@link PersistentDataType} from an {@link ItemStack}
-     *
-     * @param itemStack The {@link ItemStack} that should be checked
-     * @param namespacedKey The {@link NamespacedKey}
-     * @param persistentDataType The {@link PersistentDataType}
-     * @return The value of the {@link PersistentDataType}
-     * */
-    public static Object getPDCOfItem(ItemStack itemStack, NamespacedKey namespacedKey, PersistentDataType persistentDataType) {
-        return itemStack.getItemMeta().getPersistentDataContainer().get(namespacedKey, persistentDataType);
-    }
-
-    /**
-     * Sets a value of a {@link PersistentDataType} to an {@link ItemStack}
-     *
-     * @param itemStack The {@link ItemStack} that should be modified
-     * @param namespacedKey The {@link NamespacedKey}
-     * @param persistentDataType The {@link PersistentDataType}
-     * @param value The value to set
-     * */
-    public static void setPDCOfItem(ItemStack itemStack, NamespacedKey namespacedKey, PersistentDataType persistentDataType, Object value) {
-        itemStack.getItemMeta().getPersistentDataContainer().set(namespacedKey, persistentDataType, value);
-    }
-
-    /**
      * Formats an enum constant to a more readable string
      *
      * @param string The enum constant to format

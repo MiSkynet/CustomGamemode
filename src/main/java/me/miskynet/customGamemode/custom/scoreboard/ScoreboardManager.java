@@ -2,8 +2,7 @@ package me.miskynet.customGamemode.custom.scoreboard;
 
 import io.papermc.paper.scoreboard.numbers.NumberFormat;
 import me.miskynet.customGamemode.Main;
-import me.miskynet.customGamemode.utils.ComponentManager;
-import me.miskynet.customGamemode.utils.Utils;
+import me.miskynet.customGamemode.utils.ComponentUtils;
 import me.miskynet.customGamemode.custom.config.PlayerData;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -27,7 +26,7 @@ public class ScoreboardManager {
         Scoreboard scoreboard = manager.getNewScoreboard();
 
         int repeat = 5;
-        Component scoreboardTitle = ComponentManager.component(" ".repeat(repeat) + "&6Custom Gamemode" + " ".repeat(repeat));
+        Component scoreboardTitle = ComponentUtils.component(" ".repeat(repeat) + "&6Custom Gamemode" + " ".repeat(repeat));
         Objective objective = scoreboard.registerNewObjective("sidePanel",Criteria.DUMMY, scoreboardTitle);
 
         int rowSize = getRows(player).size();
@@ -71,17 +70,17 @@ public class ScoreboardManager {
 
         ArrayList<String> scores = new ArrayList<>();
 
-        scores.add(ComponentManager.coloredString(" "));
-        scores.add(ComponentManager.coloredString("&7Your Profile: "));
-        scores.add(ComponentManager.coloredString("  &6" + player.getName()));
-        scores.add(ComponentManager.coloredString(" "));
-        scores.add(ComponentManager.coloredString("&7Your Balance:"));
-        scores.add(ComponentManager.coloredString("&7  &6" + Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(player)) + Main.economyManager.getEcoSymbol()));
-        scores.add(ComponentManager.coloredString(" "));
+        scores.add(ComponentUtils.coloredString(" "));
+        scores.add(ComponentUtils.coloredString("&7Your Profile: "));
+        scores.add(ComponentUtils.coloredString("  &6" + player.getName()));
+        scores.add(ComponentUtils.coloredString(" "));
+        scores.add(ComponentUtils.coloredString("&7Your Balance:"));
+        scores.add(ComponentUtils.coloredString("&7  &6" + Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(player)) + Main.economyManager.getEcoSymbol()));
+        scores.add(ComponentUtils.coloredString(" "));
 
         int repeat = 7;
         String centerIP = " ".repeat(repeat) + "&8michigames.net";
-        scores.add(ComponentManager.coloredString(centerIP));
+        scores.add(ComponentUtils.coloredString(centerIP));
 
         return scores;
     }
@@ -108,7 +107,7 @@ public class ScoreboardManager {
         Objective objective = scoreboard.getObjective("sidePanel");
         if (objective == null) {
             int repeat = 5;
-            Component scoreboardTitle = ComponentManager.component(" ".repeat(repeat) + "&6&lCustom Gamemode" + " ".repeat(repeat));
+            Component scoreboardTitle = ComponentUtils.component(" ".repeat(repeat) + "&6&lCustom Gamemode" + " ".repeat(repeat));
             objective = scoreboard.registerNewObjective("sidePanel", Criteria.DUMMY, scoreboardTitle);
             objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         }

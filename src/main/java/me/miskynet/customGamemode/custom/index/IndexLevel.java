@@ -6,14 +6,20 @@ import java.util.ArrayList;
 public class IndexLevel {
 
     private final int level;
+    private final int requiredLevel;
     private final ArrayList<Reward> rewards = new ArrayList<>();
 
-    public IndexLevel(int level) {
+    public IndexLevel(int level, int requiredLevel) {
         this.level = level;
+        this.requiredLevel = requiredLevel;
     }
 
     public int getLevel() {
-        return level;
+        return this.level;
+    }
+
+    public int getRequiredLevel() {
+        return this.requiredLevel;
     }
 
     public void addReward(Reward reward) {

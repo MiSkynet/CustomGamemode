@@ -4,8 +4,7 @@ import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.item.PlayerHead;
 import me.miskynet.customGamemode.custom.shop.ShopItem;
-import me.miskynet.customGamemode.utils.ComponentManager;
-import me.miskynet.customGamemode.utils.Utils;
+import me.miskynet.customGamemode.utils.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -63,14 +62,14 @@ public class ItemPreviewItem {
         if (this.maxStackSize < this.amount) return getUnavailableItem();
 
         // else simple build and return the item stack
-        PlayerHead item = new PlayerHead(ComponentManager.component(false, "&cError while creating item!"), "5c8817ee8e9c2c2bf767487737e0a60a5e09b725138e14daa57480a03f1766d8");
+        PlayerHead item = new PlayerHead(ComponentUtils.component(false, "&cError while creating item!"), "5c8817ee8e9c2c2bf767487737e0a60a5e09b725138e14daa57480a03f1766d8");
         ArrayList<Component> lore = new ArrayList<>();
         if (itemType.toString().toLowerCase().equals("buy")) {
-            item = new PlayerHead(ComponentManager.component(false, "&aBuy " + amount),"23a45195193b5d6de5c522171d6a75abdaa78aacd901556dd0d8817c0ed810f3");
-            lore.add(ComponentManager.component(false, "&7Buy " + amount + " for " + Main.economyManager.getDisplayFormat(amount * price) + Main.economyManager.getEcoSymbol()));
+            item = new PlayerHead(ComponentUtils.component(false, "&aBuy " + amount),"23a45195193b5d6de5c522171d6a75abdaa78aacd901556dd0d8817c0ed810f3");
+            lore.add(ComponentUtils.component(false, "&7Buy " + amount + " for " + Main.economyManager.getDisplayFormat(amount * price) + Main.economyManager.getEcoSymbol()));
         }else if (itemType.toString().toLowerCase().equals("sell")) {
-            item = new PlayerHead(ComponentManager.component(false, "&aSell " + amount),"4bf360ee0b5578f10189900a21d631e6a88c296cfa3a00f1e2c2dc73588a3a8d");
-            lore.add(ComponentManager.component(false, "&7Sell " + amount + " for " + Main.economyManager.getDisplayFormat(amount * price) + Main.economyManager.getEcoSymbol()));
+            item = new PlayerHead(ComponentUtils.component(false, "&aSell " + amount),"4bf360ee0b5578f10189900a21d631e6a88c296cfa3a00f1e2c2dc73588a3a8d");
+            lore.add(ComponentUtils.component(false, "&7Sell " + amount + " for " + Main.economyManager.getDisplayFormat(amount * price) + Main.economyManager.getEcoSymbol()));
         }
 
         item.setLore(lore);
@@ -137,6 +136,6 @@ public class ItemPreviewItem {
      * @return Unavailable item as {@link ItemStack}
      * */
     public static ItemStack getUnavailableItem() {
-        return new Item(Material.BARRIER, ComponentManager.component(false, "&cNot available")).toItemStack();
+        return new Item(Material.BARRIER, ComponentUtils.component(false, "&cNot available")).toItemStack();
     }
 }
