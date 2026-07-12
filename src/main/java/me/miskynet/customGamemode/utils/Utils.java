@@ -24,8 +24,6 @@ public class Utils {
     private static final Map<UUID, Long> clickCooldownMap = new HashMap<>();
     private static final int clickCooldown = 200;
 
-
-
     /**
      * Checks if a player is able to receive an {@link ItemStack}. If yes,
      * give it to the player. Else drop it on the players position

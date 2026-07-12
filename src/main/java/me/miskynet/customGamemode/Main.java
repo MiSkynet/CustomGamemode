@@ -41,7 +41,6 @@ public final class Main extends JavaPlugin {
         scoreboardManager.runUpdates();
 
         IndexMenu.createRewardList();
-
     }
 
     @Override

@@ -45,6 +45,9 @@ public class ShopMenu extends TexturedScrollMenu {
         this.fillShopItems();
     }
 
+    /**
+     * Fills the shopMenu with the items from the {@link #cachedItems} list.
+     * */
     public void fillShopItems() {
         int shopItemStart = this.getCurrentPage() * this.getItemsPerPage();
         int currentShopItem = shopItemStart;
