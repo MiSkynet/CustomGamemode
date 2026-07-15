@@ -1,9 +1,13 @@
-package me.miskynet.customGamemode.custom.index;
+package me.miskynet.customGamemode.custom.index.listener;
 
 import me.miskynet.customGamemode.custom.config.PlayerData;
+import me.miskynet.customGamemode.custom.index.IndexMenu;
+import me.miskynet.customGamemode.custom.index.utils.IndexMenuItem;
+import me.miskynet.customGamemode.custom.index.utils.IndexLevel;
+import me.miskynet.customGamemode.custom.index.utils.Reward;
+import me.miskynet.customGamemode.custom.levelingSystem.LevelingSystem;
 import me.miskynet.customGamemode.custom.menu.TexturedScrollMenu;
 import me.miskynet.customGamemode.utils.ComponentUtils;
-import me.miskynet.customGamemode.utils.Debugger;
 import me.miskynet.customGamemode.utils.PDCUtils;
 import me.miskynet.customGamemode.utils.Utils;
 import org.bukkit.entity.Player;
@@ -58,7 +62,7 @@ public class IndexMenuListener implements Listener {
             IndexLevel indexLevel = IndexMenu.getLevelByNumber(clickedLevel);
 
             // check if the player has reached the level to unlock the reward
-            if (PlayerData.get(PlayerData.FileType.INDEX, player.getUniqueId()).getInt("currentLevel") < clickedLevel) {
+            if (new LevelingSystem().getPlayerLevel(player) < clickedLevel) {
                 player.sendMessage(ComponentUtils.component("&cYou have not unlocked this level yet!"));
                 return;
             }
@@ -80,12 +84,10 @@ public class IndexMenuListener implements Listener {
                 reward.giveToPlayer(player);
             }
 
-            ItemStack rewardItemStack = IndexMenu.buildRewardItemStack(indexLevel, player);
-
+            ItemStack rewardItemStack = IndexMenuItem.buildRewardItemStack(indexLevel, player);
             indexMenu.setItem(clickedSlot, rewardItemStack);
+            player.sendMessage(ComponentUtils.component("&aYou have claimed the reward for level " + clickedLevel + "!"));
+
         }
-
     }
-
-
 }

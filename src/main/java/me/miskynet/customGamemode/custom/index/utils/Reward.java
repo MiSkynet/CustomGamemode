@@ -1,6 +1,7 @@
-package me.miskynet.customGamemode.custom.index;
+package me.miskynet.customGamemode.custom.index.utils;
 
 import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.custom.index.IndexMenu;
 import me.miskynet.customGamemode.custom.item.Item;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;

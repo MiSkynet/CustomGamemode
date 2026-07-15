@@ -7,6 +7,7 @@ import me.miskynet.customGamemode.utils.ComponentUtils;
 import me.miskynet.customGamemode.utils.Debugger;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
@@ -31,6 +32,21 @@ public class TexturedScrollMenu extends TextureMenu {
         super(title, size, unicode);
         this.itemsPerPage = size - 9;
     }
+
+
+    @Override
+    public void buildMenu() {
+        fillEmptySlots();
+    }
+
+    /**
+     * Builds the menu for a specific player
+     *
+     * @param player The player the menu is being built for
+     * */
+    @Override
+    public void buildMenu(Player player) {}
+
 
     public void addNavigationBar() {
 

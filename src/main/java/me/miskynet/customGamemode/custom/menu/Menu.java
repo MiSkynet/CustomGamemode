@@ -27,6 +27,20 @@ public class Menu implements InventoryHolder {
     }
 
     /**
+     * Builds the menu. Building includes adding all necessary items, nav-bars etc.
+     * */
+    public void buildMenu() {}
+
+    /**
+     * Builds the menu for a specific player. Building includes adding all necessary items, nav-bars etc.
+     *
+     * @param player The player the menu is being built for
+     * */
+    public void buildMenu(Player player) {
+        buildMenu();
+    }
+
+    /**
      * Sets an {@link ItemStack} into a specific slot
      *
      * @param slot Slot where the item should be put

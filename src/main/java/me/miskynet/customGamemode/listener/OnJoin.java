@@ -41,9 +41,13 @@ public class OnJoin implements Listener {
 
         if (!PlayerData.checkForExistence(PlayerData.FileType.INDEX, playerUUID)) {
             PlayerData.setup(PlayerData.FileType.INDEX, playerUUID);
+        }
 
-            PlayerData.set(PlayerData.FileType.INDEX, playerUUID, "currentLevel", 0);
-            PlayerData.set(PlayerData.FileType.INDEX, playerUUID, "currentXP", 0);
+        if (!PlayerData.checkForExistence(PlayerData.FileType.STATS, playerUUID)) {
+            PlayerData.setup(PlayerData.FileType.STATS, playerUUID);
+
+            PlayerData.set(PlayerData.FileType.STATS, playerUUID, "currentLevel", 0);
+            PlayerData.set(PlayerData.FileType.STATS, playerUUID, "currentXP", 0);
         }
 
         Main.scoreboardManager.createScoreboard(event.getPlayer());

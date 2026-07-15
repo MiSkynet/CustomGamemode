@@ -2,19 +2,34 @@ package me.miskynet.customGamemode.commands;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.custom.config.Language;
+import me.miskynet.customGamemode.custom.config.PlayerData;
 import me.miskynet.customGamemode.custom.index.IndexMenu;
 import me.miskynet.customGamemode.utils.ComponentUtils;
+import me.miskynet.customGamemode.utils.PermsManager;
 import org.bukkit.entity.Player;
 
 public class IndexMenuCommand implements BasicCommand {
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
 
+        if (!(commandSourceStack.getSender() instanceof Player)) {
+            commandSourceStack.getSender().sendMessage(ComponentUtils.component(Main.language.getString("commands.general.nonPlayerSender")));
+            return;
+        }
+
         Player player = (Player) commandSourceStack.getSender();
 
-        IndexMenu indexMenu = new IndexMenu(ComponentUtils.component("Index"));
+        if (!(player.hasPermission(PermsManager.Perms.COMMAND_INDEX.toLowerString())) && !player.isOp()) {
+            player.sendMessage(ComponentUtils.component(Main.language.getString("commands.general.noPermission")));
+            return;
+        }
+
+        IndexMenu indexMenu = new IndexMenu();
         indexMenu.buildMenu(player);
         indexMenu.openForPlayer(player);
-    }
 
+        player.sendMessage(ComponentUtils.component(Main.language.getString("commands.index.opened")));
+    }
 }

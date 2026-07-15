@@ -4,7 +4,6 @@ import com.destroystokyo.paper.profile.PlayerProfile;
 import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.menu.Menu;
-import me.miskynet.customGamemode.utils.ComponentUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -26,7 +25,7 @@ import java.util.*;
  * */
 public class NPC {
 
-    Component name;
+    Component customName;
     Location location;
     UUID uuid = null;
     InteractType interactType = null;
@@ -42,17 +41,18 @@ public class NPC {
         MENU,
         TEXTURE_MENU,
         SHOP,
-        SETTINGS
+        SETTINGS,
+        INDEX
     }
 
     /**
      * Creates a new {@link NPC}
      *
-     * @param name The name of the {@link NPC}
+     * @param customName The name of the {@link NPC}
      * @param location The {@link Location} where the {@link NPC} should be spawned at
      * */
-    public NPC(Component name, Location location) {
-        this.name = name;
+    public NPC(Component customName, Location location) {
+        this.customName = customName;
         this.location = location;
     }
 
@@ -66,7 +66,7 @@ public class NPC {
         entity.setInvulnerable(true);
         entity.setSilent(true);
         entity.setCustomNameVisible(true);
-        entity.customName(ComponentUtils.component("&dShop NPC"));
+        entity.customName(this.customName);
 
         Mannequin mannequin = (Mannequin) entity;
         mannequin.setDescription(null);

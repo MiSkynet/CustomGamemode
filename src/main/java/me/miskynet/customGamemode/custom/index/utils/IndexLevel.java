@@ -1,8 +1,12 @@
-package me.miskynet.customGamemode.custom.index;
+package me.miskynet.customGamemode.custom.index.utils;
 
-import java.lang.reflect.Array;
+import me.miskynet.customGamemode.custom.index.IndexMenu;
+
 import java.util.ArrayList;
 
+/**
+ * Represents a level in the {@link IndexMenu}. Each {@link IndexLevel} has a level, a required level to unlock all the rewards and a list of {@link Reward}'s.
+ * */
 public class IndexLevel {
 
     private final int level;

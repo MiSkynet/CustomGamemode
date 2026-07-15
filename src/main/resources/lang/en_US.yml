@@ -1,0 +1,10 @@
+commands:
+  general:
+    nonPlayerSender: "&cYou must be a player to execute this command"
+    noPermission: "&cYou do not have permission to execute this command"
+  index:
+    opened: "&aOpened your index"
+  shop:
+    opened: "&aOpened the shop"
+  settings:
+    opened: "&aOpened your settings"

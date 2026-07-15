@@ -1,23 +1,21 @@
 package me.miskynet.customGamemode.custom.index;
 
 import me.miskynet.customGamemode.Main;
-import me.miskynet.customGamemode.custom.config.PlayerData;
+import me.miskynet.customGamemode.custom.index.utils.IndexLevel;
+import me.miskynet.customGamemode.custom.index.utils.IndexMenuItem;
+import me.miskynet.customGamemode.custom.index.utils.Reward;
 import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.custom.item.Relic;
 import me.miskynet.customGamemode.custom.menu.Menu;
 import me.miskynet.customGamemode.custom.menu.TexturedScrollMenu;
 import me.miskynet.customGamemode.utils.ComponentUtils;
-import me.miskynet.customGamemode.utils.Debugger;
-import me.miskynet.customGamemode.utils.PDCUtils;
+import me.miskynet.customGamemode.utils.Utils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class IndexMenu extends TexturedScrollMenu {
 
@@ -25,11 +23,8 @@ public class IndexMenu extends TexturedScrollMenu {
 
     public static NamespacedKey currentLevelKey = new NamespacedKey(Main.getInstance(), "currentLevel");
 
-    /**
-     * @param title The title of the {@link Menu}
-     * */
-    public IndexMenu(Component title) {
-        super(title, 54, "\uE003");
+    public IndexMenu() {
+        super(ComponentUtils.component("Index"), 54, "\uE007");
         Integer calcMaxPage = (levels.size() + this.getItemsPerPage() - 1) / this.getItemsPerPage();
         this.setMaxPage(calcMaxPage);
     }
@@ -39,6 +34,7 @@ public class IndexMenu extends TexturedScrollMenu {
      *
      * @param player The player for whom the menu is being built
      * */
+    @Override
     public void buildMenu(Player player) {
         this.getInventory().clear();
         this.addNavigationBar();
@@ -47,6 +43,7 @@ public class IndexMenu extends TexturedScrollMenu {
 
     /**
      * Adds the reward items to the {@link IndexMenu} inventory
+     *
      * @param player The player the menu is being built for
      * */
     public void addRewardItemsToInventory(Player player) {
@@ -56,7 +53,7 @@ public class IndexMenu extends TexturedScrollMenu {
         for (int i = 0; i < this.getInventory().getSize(); i++) {
             if (levels.size() <= currentShopItem) break;
             IndexLevel level = levels.get(currentShopItem);
-            this.getInventory().addItem(buildRewardItemStack(level, player));
+            this.getInventory().addItem(IndexMenuItem.buildRewardItemStack(level, player));
             currentShopItem++;
         }
     }
@@ -69,9 +66,12 @@ public class IndexMenu extends TexturedScrollMenu {
      * */
     public static void createRewardList() {
 
-        for (int i = 1; i < 50; i++) {
+        for (int i = 1; i <= 100; i++) {
 
-            IndexLevel level = new IndexLevel(i, i);
+            // calculate the required xp for the level using a formula
+            int xpRequired = (int) (Math.pow(i, 1.40));
+
+            IndexLevel level = new IndexLevel(i, xpRequired);
 
             level.addReward(new Reward(5000.0d, ComponentUtils.component(false, "&7" + 5000 + "EXP")));
 
@@ -86,56 +86,6 @@ public class IndexMenu extends TexturedScrollMenu {
 
             levels.add(level);
         }
-    }
-
-    /**
-     * Builds an {@link ItemStack} representing the reward for a given {@link IndexLevel} and player.
-     *
-     * @param level The {@link IndexLevel} for which the reward item is being built
-     * @param player The player for whom the reward item is being built
-     * @return An {@link ItemStack} representing the reward for the given level and player
-     * */
-    public static ItemStack buildRewardItemStack(IndexLevel level, Player player) {
-
-        Item item;
-        List<Component> lore = new ArrayList<>();
-
-        List<Integer> unlockedLevels = PlayerData.get(PlayerData.FileType.INDEX, player.getUniqueId()).getIntegerList("unlockedLevels");
-
-        Integer currentConfigPlayerLevel = PlayerData.get(PlayerData.FileType.INDEX, player.getUniqueId()).getInt("currentLevel");
-
-        // check weather a level is unlocked, not unlocked yet or locked
-        if (unlockedLevels != null && unlockedLevels.contains(level.getLevel())) {
-            item = new Item(Material.LIME_STAINED_GLASS_PANE, ComponentUtils.component(false, "&aLevel " + level.getLevel() + " &8(Unlocked)"));
-        } else if (currentConfigPlayerLevel >= level.getLevel()) {
-            item = new Item(Material.YELLOW_STAINED_GLASS_PANE, ComponentUtils.component(false, "&eLevel " + level.getLevel() + " &8(Locked)"));
-            lore.add(ComponentUtils.component(false, "&eClick to unlock!"));
-        }else {
-            item = new Item(Material.RED_STAINED_GLASS_PANE, ComponentUtils.component(false, "&cLevel " + level.getLevel() + " &8(Locked)"));
-        }
-
-        lore.add(ComponentUtils.component(false, " "));
-        lore.add(ComponentUtils.component(false, "&7You'll receive the following rewards"));
-        lore.add(ComponentUtils.component(false, "&7when you reach level " + level.getLevel() + ":"));
-
-        for (Reward reward : level.getRewards()) {
-            if (reward.getReward() instanceof Item || reward.getReward() instanceof Relic) {
-                Item rewardItem = (Item) reward.getReward();
-                lore.add(ComponentUtils.component(false, "&7- &6" + ComponentUtils.fromComponent(rewardItem.toItemStack().getItemMeta().displayName())));
-            } else if (reward.getReward() instanceof Integer) {
-                lore.add(ComponentUtils.component(false, "&7- &6" + reward.getReward() + " Level"));
-            } else if (reward.getReward() instanceof Double) {
-                lore.add(ComponentUtils.component(false, "&7- &6" + reward.getReward() + Main.economyManager.getEcoSymbol()));
-            }
-        }
-
-        item.setLore(lore);
-
-        ItemStack finalItemStack = item.toItemStack();
-
-        PDCUtils.setPDC(finalItemStack, currentLevelKey, PersistentDataType.INTEGER, level.getLevel());
-
-        return finalItemStack;
     }
 
     /**

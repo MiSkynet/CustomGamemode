@@ -2,7 +2,7 @@ package me.miskynet.customGamemode.commands.testCommands;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import me.miskynet.customGamemode.custom.entity.npc.NPC;
-import me.miskynet.customGamemode.utils.Utils;
+import me.miskynet.customGamemode.utils.ComponentUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -14,14 +14,21 @@ public class SummonNPCCommand implements BasicCommand {
 
         Location location = player.getLocation();
 
-        NPC npc = new NPC(Utils.component("&dCooler NPC"), location);
+        NPC npc = new NPC(ComponentUtils.component("&dCooler NPC"), location);
 
-        npc.setInteractMenu(NPC.InteractType.SHOP);
+        if (args.length > 0) {
+
+            String npcType = args[0];
+
+            npc = new NPC(ComponentUtils.component("&d" + npcType), location);
+
+            npc.setInteractMenu(NPC.InteractType.valueOf(npcType.toUpperCase()));
+        }
 
         npc.setSkinHash("de39ab9468b064c7c01aeddd345217b6dae58b51b37d9342b5a9bbf33f1197d5");
 
         npc.spawn();
 
-        player.sendMessage(Utils.component(false, "&aSpawned new shop NPC."));
+        player.sendMessage(ComponentUtils.component(false, "&aSpawned new NPC."));
     }
 }

@@ -1,5 +1,6 @@
 package me.miskynet.customGamemode.custom.entity.npc;
 
+import me.miskynet.customGamemode.custom.index.IndexMenu;
 import me.miskynet.customGamemode.custom.menu.Menu;
 import me.miskynet.customGamemode.custom.settings.SettingsMenu;
 import me.miskynet.customGamemode.custom.shop.ShopMenu;
@@ -29,7 +30,11 @@ public class NPCInteractEvent implements Listener {
             menu = new ShopMenu(0);
         }else if (PDCUtils.getPDC(entity, NPC.interactTypeKey, PersistentDataType.STRING).equals("SETTINGS")) {
             menu = new SettingsMenu();
+        }else if (PDCUtils.getPDC(entity, NPC.interactTypeKey, PersistentDataType.STRING).equals("INDEX")) {
+            menu = new IndexMenu();
         }
+
+        menu.buildMenu(event.getPlayer());
 
         menu.openForPlayer(event.getPlayer());
 

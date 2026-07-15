@@ -4,6 +4,7 @@ import me.miskynet.customGamemode.utils.ComponentUtils;
 import me.miskynet.customGamemode.custom.item.Item;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
@@ -30,9 +31,7 @@ public abstract class TextureMenu extends Menu {
         this.unicode = unicode;
     }
 
-    /**
-     * Builds the menu
-     * */
+    @Override
     public void buildMenu() {
         fillEmptySlots();
     }

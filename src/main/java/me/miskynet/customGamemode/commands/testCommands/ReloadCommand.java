@@ -14,10 +14,10 @@ public class ReloadCommand implements BasicCommand {
 
         Player player = (Player) commandSourceStack.getSender();
 
-
-        PlayerData.reload(PlayerData.FileType.SKILLS, player.getUniqueId());
         PlayerData.reload(PlayerData.FileType.SETTINGS, player.getUniqueId());
         PlayerData.reload(PlayerData.FileType.BALANCE, player.getUniqueId());
+        PlayerData.reload(PlayerData.FileType.INDEX, player.getUniqueId());
+        PlayerData.reload(PlayerData.FileType.STATS, player.getUniqueId());
 
     }
 }
