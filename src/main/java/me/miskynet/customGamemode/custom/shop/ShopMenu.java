@@ -1,5 +1,7 @@
 package me.miskynet.customGamemode.custom.shop;
 
+import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.custom.config.Language;
 import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.custom.item.PlayerHead;
 import me.miskynet.customGamemode.custom.menu.TextureMenu;
@@ -17,6 +19,8 @@ import java.util.*;
 
 public class ShopMenu extends TexturedScrollMenu {
 
+    private static final Language language = Main.getInstance().getLanguage();
+
     // caching all the items for the shopMenu
     public static final List<ShopItem> cachedItems = new ArrayList<>();
 
@@ -27,7 +31,7 @@ public class ShopMenu extends TexturedScrollMenu {
      * @param page The page at which the shopMenu should be opened
      * */
     public ShopMenu(Integer page) {
-        super(ComponentUtils.component("ShopCommand"), 54, "\uE003");
+        super(ComponentUtils.component(Main.getInstance().getLanguage().getString("shop.title")), 54, "\uE003");
         this.setCurrentPage(page);
         this.setMaxPage((cachedItems.size() + this.getItemsPerPage() - 1) / this.getItemsPerPage());
         buildMenu();
@@ -102,7 +106,8 @@ public class ShopMenu extends TexturedScrollMenu {
 
             Item resultItem = new Item(material);
 
-            resultItem.setDisplayName(ComponentUtils.component(false, "&d" + Utils.formatEnumToString(material.toString())));
+            resultItem.setDisplayName(ComponentUtils.component(false, language.getString("shop.item.offerItem.displayName")
+                    .replaceAll("%itemName%", Utils.formatEnumToString(material.toString()))));
 
             shopItem.setResultItem(resultItem);
 

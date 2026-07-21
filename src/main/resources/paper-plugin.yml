@@ -3,3 +3,4 @@ version: '1.0'
 main: me.miskynet.customGamemode.Main
 api-version: '1.21'
 authors: [ MiSkynet ]
+bootstrapper: me.miskynet.customGamemode.custom.enchantments.mole.Mole

@@ -1,6 +1,7 @@
 package me.miskynet.customGamemode.custom.shop;
 
 import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.custom.config.Language;
 import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.utils.ComponentUtils;
 import net.kyori.adventure.text.Component;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShopItem extends Item {
+
+    private final Language language = Main.getInstance().getLanguage();
 
     Double buyPrice;
     Double sellPrice;
@@ -37,8 +40,15 @@ public class ShopItem extends Item {
         super(material, null, new ArrayList<>());
 
         List<Component> lore = new ArrayList<>();
-        lore.add(ComponentUtils.component(false, "&7Buy Price: &6" + buyPrice));
-        lore.add(ComponentUtils.component(false, "&7Sell Price: &6" + sellPrice));
+
+
+        if (language.getStringList("shop.item.offerItem.lore") != null) {
+            for (String string : language.getStringList("shop.item.offerItem.lore")) {
+                lore.add(ComponentUtils.component(false, string
+                        .replaceAll("%buyPrice%", String.valueOf(buyPrice))
+                        .replaceAll("%sellPrice%", String.valueOf(sellPrice))));
+            }
+        }
 
         this.buyPrice = buyPrice;
         this.sellPrice = sellPrice;
@@ -49,13 +59,17 @@ public class ShopItem extends Item {
     /**
      * Gets the price of an {@link ShopItem} to buy it
      * */
-    public Double getBuyPrice() { return buyPrice; }
+    public Double getBuyPrice() {
+        return buyPrice;
+    }
 
     /**
      * Gets the price of an {@link ShopItem} the player receives when
      * selling the item
      * */
-    public Double getSellPrice() { return sellPrice; }
+    public Double getSellPrice() {
+        return sellPrice;
+    }
 
     /**
      * Converts the {@link ShopItem} into an {@link ItemStack}

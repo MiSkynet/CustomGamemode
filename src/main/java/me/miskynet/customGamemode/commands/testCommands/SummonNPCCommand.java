@@ -12,6 +12,9 @@ public class SummonNPCCommand implements BasicCommand {
 
         Player player = (Player) commandSourceStack.getSender();
 
+        player.sendMessage(ComponentUtils.component("\n&e&l[!] &r&eThis command is currently in testing state. It may not work as intended and " +
+                "may not support some features! Errors may be fixed in the future, else this command will be replaced by an official version!\n"));
+
         Location location = player.getLocation();
 
         NPC npc = new NPC(ComponentUtils.component("&dCooler NPC"), location);

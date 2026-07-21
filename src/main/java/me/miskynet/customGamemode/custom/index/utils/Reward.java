@@ -68,7 +68,7 @@ public class Reward {
             player.setLevel(player.getLevel() + level);
             return true;
         } else if (reward instanceof Double amount) {
-            Main.economyManager.addBalance(player, amount);
+            Main.getInstance().getEconomyManager().addBalance(player, amount);
             return true;
         }
         return false;

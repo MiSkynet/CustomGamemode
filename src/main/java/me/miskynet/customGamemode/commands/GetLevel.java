@@ -4,13 +4,14 @@ import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.config.Language;
-import me.miskynet.customGamemode.custom.config.PlayerData;
+import me.miskynet.customGamemode.custom.index.levelingSystem.IndexLevelingSystem;
 import me.miskynet.customGamemode.utils.ComponentUtils;
 import me.miskynet.customGamemode.utils.PermsManager;
 import org.bukkit.entity.Player;
 
-public class ToggleScoreboard implements BasicCommand {
+public class GetLevel implements BasicCommand {
 
+    private IndexLevelingSystem indexLevelingSystem = Main.getInstance().getLevelingSystem();
     private final Language language = Main.getInstance().getLanguage();
 
     @Override
@@ -23,15 +24,20 @@ public class ToggleScoreboard implements BasicCommand {
 
         Player player = (Player) commandSourceStack.getSender();
 
-        if (!(player.hasPermission(PermsManager.Perms.COMMAND_TOGGLE_SCOREBOARD.toLowerString())) && !player.isOp()) {
+        if (!(player.hasPermission(PermsManager.Perms.COMMAND_GET_LEVEL.toLowerString())) && !player.isOp()) {
             player.sendMessage(ComponentUtils.component(language.getString("commands.general.noPermission")));
             return;
         }
 
-        if ((Boolean) PlayerData.get(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus")) {
-            PlayerData.set(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus", false);
-        }else {
-            PlayerData.set(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus", true);
-        }
+        int nextLevel = indexLevelingSystem.getPlayerLevel(player) + 1;
+
+        int requiredXPToLevelUp = indexLevelingSystem.getRequiredXPToLevelUp(nextLevel);
+
+        player.sendMessage(ComponentUtils.component(language.getString("commands.level.currentLevel")
+                .replaceAll("%level%", indexLevelingSystem.getPlayerLevel(player) + "")
+                .replaceAll("%xp%", indexLevelingSystem.getPlayerXP(player) + "")
+                .replaceAll("%nextLevel%", nextLevel + "")
+                .replaceAll("%requiredXP%", requiredXPToLevelUp + "")));
+
     }
 }

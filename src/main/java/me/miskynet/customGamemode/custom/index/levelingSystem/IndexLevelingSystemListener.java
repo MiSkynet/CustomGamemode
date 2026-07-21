@@ -1,4 +1,4 @@
-package me.miskynet.customGamemode.custom.levelingSystem;
+package me.miskynet.customGamemode.custom.index.levelingSystem;
 
 import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
@@ -8,9 +8,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityBreedEvent;
 
-public class LevelingListeners implements Listener {
+public class IndexLevelingSystemListener implements Listener {
 
-    private LevelingSystem levelingSystem = new LevelingSystem();
+    private IndexLevelingSystem levelingSystem = new IndexLevelingSystem();
 
     @EventHandler
     public void blockBreak(BlockBreakEvent event) {

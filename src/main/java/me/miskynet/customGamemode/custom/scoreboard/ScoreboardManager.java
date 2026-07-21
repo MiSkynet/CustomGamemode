@@ -2,6 +2,7 @@ package me.miskynet.customGamemode.custom.scoreboard;
 
 import io.papermc.paper.scoreboard.numbers.NumberFormat;
 import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.custom.economy.EconomyManager;
 import me.miskynet.customGamemode.utils.ComponentUtils;
 import me.miskynet.customGamemode.custom.config.PlayerData;
 import net.kyori.adventure.text.Component;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 public class ScoreboardManager {
 
     Scoreboard scoreboard;
+
+    private final EconomyManager economyManager = Main.getInstance().getEconomyManager();
 
     /**
      * Creates the scoreboard
@@ -75,7 +78,7 @@ public class ScoreboardManager {
         scores.add(ComponentUtils.coloredString("  &6" + player.getName()));
         scores.add(ComponentUtils.coloredString(" "));
         scores.add(ComponentUtils.coloredString("&7Your Balance:"));
-        scores.add(ComponentUtils.coloredString("&7  &6" + Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(player)) + Main.economyManager.getEcoSymbol()));
+        scores.add(ComponentUtils.coloredString("&7  &6" + economyManager.getDisplayFormat(true, player)));
         scores.add(ComponentUtils.coloredString(" "));
 
         int repeat = 7;
@@ -91,6 +94,8 @@ public class ScoreboardManager {
      * @param player {@link Player} the scoreboard should be updated for
      * */
     public void updateScoreboard(Player player) {
+
+        if (PlayerData.get(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus") == null) return;
 
         if (!((Boolean) PlayerData.get(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus"))) {
             player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());

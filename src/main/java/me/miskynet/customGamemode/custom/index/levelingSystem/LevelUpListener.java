@@ -1,4 +1,4 @@
-package me.miskynet.customGamemode.custom.levelingSystem;
+package me.miskynet.customGamemode.custom.index.levelingSystem;
 
 import me.miskynet.customGamemode.utils.ComponentUtils;
 import org.bukkit.event.EventHandler;

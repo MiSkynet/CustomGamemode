@@ -1,20 +1,19 @@
 package me.miskynet.customGamemode;
 
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
-import me.miskynet.customGamemode.commands.IndexMenuCommand;
+import me.miskynet.customGamemode.commands.*;
+import me.miskynet.customGamemode.commands.admin.ReloadCommand;
 import me.miskynet.customGamemode.commands.testCommands.*;
-import me.miskynet.customGamemode.commands.SettingsCommand;
-import me.miskynet.customGamemode.commands.ToggleScoreboard;
-import me.miskynet.customGamemode.commands.EcoCommand;
-import me.miskynet.customGamemode.commands.ShopCommand;
 import me.miskynet.customGamemode.custom.config.Language;
 import me.miskynet.customGamemode.custom.economy.EconomyManager;
+import me.miskynet.customGamemode.custom.enchantments.mole.MoleListener;
 import me.miskynet.customGamemode.custom.entity.npc.NPCInteractEvent;
 import me.miskynet.customGamemode.custom.entity.npc.NPCMoveEvent;
 import me.miskynet.customGamemode.custom.index.IndexMenu;
+import me.miskynet.customGamemode.custom.index.levelingSystem.IndexLevelingSystem;
+import me.miskynet.customGamemode.custom.index.levelingSystem.IndexLevelingSystemListener;
 import me.miskynet.customGamemode.custom.index.listener.IndexMenuListener;
-import me.miskynet.customGamemode.custom.levelingSystem.LevelUpListener;
-import me.miskynet.customGamemode.custom.levelingSystem.LevelingListeners;
+import me.miskynet.customGamemode.custom.index.levelingSystem.LevelUpListener;
 import me.miskynet.customGamemode.custom.settings.SettingsListener;
 import me.miskynet.customGamemode.custom.shop.ShopMenu;
 import me.miskynet.customGamemode.custom.shop.itemPreview.ItemPreviewListener;
@@ -26,9 +25,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
 
-    public static EconomyManager economyManager;
-    public static ScoreboardManager scoreboardManager;
-    public static Language language;
+    private EconomyManager economyManager;
+    private ScoreboardManager scoreboardManager;
+    private Language language;
+    private IndexLevelingSystem levelingSystem;
 
     @Override
     public void onEnable() {
@@ -58,6 +58,7 @@ public final class Main extends JavaPlugin {
         economyManager = new EconomyManager();
         scoreboardManager = new ScoreboardManager();
         language = new Language();
+        levelingSystem = new IndexLevelingSystem();
     }
 
     // setup commands
@@ -69,14 +70,12 @@ public final class Main extends JavaPlugin {
             registrar.register("settings", new SettingsCommand());
             registrar.register("eco", new EcoCommand());
             registrar.register("shop", new ShopCommand());
+            registrar.register("index", new IndexMenuCommand());
+            registrar.register("level", new GetLevel());registrar.register("reload", new ReloadCommand());
+
 
             // test commands
             registrar.register("summonnpc", new SummonNPCCommand());
-            registrar.register("reload", new ReloadCommand());
-            registrar.register("moditem", new BuildItem());
-            registrar.register("index", new IndexMenuCommand());
-            registrar.register("functiontest", new FunctionTest());
-            registrar.register("level", new GetLevel());
         }));
     }
 
@@ -100,8 +99,27 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new IndexMenuListener(), this);
 
         // leveling listener
-        pluginManager.registerEvents(new LevelingListeners(), this);
+        pluginManager.registerEvents(new IndexLevelingSystemListener(), this);
         pluginManager.registerEvents(new LevelUpListener(), this);
+
+        // mole listener
+        pluginManager.registerEvents(new MoleListener(), this);
+    }
+
+    public EconomyManager getEconomyManager() {
+        return economyManager;
+    }
+
+    public ScoreboardManager getScoreboardManager() {
+        return scoreboardManager;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public IndexLevelingSystem getLevelingSystem() {
+        return levelingSystem;
     }
 
 }

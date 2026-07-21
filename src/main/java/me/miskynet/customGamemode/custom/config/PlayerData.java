@@ -19,10 +19,10 @@ public class PlayerData {
      * */
     public enum FileType {
 
-        SETTINGS("settings.yml"),
         BALANCE("balance.yml"),
-        STATS("stats.yml"),
-        INDEX("index.yml");
+        INDEX("index.yml"),
+        SETTINGS("settings.yml"),
+        STATS("stats.yml");
 
         private final String fileName;
 

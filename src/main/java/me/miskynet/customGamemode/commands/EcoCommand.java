@@ -3,32 +3,33 @@ package me.miskynet.customGamemode.commands;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.custom.config.Language;
+import me.miskynet.customGamemode.custom.economy.EconomyManager;
 import me.miskynet.customGamemode.utils.ComponentUtils;
 import me.miskynet.customGamemode.utils.PermsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+import java.util.regex.Matcher;
+
 
 public class EcoCommand implements BasicCommand {
+
+    private final Language language = Main.getInstance().getLanguage();
+    private final EconomyManager economyManager = Main.getInstance().getEconomyManager();
 
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
 
         if (!(commandSourceStack.getSender() instanceof Player)) {
-            commandSourceStack.getSender().sendMessage(ComponentUtils.component(Main.language.getString("commands.general.nonPlayerSender")));
+            commandSourceStack.getSender().sendMessage(ComponentUtils.component(language.getString("commands.general.nonPlayerSender")));
             return;
         }
 
         Player sender = (Player) commandSourceStack.getSender();
 
-        if (args.length < 1) {
-            sender.sendMessage(ComponentUtils.component("&cUse /eco help"));
-            return;
-        }
-
-        String firstArg = args[0].toLowerCase();
-
-        if (firstArg.equals("help")) {
+        if (args.length >= 1 && args[0].equals("help")) {
             sendPlayerHelp(sender);
             return;
         }
@@ -42,40 +43,43 @@ public class EcoCommand implements BasicCommand {
             setAndAddFunction(sender, args);
             return;
         }
+
+        sender.sendMessage(ComponentUtils.component(language.getString("commands.eco.useHelp")));
     }
 
     public void sendPlayerHelp(Player sender) {
-        sender.sendMessage(ComponentUtils.component("&aAvailable commands:"));
-        sender.sendMessage(ComponentUtils.component("&a/eco get <player> - Get the balance of a player"));
-        sender.sendMessage(ComponentUtils.component("&a/eco set <player> <amount> - Set the balance of a player"));
-        sender.sendMessage(ComponentUtils.component("&a/eco add <player> <amount> - Add to the balance of a player"));
-        sender.sendMessage(ComponentUtils.component("&a/pay <player> <amount> - Pay a player"));
+        List<String> helpMessages = language.getStringList("commands.eco.help");
+        for (String message : helpMessages) {
+            sender.sendMessage(ComponentUtils.component(message));
+        }
     }
 
     public void getFunction(Player sender, String[] args) {
 
         if (!sender.hasPermission(PermsManager.Perms.COMMAND_ECO_GET.toLowerString()) && !sender.isOp()) {
-            sender.sendMessage(ComponentUtils.component(Main.language.getString("commands.general.noPermission")));
+            sender.sendMessage(ComponentUtils.component(language.getString("commands.general.noPermission")));
             return;
         }
 
         Player target = Bukkit.getPlayer(args[1]);
 
         if (target == null) {
-            sender.sendMessage(ComponentUtils.component("&cPlayer " + args[1] + " is not a valid player"));
-            sender.sendMessage(ComponentUtils.component("&cUse /eco help for a list of commands."));
+            sender.sendMessage(ComponentUtils.component(language.getString("commands.eco.get.invalidPlayer")
+                    .replace("%target%", args[1])));
             return;
         }
 
-        sender.sendMessage(ComponentUtils.component("&a" + target.getName() + "'s balance is: " +
-                Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(target)) + Main.economyManager.getEcoSymbol()));
+        sender.sendMessage(ComponentUtils.component(language.getString("commands.eco.get.balance")
+                .replace("%target%", target.getName())
+                .replace("%balance%", economyManager.getDisplayFormat(true, target))));
     }
 
     public void setAndAddFunction(Player sender, String[] args) {
         Player target = Bukkit.getPlayer(args[1]);
 
         if (target == null) {
-            sender.sendMessage(ComponentUtils.component("Player " + args[1] + " is not a valid player"));
+            sender.sendMessage(ComponentUtils.component(language.getString("commands.eco.invalidPlayer")
+                    .replace("%target%", args[1])));
             return;
         }
 
@@ -84,34 +88,42 @@ public class EcoCommand implements BasicCommand {
         try {
             amount = Double.parseDouble(args[2]);
         } catch (NumberFormatException e) {
-            sender.sendMessage(ComponentUtils.component("This is not a valid amount!"));
-            sender.sendMessage(ComponentUtils.component("&cUse /eco help for a list of commands."));
+            sender.sendMessage(ComponentUtils.component(language.getString("commands.eco.invalidAmount")
+                    .replace("%amount%", args[2])));
             return;
         }
 
         switch (args[0].toLowerCase()) {
             case "set" -> {
                 if (!sender.hasPermission(PermsManager.Perms.COMMAND_ECO_SET.toLowerString()) && !sender.isOp()) {
-                    sender.sendMessage(ComponentUtils.component(Main.language.getString("commands.general.noPermission")));
+                    sender.sendMessage(ComponentUtils.component(language.getString("commands.general.noPermission")));
                     return;
                 }
 
-                Main.economyManager.setBalance(target, amount);
-                sender.sendMessage(ComponentUtils.component("&aYou've set " + target.getName() + "'s balance to " + Main.economyManager.getDisplayFormat(amount) + Main.economyManager.getEcoSymbol()));
-                target.sendMessage(ComponentUtils.component("&aYour balance has been set to " + Main.economyManager.getDisplayFormat(amount) + Main.economyManager.getEcoSymbol()));
+                economyManager.setBalance(target, amount);
+                sender.sendMessage(ComponentUtils.component(language.getString("commands.eco.set.sender")
+                        .replace("%target%", target.getName())
+                        .replace("%amount%", economyManager.getDisplayFormat(true, target))));
+                target.sendMessage(ComponentUtils.component(language.getString("commands.eco.set.target")
+                        .replace("%sender%", sender.getName())
+                        .replace("%amount%", economyManager.getDisplayFormat(true, target))));
             }
             case "add" -> {
                 if (!sender.hasPermission(PermsManager.Perms.COMMAND_ECO_ADD.toLowerString()) && !sender.isOp()) {
-                    sender.sendMessage(ComponentUtils.component(Main.language.getString("commands.general.noPermission")));
+                    sender.sendMessage(ComponentUtils.component(language.getString("commands.general.noPermission")));
                     return;
                 }
 
-                Main.economyManager.addBalance(target, amount);
-                sender.sendMessage(ComponentUtils.component("&aYou've added " + Main.economyManager.getDisplayFormat(amount) + Main.economyManager.getEcoSymbol()) + " to " + target.getName() + "'s balance");
-                target.sendMessage(ComponentUtils.component("&a" + Main.economyManager.getDisplayFormat(amount) + Main.economyManager.getEcoSymbol() + " has been added to your balance"));
+                economyManager.addBalance(target, amount);
+                sender.sendMessage(ComponentUtils.component(language.getString("commands.eco.add.sender")
+                        .replace("%target%", target.getName())
+                        .replace("%amount%", economyManager.getDisplayFormat(true, target))));
+                target.sendMessage(ComponentUtils.component(language.getString("commands.eco.add.target")
+                        .replace("%sender%", sender.getName())
+                        .replace("%amount%", economyManager.getDisplayFormat(true, target))));
             }
             default -> {
-                sender.sendMessage(ComponentUtils.component("&cInvalid command. Use /eco help for a list of commands."));
+                sender.sendMessage(ComponentUtils.component(language.getString("commands.eco.useHelp")));
             }
         }
     }

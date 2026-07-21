@@ -1,5 +1,6 @@
 package me.miskynet.customGamemode.custom.economy;
 
+import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.config.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -116,14 +117,22 @@ public class EconomyManager {
      *
      * @param value The value that should be formated
      * */
-    public String getDisplayFormat(double value) {
+    public String getDisplayFormat(boolean visibility, double value) {
 
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         DecimalFormat formatter = new DecimalFormat("#,##0.00", symbols);
 
         String formatedNumber = formatter.format(value);
 
-        return formatedNumber;
+        if (visibility) return formatedNumber + Main.getInstance().getEconomyManager().getEcoSymbol();
+        else return formatedNumber;
+    }
+
+    /**
+     * Get the display format of a player's balance
+     * */
+    public String getDisplayFormat(boolean visibility, Player player) {
+        return getDisplayFormat(visibility, Main.getInstance().getEconomyManager().getBalance(player));
     }
 
 

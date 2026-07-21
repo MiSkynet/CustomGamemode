@@ -1,5 +1,6 @@
 package me.miskynet.customGamemode.custom.shop.itemPreview;
 
+import me.miskynet.customGamemode.custom.economy.EconomyManager;
 import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.item.PlayerHead;
@@ -28,6 +29,8 @@ public class ItemPreviewItem {
         BUY,
         SELL
     }
+
+    private final EconomyManager economyManager = Main.getInstance().getEconomyManager();
 
     private ItemType itemType;
     private int amount;
@@ -66,10 +69,10 @@ public class ItemPreviewItem {
         ArrayList<Component> lore = new ArrayList<>();
         if (itemType.toString().toLowerCase().equals("buy")) {
             item = new PlayerHead(ComponentUtils.component(false, "&aBuy " + amount),"23a45195193b5d6de5c522171d6a75abdaa78aacd901556dd0d8817c0ed810f3");
-            lore.add(ComponentUtils.component(false, "&7Buy " + amount + " for " + Main.economyManager.getDisplayFormat(amount * price) + Main.economyManager.getEcoSymbol()));
+            lore.add(ComponentUtils.component(false, "&7Buy " + amount + " for " + economyManager.getDisplayFormat(true, amount * price)));
         }else if (itemType.toString().toLowerCase().equals("sell")) {
             item = new PlayerHead(ComponentUtils.component(false, "&aSell " + amount),"4bf360ee0b5578f10189900a21d631e6a88c296cfa3a00f1e2c2dc73588a3a8d");
-            lore.add(ComponentUtils.component(false, "&7Sell " + amount + " for " + Main.economyManager.getDisplayFormat(amount * price) + Main.economyManager.getEcoSymbol()));
+            lore.add(ComponentUtils.component(false, "&7Sell " + amount + " for " + economyManager.getDisplayFormat(true, amount * price)));
         }
 
         item.setLore(lore);

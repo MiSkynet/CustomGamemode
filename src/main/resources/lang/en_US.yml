@@ -2,9 +2,54 @@ commands:
   general:
     nonPlayerSender: "&cYou must be a player to execute this command"
     noPermission: "&cYou do not have permission to execute this command"
+
+  admin:
+    reload: "&a&lPlugin reloaded!"
+
   index:
     opened: "&aOpened your index"
-  shop:
-    opened: "&aOpened the shop"
   settings:
     opened: "&aOpened your settings"
+
+  eco:
+    help:
+      - "&aAvailable commands:"
+      - "&a/eco get <player> - Get the balance of a player"
+      - "&a/eco set <player> <amount> - Set the balance of a player"
+      - "&a/eco add <player> <amount> - Add to the balance of a player"
+      - "&a/pay <player> <amount> - Pay a player"
+
+    useHelp: "&cTry to use /eco help for a list of commands"
+
+    invalidAmount: "&c'%amount%' is not a valid amount! <additionalMessage:commands.eco.useHelp>"
+    invalidPlayer: "&c'%target%' is not a valid player! <additionalMessage:commands.eco.useHelp>"
+
+    get:
+      balance: "&a%target%'s balance is: %balance%"
+
+    set:
+      sender: "&aYou've set %target%'s balance to %amount%"
+      target: "&aYour balance has been set to %amount% by %sender%"
+
+    add:
+      sender: "&aYou've added %amount% to %target%'s balance"
+      target: "&aYou've received %amount% from %sender%"
+
+  level:
+    currentLevel: "&aYou are currently level &e%level% &a(&e%xp%XP&a). For level &e%nextLevel% &ayou need &e%requiredXP%XP&a."
+
+
+shop:
+    open: "&aOpened your shop"
+
+    title: "Shop"
+
+    item:
+      offerItem:
+        displayName: "&a%itemName%"
+        lore:
+          - "&7Buy Price: &a%buyPrice%"
+          - "&7Sell Price: &a%sellPrice%"
+
+    itemPreviewMenu:
+      title: "Buy or sell "

@@ -1,11 +1,12 @@
 package me.miskynet.customGamemode.custom.index.listener;
 
+import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.config.PlayerData;
 import me.miskynet.customGamemode.custom.index.IndexMenu;
+import me.miskynet.customGamemode.custom.index.levelingSystem.IndexLevelingSystem;
 import me.miskynet.customGamemode.custom.index.utils.IndexMenuItem;
 import me.miskynet.customGamemode.custom.index.utils.IndexLevel;
 import me.miskynet.customGamemode.custom.index.utils.Reward;
-import me.miskynet.customGamemode.custom.levelingSystem.LevelingSystem;
 import me.miskynet.customGamemode.custom.menu.TexturedScrollMenu;
 import me.miskynet.customGamemode.utils.ComponentUtils;
 import me.miskynet.customGamemode.utils.PDCUtils;
@@ -20,6 +21,8 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.List;
 
 public class IndexMenuListener implements Listener {
+
+    private final IndexLevelingSystem levelingSystem = Main.getInstance().getLevelingSystem();
 
     @EventHandler
     public void invClick(InventoryClickEvent event) {
@@ -62,7 +65,7 @@ public class IndexMenuListener implements Listener {
             IndexLevel indexLevel = IndexMenu.getLevelByNumber(clickedLevel);
 
             // check if the player has reached the level to unlock the reward
-            if (new LevelingSystem().getPlayerLevel(player) < clickedLevel) {
+            if (levelingSystem.getPlayerLevel(player) < clickedLevel) {
                 player.sendMessage(ComponentUtils.component("&cYou have not unlocked this level yet!"));
                 return;
             }

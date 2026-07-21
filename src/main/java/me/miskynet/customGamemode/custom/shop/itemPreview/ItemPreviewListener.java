@@ -1,6 +1,7 @@
 package me.miskynet.customGamemode.custom.shop.itemPreview;
 
 import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.custom.economy.EconomyManager;
 import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.custom.shop.ShopMenu;
 import me.miskynet.customGamemode.custom.shop.ShopItem;
@@ -13,6 +14,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemPreviewListener implements Listener {
+
+    private final EconomyManager economyManager = Main.getInstance().getEconomyManager();
 
     @EventHandler
     public void invClick(InventoryClickEvent event) {
@@ -49,7 +52,7 @@ public class ItemPreviewListener implements Listener {
 
                 if (event.getClickedInventory().getItem(event.getSlot()).equals(ItemPreviewItem.getUnavailableItem())) return;
 
-                if (Main.economyManager.getBalance(player) < finalPrice) {
+                if (economyManager.getBalance(player) < finalPrice) {
                     player.sendMessage(ComponentUtils.component("&cYou don't have enough money to buy this!"));
                     return;
                 }
@@ -62,11 +65,11 @@ public class ItemPreviewListener implements Listener {
                     return;
                 }
 
-                Main.economyManager.addBalance(player, finalPrice * -1);
+                economyManager.addBalance(player, finalPrice * -1);
 
                 player.sendMessage(ComponentUtils.component("&7You bought " + ComponentUtils.fromComponent(resultItem.toItemStack().getItemMeta().displayName()) +
-                        "&r&7 for &a" + finalPrice + Main.economyManager.getEcoSymbol() + "&7 (New Balance: &a" +
-                        Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(player)) + Main.economyManager.getEcoSymbol() + "&7)"));
+                        "&r&7 for &a" + finalPrice + economyManager.getEcoSymbol() + "&7 (New Balance: &a" +
+                        economyManager.getDisplayFormat(true, player) + "&7)"));
             }
 
             // slots to sell items
@@ -87,11 +90,11 @@ public class ItemPreviewListener implements Listener {
 
                 removeItems(player, resultItem.toItemStack(), amount);
 
-                Main.economyManager.addBalance(player, clickedItem.getPrice());
+                economyManager.addBalance(player, clickedItem.getPrice());
 
                 player.sendMessage(ComponentUtils.component("&7You sold " + ComponentUtils.fromComponent(resultItem.toItemStack().getItemMeta().displayName()) +
-                        "&r&7 for &a" + clickedItem.getPrice() + Main.economyManager.getEcoSymbol() + "&7 (New Balance: &a" +
-                        Main.economyManager.getDisplayFormat(Main.economyManager.getBalance(player)) + Main.economyManager.getEcoSymbol() + "&7)"));
+                        "&r&7 for &a" + clickedItem.getPrice() + economyManager.getEcoSymbol() + "&7 (New Balance: &a" +
+                        economyManager.getDisplayFormat(true, player)+ "&7)"));
             }
         }
     }

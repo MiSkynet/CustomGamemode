@@ -11,18 +11,21 @@ import me.miskynet.customGamemode.utils.PermsManager;
 import org.bukkit.entity.Player;
 
 public class IndexMenuCommand implements BasicCommand {
+
+    private final Language language = Main.getInstance().getLanguage();
+
     @Override
     public void execute(CommandSourceStack commandSourceStack, String[] args) {
 
         if (!(commandSourceStack.getSender() instanceof Player)) {
-            commandSourceStack.getSender().sendMessage(ComponentUtils.component(Main.language.getString("commands.general.nonPlayerSender")));
+            commandSourceStack.getSender().sendMessage(ComponentUtils.component(language.getString("commands.general.nonPlayerSender")));
             return;
         }
 
         Player player = (Player) commandSourceStack.getSender();
 
         if (!(player.hasPermission(PermsManager.Perms.COMMAND_INDEX.toLowerString())) && !player.isOp()) {
-            player.sendMessage(ComponentUtils.component(Main.language.getString("commands.general.noPermission")));
+            player.sendMessage(ComponentUtils.component(language.getString("commands.general.noPermission")));
             return;
         }
 
@@ -30,6 +33,6 @@ public class IndexMenuCommand implements BasicCommand {
         indexMenu.buildMenu(player);
         indexMenu.openForPlayer(player);
 
-        player.sendMessage(ComponentUtils.component(Main.language.getString("commands.index.opened")));
+        player.sendMessage(ComponentUtils.component(language.getString("commands.index.opened")));
     }
 }

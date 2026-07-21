@@ -1,6 +1,7 @@
 package me.miskynet.customGamemode.custom.config;
 
 import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.utils.Debugger;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -112,7 +113,15 @@ public class CustomConfig {
      * @param filePath Path to the file that should be reloaded
      * */
     public static void reload(String filePath) {
-        configs.put(filePath, YamlConfiguration.loadConfiguration(files.get(filePath)));
+        File file = new File(Main.getInstance().getDataFolder(), filePath);
+
+        if (!file.exists()) {
+            Bukkit.getLogger().warning(filePath + " does not exist. This file will not be reloaded!");
+            return;
+        }
+
+        files.put(filePath, file);
+        configs.put(filePath, YamlConfiguration.loadConfiguration(file));
     }
 
     /**

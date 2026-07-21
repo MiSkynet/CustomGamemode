@@ -1,10 +1,13 @@
-package me.miskynet.customGamemode.custom.levelingSystem;
+package me.miskynet.customGamemode.custom.index.levelingSystem;
 
 import me.miskynet.customGamemode.custom.config.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class LevelingSystem {
+public class IndexLevelingSystem {
+
+    private String currentLevelPath = "index.currentLevel";
+    private String currentXPPath = "index.currentXP";
 
     /**
      * Gets the current level of a {@link Player}
@@ -13,7 +16,7 @@ public class LevelingSystem {
      * @return The current level of the {@link Player} as an {@link Integer}
      * */
     public int getPlayerLevel(Player player) {
-        return PlayerData.get(PlayerData.FileType.STATS, player.getUniqueId()).getInt("currentLevel");
+        return PlayerData.get(PlayerData.FileType.STATS, player.getUniqueId()).getInt(currentLevelPath);
     }
 
     /**
@@ -21,10 +24,10 @@ public class LevelingSystem {
      *
      * @param player {@link Player}
      * @param level The level to set the {@link Player} to as an {@link Integer}
-     * @return The current instance of the {@link LevelingSystem}
+     * @return The current instance of the {@link IndexLevelingSystem}
      * */
-    public LevelingSystem setPlayerLevel(Player player, int level) {
-        PlayerData.get(PlayerData.FileType.STATS, player.getUniqueId()).set("currentLevel", level);
+    public IndexLevelingSystem setPlayerLevel(Player player, int level) {
+        PlayerData.get(PlayerData.FileType.STATS, player.getUniqueId()).set(currentLevelPath, level);
         PlayerData.save(PlayerData.FileType.STATS, player.getUniqueId());
         return this;
     }
@@ -34,9 +37,9 @@ public class LevelingSystem {
      *
      * @param player {@link Player}
      * @param xp The amount of levels to add to the {@link Player} as an {@link Integer}
-     * @return The current instance of the {@link LevelingSystem}
+     * @return The current instance of the {@link IndexLevelingSystem}
      * */
-    public LevelingSystem addPlayerLevel(Player player, int xp) {
+    public IndexLevelingSystem addPlayerLevel(Player player, int xp) {
         int currentLevel = getPlayerLevel(player);
         setPlayerLevel(player, currentLevel + xp);
         return this;
@@ -49,7 +52,7 @@ public class LevelingSystem {
      * @return The current XP of the {@link Player} as an {@link Integer}
      * */
     public int getPlayerXP(Player player) {
-        return PlayerData.get(PlayerData.FileType.STATS, player.getUniqueId()).getInt("currentXP");
+        return PlayerData.get(PlayerData.FileType.STATS, player.getUniqueId()).getInt(currentXPPath);
     }
 
     /**
@@ -57,10 +60,10 @@ public class LevelingSystem {
      *
      * @param player {@link Player}
      * @param xp The XP to set the {@link Player} to as an {@link Integer}
-     * @return The current instance of the {@link LevelingSystem}
+     * @return The current instance of the {@link IndexLevelingSystem}
      * */
-    public LevelingSystem setPlayerXP(Player player, int xp) {
-        PlayerData.get(PlayerData.FileType.STATS, player.getUniqueId()).set("currentXP", xp);
+    public IndexLevelingSystem setPlayerXP(Player player, int xp) {
+        PlayerData.get(PlayerData.FileType.STATS, player.getUniqueId()).set(currentXPPath, xp);
         PlayerData.save(PlayerData.FileType.STATS, player.getUniqueId());
         return this;
     }
@@ -70,9 +73,9 @@ public class LevelingSystem {
      *
      * @param player {@link Player}
      * @param xp The amount of XP to add to the {@link Player} as an {@link Integer}
-     * @returns The current instance of the {@link LevelingSystem}
+     * @returns The current instance of the {@link IndexLevelingSystem}
      * */
-    public LevelingSystem addPlayerXP(Player player, int xp) {
+    public IndexLevelingSystem addPlayerXP(Player player, int xp) {
         int currentLevel = getPlayerXP(player);
         setPlayerXP(player, currentLevel + xp);
         // check if the player can level up
