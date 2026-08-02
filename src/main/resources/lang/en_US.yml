@@ -1,55 +1,109 @@
+general:
+  # This message will be sent to a non player command sender (e.g. console)
+  # when they try to execute a command that can only be executed by a player.
+  nonPlayerSender: "&cYou must be a player to execute this command"
+
+  # This message will be sent to a command sender when they don't have permission to run a command
+  noPermission: "&cYou do not have permission to execute this command"
+
+
+# Here are all messages, related to the economy system except the economy symbol, which can be configured in the config.yml
+eco:
+
+  # This message will be sent to a command sender when they execute '/eco help' or '/eco' without any arguments
+  # This has to be a string list, even if the message should be only one line!
+  help:
+    - "&aAvailable commands:"
+    - "&a/eco get <player> - Get the balance of a player"
+    - "&a/eco set <player> <amount> - Set the balance of a player"
+    - "&a/eco add <player> <amount> - Add to the balance of a player"
+    - "&a/pay <player> <amount> - Pay a player"
+
+  # This message will be sent to a command sender when they input an invalid amount or and invalid player name
+  # into the command!
+  invalidAmount: "&c'%amount%' is not a valid amount! <additionalMessage:commands.eco.useHelp>"
+  invalidPlayer: "&c'%target%' is not a valid player! Maybe %target% is offline? <additionalMessage:commands.eco.useHelp>"
+
+  # This message will, by default, not be used anywhere, but can be added to other messages by using the
+  # <additionalMessage:commands.eco.useHelp> placeholder.
+  useHelp: "&cTry to use '/eco help' for a list of commands"
+
+  # This message will be sent to a command sender when they run '/eco get <player>' and will return the
+  # balance of a tageted player
+  get:
+    balance: "&a%target%'s balance is: %balance%"
+
+  # This message will be sent to a command sender and the targeted player when the sender runs '/eco set <player> <amount>'
+  set:
+    sender: "&aYou've set %target%'s balance to %amount%"
+    target: "&aYour balance has been set to %amount% by %sender%"
+
+
+  add:
+    sender: "&aYou've added %amount% to %target%'s balance"
+    target: "&aYou've received %amount% from %sender%"
+
+  remove:
+    sender: "&aYou've removed %amount% from %target%'s balance"
+    target: "&aYou've lost %amount% from %sender%"
+
+
 commands:
-  general:
-    nonPlayerSender: "&cYou must be a player to execute this command"
-    noPermission: "&cYou do not have permission to execute this command"
 
   admin:
-    reload: "&a&lPlugin reloaded!"
+    reload:
+      success: "&aPlugin reloaded!"
+      invalidArgument: "&c'%arg%' is not a valid argument!"
 
   index:
     opened: "&aOpened your index"
   settings:
     opened: "&aOpened your settings"
 
-  eco:
-    help:
-      - "&aAvailable commands:"
-      - "&a/eco get <player> - Get the balance of a player"
-      - "&a/eco set <player> <amount> - Set the balance of a player"
-      - "&a/eco add <player> <amount> - Add to the balance of a player"
-      - "&a/pay <player> <amount> - Pay a player"
-
-    useHelp: "&cTry to use /eco help for a list of commands"
-
-    invalidAmount: "&c'%amount%' is not a valid amount! <additionalMessage:commands.eco.useHelp>"
-    invalidPlayer: "&c'%target%' is not a valid player! <additionalMessage:commands.eco.useHelp>"
-
-    get:
-      balance: "&a%target%'s balance is: %balance%"
-
-    set:
-      sender: "&aYou've set %target%'s balance to %amount%"
-      target: "&aYour balance has been set to %amount% by %sender%"
-
-    add:
-      sender: "&aYou've added %amount% to %target%'s balance"
-      target: "&aYou've received %amount% from %sender%"
 
   level:
     currentLevel: "&aYou are currently level &e%level% &a(&e%xp%XP&a). For level &e%nextLevel% &ayou need &e%requiredXP%XP&a."
 
-
 shop:
-    open: "&aOpened your shop"
+    opened: "&aOpened your shop"
 
     title: "Shop"
 
+    # This section contains all the items that are displayed in the shop menu
+
     item:
+      currentPage:
+        displayName: "&aCurrent page: &e%currentPage%"
+        lore:
+          - ""
+      previousPage:
+        displayName: "&ePrevious Page"
+      nextPage:
+        displayName: "&eNext Page"
+
       offerItem:
         displayName: "&a%itemName%"
         lore:
           - "&7Buy Price: &a%buyPrice%"
           - "&7Sell Price: &a%sellPrice%"
+    button:
+      back:
+        displayName: "&cBack"
+        lore:
+          - "&7Go back to the previous menu"
 
     itemPreviewMenu:
-      title: "Buy or sell "
+      title: "Buy or sell"
+      item:
+        buy:
+          displayName: "&aBuy %amount% for %price%"
+          lore:
+            - "&7Buy price: &a%price%"
+        sell:
+            displayName: "&cSell %amount% for %price%"
+            lore:
+                - "&7Sell price: &a%price%"
+
+
+    messages:
+      inventoryFull: "&cSorry, but the item couldn't be added to your inventory and the buy was cancelled"
