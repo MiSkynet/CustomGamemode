@@ -36,17 +36,16 @@ public class ShopItem extends Item {
      * @param buyPrice Price to buy the Item
      * @param sellPrice Price a player will receive when selling the Item
      * */
-    public ShopItem(Material material, Double buyPrice, Double sellPrice) {
-        super(material, null, new ArrayList<>());
+    public ShopItem(Material material, Component displayName, Double buyPrice, Double sellPrice) {
+        super(material, displayName, new ArrayList<>());
 
         List<Component> lore = new ArrayList<>();
-
 
         if (language.getStringList("shop.item.offerItem.lore") != null) {
             for (String string : language.getStringList("shop.item.offerItem.lore")) {
                 lore.add(ComponentUtils.component(false, string
-                        .replaceAll("%buyPrice%", String.valueOf(buyPrice))
-                        .replaceAll("%sellPrice%", String.valueOf(sellPrice))));
+                        .replace("%buyPrice%", String.valueOf(buyPrice))
+                        .replace("%sellPrice%", String.valueOf(sellPrice))));
             }
         }
 

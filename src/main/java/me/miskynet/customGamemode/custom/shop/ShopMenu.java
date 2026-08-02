@@ -9,6 +9,7 @@ import me.miskynet.customGamemode.custom.menu.TexturedScrollMenu;
 import me.miskynet.customGamemode.utils.ComponentUtils;
 import me.miskynet.customGamemode.utils.Debugger;
 import me.miskynet.customGamemode.utils.Utils;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
@@ -102,19 +103,22 @@ public class ShopMenu extends TexturedScrollMenu {
             sellPriceBigDecimal = sellPriceBigDecimal.setScale(2, RoundingMode.HALF_UP);
             double sellPriceRounded = sellPriceBigDecimal.doubleValue();
 
-            ShopItem shopItem = new ShopItem(material, buyPriceRounded, sellPriceRounded);
+            // create the display name for shop item
+            Component shopItemDisplayName = ComponentUtils.component(false, language.getString("shop.item.offerItem.displayName")
+                    .replace("%itemName%", Utils.formatEnumToString(material.toString()))
+                    .replace("%buyPrice%", String.valueOf(buyPriceRounded))
+                    .replace("%sellPrice%", String.valueOf(sellPriceRounded)));
 
+            ShopItem shopItem = new ShopItem(material, shopItemDisplayName, buyPriceRounded, sellPriceRounded);
+
+            // create a basic result item
             Item resultItem = new Item(material);
-
-            resultItem.setDisplayName(ComponentUtils.component(false, language.getString("shop.item.offerItem.displayName")
-                    .replaceAll("%itemName%", Utils.formatEnumToString(material.toString()))));
+            resultItem.setDisplayName(ComponentUtils.component(Utils.formatEnumToString(material.toString())));
 
             shopItem.setResultItem(resultItem);
-
             shopItem.setId(id);
 
             cachedItems.add(shopItem);
-
             current++;
         }
     }
