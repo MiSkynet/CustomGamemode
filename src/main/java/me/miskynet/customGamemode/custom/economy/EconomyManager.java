@@ -1,10 +1,12 @@
 package me.miskynet.customGamemode.custom.economy;
 
 import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.custom.config.CustomConfig;
 import me.miskynet.customGamemode.custom.config.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -18,11 +20,15 @@ import java.util.UUID;
  * */
 public class EconomyManager {
 
-    HashMap<UUID, Double> playerBalance = new HashMap<>();
+    private final HashMap<UUID, Double> playerBalance = new HashMap<>();
 
-    String ecoSymbol = "$";
+    private String ecoSymbol = "";
 
     public EconomyManager() {
+        // load the economy symbol from the config
+        if (CustomConfig.get("config.yml").getString("economy.currencySymbol") != null) {
+            this.ecoSymbol = CustomConfig.get("config.yml").getString("economy.currencySymbol");
+        }
         syncBalanceMapWithConfig();
     }
 
@@ -36,7 +42,7 @@ public class EconomyManager {
         if (playerBalance.get(player.getUniqueId()) != null) {
             return playerBalance.get(player.getUniqueId());
         }else {
-            return null;
+            return 0.0;
         }
     }
 
@@ -75,6 +81,16 @@ public class EconomyManager {
     }
 
     /**
+     * Reloads the economy manager
+     * */
+    public void reload() {
+        // load the economy symbol from the config
+        if (CustomConfig.get("config.yml").getString("economy.currencySymbol") != null) {
+            this.ecoSymbol = CustomConfig.get("config.yml").getString("economy.currencySymbol");
+        }
+    }
+
+    /**
      * Load all balances into the {@link #playerBalance} HashMap <br>
      * Only used when starting the plugin!
      * */
@@ -91,6 +107,7 @@ public class EconomyManager {
      * */
     public void syncConfigWithUniquePlayer(Player player) {
         PlayerData.set(PlayerData.FileType.BALANCE, player.getUniqueId(), player.getUniqueId() + ".balance", playerBalance.get(player.getUniqueId()));
+
     }
 
     /**
@@ -109,12 +126,13 @@ public class EconomyManager {
      * @return String of the Symbol
      * */
     public String getEcoSymbol() {
-        return ecoSymbol;
+        return this.ecoSymbol;
     }
 
     /**
      * Format a value into a more readable format
      *
+     * @param visibility If the economy symbol should be added to the end of the value
      * @param value The value that should be formated
      * */
     public String getDisplayFormat(boolean visibility, double value) {
@@ -124,7 +142,7 @@ public class EconomyManager {
 
         String formatedNumber = formatter.format(value);
 
-        if (visibility) return formatedNumber + Main.getInstance().getEconomyManager().getEcoSymbol();
+        if (visibility) return formatedNumber + this.getEcoSymbol();
         else return formatedNumber;
     }
 
@@ -132,7 +150,7 @@ public class EconomyManager {
      * Get the display format of a player's balance
      * */
     public String getDisplayFormat(boolean visibility, Player player) {
-        return getDisplayFormat(visibility, Main.getInstance().getEconomyManager().getBalance(player));
+        return getDisplayFormat(visibility, this.getBalance(player));
     }
 
 
