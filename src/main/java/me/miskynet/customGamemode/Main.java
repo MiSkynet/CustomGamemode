@@ -1,12 +1,18 @@
 package me.miskynet.customGamemode;
 
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
-import me.miskynet.customGamemode.commands.*;
 import me.miskynet.customGamemode.commands.admin.ReloadCommand;
+import me.miskynet.customGamemode.commands.GetLevel;
+import me.miskynet.customGamemode.commands.IndexMenuCommand;
+import me.miskynet.customGamemode.commands.SettingsCommand;
+import me.miskynet.customGamemode.commands.ShopCommand;
+import me.miskynet.customGamemode.commands.eco.EcoCommandManager;
 import me.miskynet.customGamemode.commands.testCommands.*;
+import me.miskynet.customGamemode.commands.ToggleScoreboard;
+import me.miskynet.customGamemode.custom.config.CustomConfig;
 import me.miskynet.customGamemode.custom.config.Language;
 import me.miskynet.customGamemode.custom.economy.EconomyManager;
-import me.miskynet.customGamemode.custom.enchantments.mole.MoleListener;
+import me.miskynet.customGamemode.experimental.enchantments.mole.MoleListener;
 import me.miskynet.customGamemode.custom.entity.npc.NPCInteractEvent;
 import me.miskynet.customGamemode.custom.entity.npc.NPCMoveEvent;
 import me.miskynet.customGamemode.custom.index.IndexMenu;
@@ -19,6 +25,8 @@ import me.miskynet.customGamemode.custom.shop.ShopMenu;
 import me.miskynet.customGamemode.custom.shop.itemPreview.ItemPreviewListener;
 import me.miskynet.customGamemode.custom.shop.ShopListener;
 import me.miskynet.customGamemode.custom.scoreboard.ScoreboardManager;
+import me.miskynet.customGamemode.experimental.structures.RegisterStructures;
+import me.miskynet.customGamemode.experimental.structures.overworld.StructurePlaceListener;
 import me.miskynet.customGamemode.listener.OnJoin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,15 +41,20 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        // preload all shop items
-        ShopMenu.cacheShopItems();
+        CustomConfig.setup("config.yml");
 
         setupManagers();
         setupCommands();
+
+        // register the structures
+        RegisterStructures.registerStructures();
+
         setupListener();
 
         scoreboardManager.runUpdates();
 
+        // preload all shop items
+        ShopMenu.cacheShopItems();
         IndexMenu.createRewardList();
     }
 
@@ -55,9 +68,9 @@ public final class Main extends JavaPlugin {
     }
 
     private void setupManagers() {
+        language = new Language();
         economyManager = new EconomyManager();
         scoreboardManager = new ScoreboardManager();
-        language = new Language();
         levelingSystem = new IndexLevelingSystem();
     }
 
@@ -68,7 +81,9 @@ public final class Main extends JavaPlugin {
 
             registrar.register("togglescoreboard", new ToggleScoreboard());
             registrar.register("settings", new SettingsCommand());
-            registrar.register("eco", new EcoCommand());
+
+            registrar.register("eco", new EcoCommandManager());
+
             registrar.register("shop", new ShopCommand());
             registrar.register("index", new IndexMenuCommand());
             registrar.register("level", new GetLevel());registrar.register("reload", new ReloadCommand());
@@ -104,6 +119,9 @@ public final class Main extends JavaPlugin {
 
         // mole listener
         pluginManager.registerEvents(new MoleListener(), this);
+
+        // register structure place listener to place all the structures
+        pluginManager.registerEvents(new StructurePlaceListener(), this);
     }
 
     public EconomyManager getEconomyManager() {

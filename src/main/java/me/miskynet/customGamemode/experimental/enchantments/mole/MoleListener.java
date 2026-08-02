@@ -1,12 +1,10 @@
-package me.miskynet.customGamemode.custom.enchantments.mole;
+package me.miskynet.customGamemode.experimental.enchantments.mole;
 
-import me.miskynet.customGamemode.utils.Debugger;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -36,10 +34,7 @@ public class MoleListener implements Listener {
         NamespacedKey key = new NamespacedKey("cc", "mole");
         Enchantment enchantment = Enchantment.getByKey(key);
 
-        if (enchantment == null || !itemInMainHand.containsEnchantment(enchantment)) {
-            Debugger.log("Item does not have the 'Mole' enchantment.");
-            return;
-        }
+        if (enchantment == null || !itemInMainHand.containsEnchantment(enchantment)) return;
 
         int enchantmentLevel = itemInMainHand.getEnchantmentLevel(enchantment);
 

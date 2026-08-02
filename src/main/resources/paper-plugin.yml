@@ -3,5 +3,18 @@ version: '1.0'
 main: me.miskynet.customGamemode.Main
 api-version: '26.2'
 authors: [ MiSkynet ]
-bootstrapper: me.miskynet.customGamemode.custom.enchantments.mole.Mole
 bootstrapper: me.miskynet.customGamemode.experimental.enchantments.mole.Mole
+
+load: STARTUP
+
+permissions:
+  customgamemode.command.player.getLevel:
+    default: true
+  customgamemode.command.player.togglescoreboard:
+    default: true
+  customgamemode.command.player.settings:
+    default: true
+  customgamemode.command.player.index:
+    default: true
+  customgamemode.command.player.shop:
+    default: true

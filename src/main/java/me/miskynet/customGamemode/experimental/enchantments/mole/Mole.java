@@ -1,4 +1,4 @@
-package me.miskynet.customGamemode.custom.enchantments.mole;
+package me.miskynet.customGamemode.experimental.enchantments.mole;
 
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
