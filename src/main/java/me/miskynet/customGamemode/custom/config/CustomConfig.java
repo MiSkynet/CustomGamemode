@@ -116,8 +116,17 @@ public class CustomConfig {
         File file = new File(Main.getInstance().getDataFolder(), filePath);
 
         if (!file.exists()) {
-            Bukkit.getLogger().warning(filePath + " does not exist. This file will not be reloaded!");
-            return;
+
+            Bukkit.getLogger().warning("'" + filePath + "' does not exist. Trying to regenerate it!");
+
+            try {
+                CustomConfig.setup(filePath);
+            } catch (IllegalArgumentException e) {
+                Bukkit.getLogger().warning("Could not regenerate '" + filePath + "'. Skipping it!");
+                files.remove(filePath);
+                configs.remove(filePath);
+                return;
+            }
         }
 
         files.put(filePath, file);
