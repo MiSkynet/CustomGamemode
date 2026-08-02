@@ -12,7 +12,7 @@ public class Debugger {
      * */
     public static void log(String message) {
         if (ENABLED) {
-            Bukkit.getLogger().info("[Debug] " + message);
+            Bukkit.getLogger().info("[CustomGamemode] [Debug] " + message);
         }
     }
 
