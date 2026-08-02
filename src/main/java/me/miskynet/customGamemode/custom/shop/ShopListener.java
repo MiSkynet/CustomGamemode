@@ -1,5 +1,7 @@
 package me.miskynet.customGamemode.custom.shop;
 
+import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.custom.config.Language;
 import me.miskynet.customGamemode.custom.menu.TexturedScrollMenu;
 import me.miskynet.customGamemode.custom.shop.itemPreview.ItemPreviewMenu;
 import me.miskynet.customGamemode.utils.ComponentUtils;
@@ -14,6 +16,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 public class ShopListener implements Listener {
+
+    Language language = Main.getInstance().getLanguage();
 
     /**
      * Gets the clicks in the {@link ShopMenu}
@@ -54,7 +58,7 @@ public class ShopListener implements Listener {
 
                 ShopItem shopItem = ShopMenu.getItemById(id);
 
-                ItemPreviewMenu itemPreview = new ItemPreviewMenu(ComponentUtils.component("Buy or sell"), 45, "\uE005", shopMenu.getCurrentPage(), shopItem);
+                ItemPreviewMenu itemPreview = new ItemPreviewMenu(ComponentUtils.component(language.getString("shop.itemPreviewMenu.title")), 45, "\uE005", shopMenu.getCurrentPage(), shopItem);
                 itemPreview.openForPlayer(player);
             }
         }

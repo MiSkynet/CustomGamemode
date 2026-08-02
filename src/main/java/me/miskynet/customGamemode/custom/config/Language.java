@@ -3,8 +3,12 @@ package me.miskynet.customGamemode.custom.config;
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.utils.ComponentUtils;
 import me.miskynet.customGamemode.utils.Debugger;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
+import org.eclipse.sisu.inject.DefaultBeanLocator;
 
 import java.io.File;
+import java.lang.classfile.constantpool.DoubleEntry;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,13 +18,11 @@ import java.util.regex.Pattern;
 public class Language {
 
     // getting the language from the config.yml, if it doesn't exist, default to en_US.yml
-    private final String currentLang;
+    private String currentLang;
 
     public ArrayList<String> availableLanguages = new ArrayList<>();
 
     public Language() {
-        String lang = Main.getInstance().getConfig().getString("lang");
-        this.currentLang = (lang != null) ? lang : "en_US.yml";
         loadLanguage();
     }
 
@@ -33,7 +35,7 @@ public class Language {
     public String getString(String key) {
         String string = CustomConfig.get("lang/" + currentLang).getString(key);
         if (string == null) {
-            return "&CMissing translation for key: " + key;
+            return getMissingTranslationMessage(key);
         }
 
         return findMatch(string);
@@ -62,8 +64,6 @@ public class Language {
 
         matcher.appendTail(stringBuilder);
 
-        Debugger.log(stringBuilder.toString());
-
         return stringBuilder.toString();
     }
 
@@ -76,7 +76,7 @@ public class Language {
     public List<String> getStringList(String key) {
         List<String> list = CustomConfig.get("lang/" + currentLang).getStringList(key);
         if (list.isEmpty() || list == null) {
-            return Collections.singletonList("&CMissing translation for key: " + key);
+            return Collections.singletonList(getMissingTranslationMessage(key));
         }
 
         List<String> replacedList = new ArrayList<>();
@@ -96,9 +96,16 @@ public class Language {
     public Object get(String key) {
         Object value = CustomConfig.get("lang/" + currentLang).get(key);
         if (value == null) {
-            return "&CMissing translation for key: " + key;
+            return getMissingTranslationMessage(key);
         }
         return value;
+    }
+
+    /**
+     * Reloads the language files from the lang folder
+     * */
+    public void reload() {
+        loadLanguage();
     }
 
     /**
@@ -106,7 +113,7 @@ public class Language {
      * */
     private void loadLanguage() {
 
-        File langFolder = new File(Main.getInstance().getDataFolder(), currentLang);
+        File langFolder = new File(Main.getInstance().getDataFolder(), "lang/");
 
         if (!langFolder.exists()) {
             loadDefaultLanguages();
@@ -121,6 +128,22 @@ public class Language {
                 availableLanguages.add(file.getName());
             }
         }
+
+        String lang = Main.getInstance().getConfig().getString("lang");
+        this.currentLang = (lang != null && checkForValidLanguageFile(lang)) ? lang : "en_US.yml";
+    }
+
+    /**
+     * Check if a language file exists in the lang folder
+     *
+     * @param filePath The path to the language file
+     * @return true if the file exists, false otherwise
+     * */
+    private boolean checkForValidLanguageFile(String filePath) {
+        File file = new File(Main.getInstance().getDataFolder(), "lang/" + filePath);
+        if (file.exists()) return true;
+        Bukkit.getLogger().warning("[CustomGamemode] Language file '" + filePath + "' does not exist in the lang folder! Defaulting to 'en_US.yml'");
+        return false;
     }
 
     /**
@@ -131,6 +154,19 @@ public class Language {
         CustomConfig.setup("lang/en_US.yml");
         CustomConfig.save("lang/en_US.yml");
         availableLanguages.add("en_US.yml");
+
+        String lang = Main.getInstance().getConfig().getString("lang");
+        this.currentLang = (lang != null && checkForValidLanguageFile(lang)) ? lang : "en_US.yml";
+    }
+
+    /**
+     * Gets a message that the translation for the key is missing
+     *
+     * @param key The key that is missing
+     * @return The message that the translation is missing
+     * */
+    private String getMissingTranslationMessage(String key) {
+        return "&cMissing translation for key: " + key + " (lang file: " + currentLang + ")";
     }
 
 
