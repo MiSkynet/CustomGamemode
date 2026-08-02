@@ -4,6 +4,7 @@ import com.destroystokyo.paper.profile.PlayerProfile;
 import io.papermc.paper.datacomponent.item.ResolvableProfile;
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.menu.Menu;
+import me.miskynet.customGamemode.utils.PDCUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -38,11 +39,7 @@ public class NPC {
      * an NPC can hold
      * */
     public enum InteractType {
-        MENU,
-        TEXTURE_MENU,
-        SHOP,
-        SETTINGS,
-        INDEX
+        SHOP
     }
 
     /**
@@ -75,7 +72,7 @@ public class NPC {
         this.uuid = entity.getUniqueId();
 
         if (this.interactType != null) {
-            entity.getPersistentDataContainer().set(interactTypeKey, PersistentDataType.STRING, interactType.toString());
+            PDCUtils.setPDC(entity, interactTypeKey, PersistentDataType.STRING, interactType.toString());
         }
     }
 
@@ -120,7 +117,7 @@ public class NPC {
      *
      * @param textureHash The texture hash of the skin
      * */
-    public NPC setSkinHash(String textureHash) {
+    public NPC setTextureHash(String textureHash) {
         PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID());
         PlayerTextures textureUrl = profile.getTextures();
         URL url;

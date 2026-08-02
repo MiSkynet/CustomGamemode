@@ -15,6 +15,9 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class NPCInteractEvent implements Listener {
 
+    /**
+     * Allow the player to interact with an {@link NPC} and open the corresponding menu
+     * */
     @EventHandler
     public void interactEvent(PlayerInteractEntityEvent event) {
 
