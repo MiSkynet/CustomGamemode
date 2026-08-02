@@ -36,12 +36,14 @@ public class PlayerUtils {
 
         UUID playerUUID = player.getUniqueId();
 
+        // load default for the SETTINGS file, if the fileType is SETTINGS
         if (fileType == FileType.SETTINGS) {
             PlayerData.set(FileType.SETTINGS, playerUUID, "settings.scoreboardStatus", true);
 
             return;
         }
 
+        // load default for the BALANCE file, if the fileType is BALANCE
         if (fileType == FileType.BALANCE) {
             PlayerData.setup(FileType.BALANCE, playerUUID);
 
@@ -52,11 +54,13 @@ public class PlayerUtils {
             return;
         }
 
+        // load default for the INDEX file, if the fileType is INDEX
         if (fileType == FileType.INDEX) {
             PlayerData.setup(FileType.INDEX, playerUUID);
             return;
         }
 
+        // load default for the STATS file, if the fileType is STATS
         if (fileType == FileType.STATS) {
             PlayerData.setup(FileType.STATS, playerUUID);
 
