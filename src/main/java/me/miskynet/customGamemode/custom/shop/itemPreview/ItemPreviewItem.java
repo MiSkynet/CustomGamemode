@@ -1,5 +1,6 @@
 package me.miskynet.customGamemode.custom.shop.itemPreview;
 
+import me.miskynet.customGamemode.custom.config.Language;
 import me.miskynet.customGamemode.custom.economy.EconomyManager;
 import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.Main;
@@ -30,6 +31,7 @@ public class ItemPreviewItem {
         SELL
     }
 
+    private final Language language = Main.getInstance().getLanguage();
     private final EconomyManager economyManager = Main.getInstance().getEconomyManager();
 
     private ItemType itemType;
@@ -68,11 +70,40 @@ public class ItemPreviewItem {
         PlayerHead item = new PlayerHead(ComponentUtils.component(false, "&cError while creating item!"), "5c8817ee8e9c2c2bf767487737e0a60a5e09b725138e14daa57480a03f1766d8");
         ArrayList<Component> lore = new ArrayList<>();
         if (itemType.toString().toLowerCase().equals("buy")) {
-            item = new PlayerHead(ComponentUtils.component(false, "&aBuy " + amount),"23a45195193b5d6de5c522171d6a75abdaa78aacd901556dd0d8817c0ed810f3");
-            lore.add(ComponentUtils.component(false, "&7Buy " + amount + " for " + economyManager.getDisplayFormat(true, amount * price)));
+
+            // get the display name
+            String displayName = language.getString("shop.itemPreviewMenu.item.buy.displayName")
+                    .replace("%amount%", String.valueOf(amount))
+                            .replace("%price%", economyManager.getDisplayFormat(true, amount * price));
+
+            item = new PlayerHead(ComponentUtils.component(false, displayName),"23a45195193b5d6de5c522171d6a75abdaa78aacd901556dd0d8817c0ed810f3");
+
+            // create the lore
+            if (!(language.getStringList("shop.itemPreviewMenu.item.buy.lore") == null && language.getStringList("shop.itemPreviewMenu.item.buy.lore").isEmpty())) {
+                for (String string : language.getStringList("shop.itemPreviewMenu.item.buy.lore")) {
+                    lore.add(ComponentUtils.component(false, string
+                            .replace("%amount%", String.valueOf(amount))
+                            .replace("%price%", economyManager.getDisplayFormat(true, amount * price))));
+                }
+            }
+
         }else if (itemType.toString().toLowerCase().equals("sell")) {
-            item = new PlayerHead(ComponentUtils.component(false, "&aSell " + amount),"4bf360ee0b5578f10189900a21d631e6a88c296cfa3a00f1e2c2dc73588a3a8d");
-            lore.add(ComponentUtils.component(false, "&7Sell " + amount + " for " + economyManager.getDisplayFormat(true, amount * price)));
+
+            // get the display name
+            String displayName = language.getString("shop.itemPreviewMenu.item.sell.displayName")
+                    .replace("%amount%", String.valueOf(amount))
+                            .replace("%price%", economyManager.getDisplayFormat(true, amount * price));
+
+            item = new PlayerHead(ComponentUtils.component(false, displayName),"23a45195193b5d6de5c522171d6a75abdaa78aacd901556dd0d8817c0ed810f3");
+
+            // create the lore
+            if (!(language.getStringList("shop.itemPreviewMenu.item.sell.lore") == null && language.getStringList("shop.itemPreviewMenu.item.sell.lore").isEmpty())) {
+                for (String string : language.getStringList("shop.itemPreviewMenu.item.sell.lore")) {
+                    lore.add(ComponentUtils.component(false, string
+                            .replace("%amount%", String.valueOf(amount))
+                            .replace("%price%", economyManager.getDisplayFormat(true, amount * price))));
+                }
+            }
         }
 
         item.setLore(lore);

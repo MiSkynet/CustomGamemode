@@ -1,16 +1,23 @@
 package me.miskynet.customGamemode.custom.shop.itemPreview;
 
+import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.custom.config.Language;
 import me.miskynet.customGamemode.custom.item.PlayerHead;
 import me.miskynet.customGamemode.custom.menu.Menu;
 import me.miskynet.customGamemode.custom.menu.TextureMenu;
 import me.miskynet.customGamemode.custom.shop.ShopItem;
 import me.miskynet.customGamemode.utils.ComponentUtils;
+import me.miskynet.customGamemode.utils.Utils;
 import net.kyori.adventure.text.Component;
+
+import java.util.ArrayList;
 
 public class ItemPreviewMenu extends TextureMenu {
 
     private ShopItem shopItem;
     private Integer lastPage;
+
+    Language language = Main.getInstance().getLanguage();
 
     /**
      * The {@link TextureMenu} is a type of {@link Menu} that can have a custom GUI design.
@@ -33,7 +40,17 @@ public class ItemPreviewMenu extends TextureMenu {
     @Override
     public void buildMenu() {
 
-        PlayerHead backItem = new PlayerHead(ComponentUtils.component(false, "&cBack"), "158a3e5617b7fc16ff436edab5996027986c584dd8837b63260577c32421bd1c");
+        String backButtonDisplayName = language.getString("shop.button.back.displayName");
+
+        ArrayList<Component> backButtonLore = new ArrayList<>();
+
+        if (!(language.getStringList("shop.button.back.lore") == null && language.getStringList("shop.button.back.lore").isEmpty())) {
+            for (String string : language.getStringList("shop.button.back.lore")) {
+                backButtonLore.add(ComponentUtils.component(false, string));
+            }
+        }
+
+        PlayerHead backItem = new PlayerHead(ComponentUtils.component(false, backButtonDisplayName), backButtonLore, "158a3e5617b7fc16ff436edab5996027986c584dd8837b63260577c32421bd1c");
 
         this.getInventory().setItem(0, backItem.toItemStack());
 

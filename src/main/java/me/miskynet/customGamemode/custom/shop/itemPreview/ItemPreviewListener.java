@@ -1,6 +1,7 @@
 package me.miskynet.customGamemode.custom.shop.itemPreview;
 
 import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.custom.config.Language;
 import me.miskynet.customGamemode.custom.economy.EconomyManager;
 import me.miskynet.customGamemode.custom.item.Item;
 import me.miskynet.customGamemode.custom.shop.ShopMenu;
@@ -16,7 +17,11 @@ import org.bukkit.inventory.ItemStack;
 public class ItemPreviewListener implements Listener {
 
     private final EconomyManager economyManager = Main.getInstance().getEconomyManager();
+    private final Language language = Main.getInstance().getLanguage();
 
+    /**
+     * Gets the clicks in the {@link ItemPreviewMenu}
+     * */
     @EventHandler
     public void invClick(InventoryClickEvent event) {
 
@@ -61,7 +66,7 @@ public class ItemPreviewListener implements Listener {
 
                 // cancel the buy if the item couldn't be added to the player inventory
                 if (!giveItem.isEmpty()) {
-                    player.sendMessage(ComponentUtils.component("&cSorry, but the item couldn't be added to your inventory and the buy was cancelled"));
+                    player.sendMessage(ComponentUtils.component(language.getString("shop.messages.inventoryFull")));
                     return;
                 }
 
