@@ -1,1 +1,21 @@
-lang: en_US.yml
+# -------------------------------------------------------------------------------------------------------------------------
+
+# This is the default config file for the plugin.
+# When changing a value, make sure to reload the plugin or restart the server for the changes to take effect.
+
+# In case you change a value and the plugin doesn't work as expected, make sure to check the console for any errors.
+# If you don't know how to fix the error, you can always delete this file and reload the plugin to regenerate this file.
+# (This also applies to any other config file EXCEPT the playerData files, since these are created when a player joins the server!)
+
+# -------------------------------------------------------------------------------------------------------------------------
+
+# Here can the general language be configured. By default, this value is 'en_US.yml'.
+# You can change this to any other language file that is present in the 'lang' folder.
+# To create your own language file, it'd be the easiest to copy the 'en_US.yml' file, change the name and
+# translate it to your desired language.
+lang: "en_US.yml"
+
+economy:
+  # The currency symbol is a small, character that is used to represent the currency in the game.
+  # By default, this value is '$'. To remove it, set this value to ''
+  currencySymbol: '$'
