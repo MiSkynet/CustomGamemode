@@ -82,7 +82,12 @@ public class IndexLevelingSystem {
         if (checkLevelUp(player)) {
             setPlayerXP(player, getPlayerXP(player) - getRequiredXPToLevelUp(getPlayerLevel(player)));
             addPlayerLevel(player, 1);
-            Bukkit.getPluginManager().callEvent(new PlayerLevelUpEvent(player, getPlayerLevel(player)));
+
+            // call the PlayerLevelUpEvent
+            Bukkit.getPluginManager().callEvent(new PlayerLevelUpEvent(
+                    player,
+                    currentLevel,
+                    getPlayerLevel(player)));
         }
         return this;
     }

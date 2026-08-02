@@ -4,10 +4,9 @@ import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.config.Language;
-import me.miskynet.customGamemode.custom.config.PlayerData;
 import me.miskynet.customGamemode.custom.index.IndexMenu;
 import me.miskynet.customGamemode.utils.ComponentUtils;
-import me.miskynet.customGamemode.utils.PermsManager;
+import me.miskynet.customGamemode.utils.PermissionManager;
 import org.bukkit.entity.Player;
 
 public class IndexMenuCommand implements BasicCommand {
@@ -24,7 +23,7 @@ public class IndexMenuCommand implements BasicCommand {
 
         Player player = (Player) commandSourceStack.getSender();
 
-        if (!(player.hasPermission(PermsManager.Perms.COMMAND_INDEX.toLowerString())) && !player.isOp()) {
+        if (!(PermissionManager.Perm.COMMAND_PLAYER_INDEX.hasPermission(player)) && !player.isOp()) {
             player.sendMessage(ComponentUtils.component(language.getString("commands.general.noPermission")));
             return;
         }
