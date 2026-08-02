@@ -6,7 +6,7 @@ import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.config.Language;
 import me.miskynet.customGamemode.custom.config.PlayerData;
 import me.miskynet.customGamemode.utils.ComponentUtils;
-import me.miskynet.customGamemode.utils.PermsManager;
+import me.miskynet.customGamemode.utils.PermissionManager;
 import org.bukkit.entity.Player;
 
 public class ToggleScoreboard implements BasicCommand {
@@ -23,7 +23,7 @@ public class ToggleScoreboard implements BasicCommand {
 
         Player player = (Player) commandSourceStack.getSender();
 
-        if (!(player.hasPermission(PermsManager.Perms.COMMAND_TOGGLE_SCOREBOARD.toLowerString())) && !player.isOp()) {
+        if (!(PermissionManager.Perm.COMMAND_PLAYER_TOGGLE_SCOREBOARD.hasPermission(player)) && !player.isOp()) {
             player.sendMessage(ComponentUtils.component(language.getString("commands.general.noPermission")));
             return;
         }
