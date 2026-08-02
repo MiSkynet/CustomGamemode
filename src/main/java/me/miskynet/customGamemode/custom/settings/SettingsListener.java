@@ -1,7 +1,10 @@
 package me.miskynet.customGamemode.custom.settings;
 
 import me.miskynet.customGamemode.Main;
+import me.miskynet.customGamemode.custom.config.Language;
 import me.miskynet.customGamemode.custom.scoreboard.ScoreboardManager;
+import me.miskynet.customGamemode.utils.ComponentUtils;
+import me.miskynet.customGamemode.utils.PermissionManager;
 import me.miskynet.customGamemode.utils.Utils;
 import me.miskynet.customGamemode.custom.config.PlayerData;
 import org.bukkit.entity.Player;
@@ -12,6 +15,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 public class SettingsListener implements Listener {
 
     private final ScoreboardManager scoreboardManager = Main.getInstance().getScoreboardManager();
+    private final Language language = Main.getInstance().getLanguage();
 
     /**
      * IndexMenuListener to check for clicks in the {@link SettingsMenu}
@@ -30,6 +34,11 @@ public class SettingsListener implements Listener {
             Utils.createClickCooldown(player);
 
             if (event.getSlot() == 10) {
+
+                if (!(PermissionManager.Perm.COMMAND_PLAYER_TOGGLE_SCOREBOARD.hasPermission(player))) {
+                    player.sendMessage(ComponentUtils.component(language.getString("commands.general.noPermission")));
+                    return;
+                }
 
                 if ((Boolean) PlayerData.get(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus")) {
                     PlayerData.set(PlayerData.FileType.SETTINGS, player.getUniqueId(), "settings.scoreboardStatus", false);

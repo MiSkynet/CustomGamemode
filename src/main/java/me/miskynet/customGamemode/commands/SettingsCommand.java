@@ -6,7 +6,7 @@ import me.miskynet.customGamemode.Main;
 import me.miskynet.customGamemode.custom.config.Language;
 import me.miskynet.customGamemode.custom.settings.SettingsMenu;
 import me.miskynet.customGamemode.utils.ComponentUtils;
-import me.miskynet.customGamemode.utils.PermsManager;
+import me.miskynet.customGamemode.utils.PermissionManager;
 import org.bukkit.entity.Player;
 
 public class SettingsCommand implements BasicCommand {
@@ -23,7 +23,7 @@ public class SettingsCommand implements BasicCommand {
 
         Player player = (Player) commandSourceStack.getSender();
 
-        if (!(player.hasPermission(PermsManager.Perms.COMMAND_SETTINGS.toLowerString())) && !player.isOp()) {
+        if (!(PermissionManager.Perm.COMMAND_PLAYER_SETTINGS.hasPermission(player)) && !player.isOp()) {
             player.sendMessage(ComponentUtils.component(language.getString("commands.general.noPermission")));
             return;
         }
